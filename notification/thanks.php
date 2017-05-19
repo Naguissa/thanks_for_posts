@@ -18,10 +18,12 @@ namespace gfksx\ThanksForPosts\notification;
 class thanks extends \phpbb\notification\type\base {
 
 	protected $notifications_table;
+	protected $user_loader;
 
-	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\language\language $language, \phpbb\user $user, \phpbb\auth\auth $auth, $phpbb_root_path, $php_ext, $user_notifications_table, $notifications_table) {
+	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\language\language $language, \phpbb\user $user, \phpbb\auth\auth $auth, $phpbb_root_path, $php_ext, $user_notifications_table, $notifications_table, \phpbb\user_loader $user_loader) {
 		parent::__construct($db, $language, $user, $auth, $phpbb_root_path, $php_ext, $user_notifications_table);
 		$this->notifications_table = $notifications_table;
+		$this->user_loader = $user_loader;
 	}
 
 	/**
@@ -96,7 +98,7 @@ class thanks extends \phpbb\notification\type\base {
 	 */
 	public function get_avatar() {
 		$thankers = $this->get_data('thankers');
-		return (sizeof($thankers) == 1) ? $this->user_loader->get_avatar($thankers[0]['user_id']) : '';
+		return (sizeof($thankers) == 1) && $this->user_loader ? $this->user_loader->get_avatar($thankers[0]['user_id']) : '';
 	}
 
 	/**
