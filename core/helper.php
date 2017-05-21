@@ -117,7 +117,7 @@ class helper {
 		$this->controller_helper = $controller_helper;
 		$this->phpbb_dispatcher = $phpbb_dispatcher;
 		// FIX for SEO extension
-		$this->phpbb_root_path = '/';
+		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 		$this->thanks_table = $thanks_table;
