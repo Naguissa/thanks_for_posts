@@ -16,3 +16,4 @@ Thanks for posts extension updated for phpbb 3.2 with Tapatalk support (see http
 
  * [Naguissa](https://github.com/Naguissa)
  * https://www.foroelectro.net (spanish phpbb forum)
+ * https://www.phpbb.com/community/viewtopic.php?f=456&t=2423931 (PhpBB forum extension page)
