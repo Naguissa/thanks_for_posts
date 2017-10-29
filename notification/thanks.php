@@ -119,7 +119,11 @@ class thanks extends \phpbb\notification\type\base {
 		$trimmed_thankers_cnt = $thankers_cnt - sizeof($thankers);
 
 		foreach ($thankers as $thanker) {
-			$usernames[] = $this->user_loader->get_username($thanker['user_id'], 'no_profile');
+			$username_tmp = $this->user_loader->get_username($thanker['user_id'], 'no_profile');
+			if (isset($thanker['ntimes']) && $thanker['ntimes'] > 1) {
+				$username_tmp .= ' (' . $thanker['ntimes'] . ')';
+			}
+			$usernames[] = $username_tmp;
 		}
 
 		if ($trimmed_thankers_cnt > 20) {
@@ -231,9 +235,22 @@ class thanks extends \phpbb\notification\type\base {
 	 * @return array Array of data ready to be inserted into the database
 	 */
 	public function create_insert_array($thanks_data, $pre_create_data = array()) {
-		$thankers = array_merge(
-			array(array('user_id' => $thanks_data['user_id'])), isset($thanks_data['thankers']) ? $thanks_data['thankers'] : array()
-		);
+		$existing_yet = FALSE;
+		if (isset($thanks_data['thankers']) && is_array($thanks_data['thankers'])) {
+			foreach ($thanks_data['thankers'] as &$item) {
+				if ($item['user_id'] == $thanks_data['user_id']) {
+					$existing_yet = TRUE;
+					$item['ntimes'] = (isset($item['ntimes']) && $item['ntimes'] > 1 ? $item['ntimes'] + 1 : 2);
+					break;
+				}
+			}
+		}
+		if ($existing_yet) {
+			$thankers = $thanks_data['thankers'];
+		} else {
+			$thankers = array_merge(array(array('user_id' => $thanks_data['user_id'], 'ntimes' => 1)), isset($thanks_data['thankers']) ? $thanks_data['thankers'] : array());
+		}
+
 		$this->set_data('thankers', $thankers);
 
 		$this->set_data('post_id', $thanks_data['post_id']);
@@ -260,9 +277,25 @@ class thanks extends \phpbb\notification\type\base {
 
 		$result = $this->db->sql_query($sql);
 		$thanks_data['thankers'] = array();
-		if ($row = $this->db->sql_fetchrow($result)) {
+		$row = $this->db->sql_fetchrow($result);
+		if ($row) {
 			$data = unserialize($row['notification_data']);
-			$thanks_data['thankers'] = (!empty($data['thankers'])) ? $data['thankers'] : array();
+			if (!empty($data['thankers'])) {
+				$filtered_thankers = array();
+				foreach ($data['thankers'] as $item) {
+					if (isset($filtered_thankers['_' . $item['user_id']])) {
+						$filtered_thankers['_' . $item['user_id']]['ntimes'] = (isset($filtered_thankers['_' . $item['user_id']]['ntimes']) && $filtered_thankers['_' . $item['user_id']]['ntimes'] > 1 ? $filtered_thankers['_' . $item['user_id']]['ntimes'] + 1 : 2);
+					} else {
+						$filtered_thankers['_' . $item['user_id']] = $item;
+						if (!isset($filtered_thankers['_' . $item['user_id']]['ntimes'])) {
+							$filtered_thankers['_' . $item['user_id']]['ntimes'] = 1;
+						}
+					}
+				}
+				$thanks_data['thankers'] = array_values($filtered_thankers);
+			} else {
+				$thanks_data['thankers'] = array();
+			}
 		}
 		$this->create_insert_array($thanks_data);
 
