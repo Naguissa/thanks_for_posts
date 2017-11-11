@@ -1,22 +1,24 @@
 <?php
+
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\ThanksForPosts\event;
 
 /**
-* Event listener
-*/
+ * Event listener
+ */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
+
 	/** @var array topic_thanks */
 	protected $topic_thanks;
 
@@ -57,21 +59,21 @@ class listener implements EventSubscriberInterface
 	protected $helper;
 
 	/**
-	* Constructor
-	*
-	* @param \phpbb\config\config                 $config                Config object
-	* @param \phpbb\db\driver\driver_interface    $db                    DBAL object
-	* @param \phpbb\auth\auth                     $auth                  Auth object
-	* @param \phpbb\template\template             $template              Template object
-	* @param \phpbb\user                          $user                  User object
-	* @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
-	* @param \phpbb\request\request_interface     $request               Request object
-	* @param string                               $phpbb_root_path       phpbb_root_path
-	* @param string                               $php_ext               phpEx
-	* @param rxu\PostsMerging\core\helper         $helper                The extension helper object
-	* @return \rxu\ThanksForPosts\event\listener
-	* @access public
-	*/
+	 * Constructor
+	 *
+	 * @param \phpbb\config\config                 $config                Config object
+	 * @param \phpbb\db\driver\driver_interface    $db                    DBAL object
+	 * @param \phpbb\auth\auth                     $auth                  Auth object
+	 * @param \phpbb\template\template             $template              Template object
+	 * @param \phpbb\user                          $user                  User object
+	 * @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
+	 * @param \phpbb\request\request_interface     $request               Request object
+	 * @param string                               $phpbb_root_path       phpbb_root_path
+	 * @param string                               $php_ext               phpEx
+	 * @param rxu\PostsMerging\core\helper         $helper                The extension helper object
+	 * @return \rxu\ThanksForPosts\event\listener
+	 * @access public
+	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $helper)
 	{
 		$this->config = $config;
@@ -92,23 +94,23 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.index_modify_page_title'			=> 'get_thanks_list',
-			'core.memberlist_view_profile'			=> 'memberlist_viewprofile',
-			'core.delete_posts_in_transaction'		=> 'delete_post_thanks',
-			'core.viewforum_modify_topicrow'		=> 'viewforum_output_topics_reput',
-			'core.viewforum_modify_topics_data'		=> 'viewforum_get_topics_reput',
+			'core.index_modify_page_title' => 'get_thanks_list',
+			'core.memberlist_view_profile' => 'memberlist_viewprofile',
+			'core.delete_posts_in_transaction' => 'delete_post_thanks',
+			'core.viewforum_modify_topicrow' => 'viewforum_output_topics_reput',
+			'core.viewforum_modify_topics_data' => 'viewforum_get_topics_reput',
 			// Set lower priority for the case another ext want to change $post_list first
-			'core.viewtopic_get_post_data'			=> array('viewtopic_handle_thanks', -2),
-			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
-			'core.display_forums_before'			=> 'forumlist_display_rating',
-			'core.display_forums_modify_template_vars'		=> 'forumlist_modify_template_vars',
-			'core.user_setup'						=> 'load_language_on_setup',
-			'core.page_header_after'				=> 'add_header_quicklinks',
-			'core.viewtopic_modify_page_title'		=> 'markread',
-			'core.viewtopic_assign_template_vars_before'	=> 'viewtopic_check_f_thanks_auth',
-			'paybas.recenttopics.modify_tpl_ary'	=> 'recenttopics_output_topics_reput',
-			'paybas.recenttopics.modify_topics_list'=> 'recenttopics_get_topics_reput',
-			'core.permissions'						=> 'add_permission',
+			'core.viewtopic_get_post_data' => array('viewtopic_handle_thanks', -2),
+			'core.viewtopic_modify_post_row' => 'viewtopic_modify_postrow',
+			'core.display_forums_before' => 'forumlist_display_rating',
+			'core.display_forums_modify_template_vars' => 'forumlist_modify_template_vars',
+			'core.user_setup' => 'load_language_on_setup',
+			'core.page_header_after' => 'add_header_quicklinks',
+			'core.viewtopic_modify_page_title' => 'markread',
+			'core.viewtopic_assign_template_vars_before' => 'viewtopic_check_f_thanks_auth',
+			'paybas.recenttopics.modify_tpl_ary' => 'recenttopics_output_topics_reput',
+			'paybas.recenttopics.modify_topics_list' => 'recenttopics_get_topics_reput',
+			'core.permissions' => 'add_permission',
 		);
 	}
 
@@ -123,9 +125,9 @@ class listener implements EventSubscriberInterface
 			$thanks_list = $this->helper->get_toplist_index($ex_fid_ary);
 		}
 		$this->template->assign_vars(array(
-			'THANKS_LIST'		=> ($thanks_list != '') ? $thanks_list : false,
-			'S_THANKS_LIST'		=> (isset($this->config['thanks_top_number']) && $thanks_list != '') ? true : false,
-			'L_TOP_THANKS_LIST'	=> isset($this->config['thanks_top_number']) ? sprintf($this->user->lang['REPUT_TOPLIST'], (int) $this->config['thanks_top_number']) : false,
+			'THANKS_LIST' => ($thanks_list != '') ? $thanks_list : false,
+			'S_THANKS_LIST' => (isset($this->config['thanks_top_number']) && $thanks_list != '') ? true : false,
+			'L_TOP_THANKS_LIST' => isset($this->config['thanks_top_number']) ? sprintf($this->user->lang['REPUT_TOPLIST'], (int) $this->config['thanks_top_number']) : false,
 		));
 	}
 
@@ -231,7 +233,7 @@ class listener implements EventSubscriberInterface
 		$row = $event['row'];
 		$forum_row = array_merge($forum_row, array(
 			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view_column'] : false,
-			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level'])? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
+			'THANKS_REPUT_GRAPHIC_WIDTH' => isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']) : false) : false,
 		));
 		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'])
 		{
@@ -255,12 +257,12 @@ class listener implements EventSubscriberInterface
 		$u_thankslist = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => ''));
 		$u_toplist = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('tslash' => ''));
 		$this->template->assign_vars(array(
-			'U_THANKS_LIST'		=> $u_thankslist,
-			'U_REPUT_TOPLIST'	=> $u_toplist,
-			'S_DISPLAY_THANKSLIST'	=> $this->auth->acl_get('u_viewthanks'),
-			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist'),
-			'MINI_THANKS_IMG'		=> $this->user->img('icon_mini_thanks', $this->user->lang['GRATITUDES']),
-			'MINI_TOPLIST_IMG'		=> $this->user->img('icon_mini_toplist', $this->user->lang['TOPLIST']),
+			'U_THANKS_LIST' => $u_thankslist,
+			'U_REPUT_TOPLIST' => $u_toplist,
+			'S_DISPLAY_THANKSLIST' => $this->auth->acl_get('u_viewthanks'),
+			'S_DISPLAY_TOPLIST' => $this->auth->acl_get('u_viewtoplist'),
+			'MINI_THANKS_IMG' => $this->user->img('icon_mini_thanks', $this->user->lang['GRATITUDES']),
+			'MINI_TOPLIST_IMG' => $this->user->img('icon_mini_toplist', $this->user->lang['TOPLIST']),
 		));
 	}
 
@@ -274,7 +276,7 @@ class listener implements EventSubscriberInterface
 	{
 		$forum_id = (int) $event['forum_id'];
 		$this->template->assign_vars(array(
-			'S_FORUM_THANKS'	=> (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
+			'S_FORUM_THANKS' => (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
 		));
 	}
 
@@ -308,4 +310,5 @@ class listener implements EventSubscriberInterface
 		$permissions['u_viewtoplist'] = array('lang' => 'ACL_U_VIEWTOPLIST', 'cat' => 'misc');
 		$event['permissions'] = $permissions;
 	}
+
 }

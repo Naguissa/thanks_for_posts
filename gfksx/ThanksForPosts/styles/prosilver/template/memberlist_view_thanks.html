@@ -1,34 +1,34 @@
 <script type="text/JavaScript">
-// <![CDATA[
-function getElement(iElementId)
-{
-   if (document.all)
-   {
-      return document.all[iElementId];
-   }
-   if (document.getElementById)
-   {
-      return document.getElementById(iElementId);
-   }
-}
+	// <![CDATA[
+	function getElement(iElementId)
+	{
+	if (document.all)
+	{
+	return document.all[iElementId];
+	}
+	if (document.getElementById)
+	{
+	return document.getElementById(iElementId);
+	}
+	}
 
-function toggleElement(oElement)
-{
-   if (oElement.style.display == "none")
-   {
-      oElement.style.display = "";
-   }
-   else
-   {
-      oElement.style.display = "none";
-   }
-}
-// ]]>
+	function toggleElement(oElement)
+	{
+	if (oElement.style.display == "none")
+	{
+	oElement.style.display = "";
+	}
+	else
+	{
+	oElement.style.display = "none";
+	}
+	}
+	// ]]>
 </script>
 <!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
 <div class="panel bg1">
 	<div class="inner">
-	<h3>{L_GRATITUDES}</h3>
+		<h3>{L_GRATITUDES}</h3>
 		<!-- IF POSTER_GIVE_COUNT -->
 		<div class="column1">
 			<!-- IF S_MOD_THANKS -->
@@ -41,7 +41,7 @@ function toggleElement(oElement)
 			<dl>
 				<dt>{L_GIVEN}{L_COLON} {POSTER_GIVE_COUNT}</dt>
 				<dd>
-					<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
+					<a href="#" onclick="toggleElement(getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
 					<div id="show_thanks" style="display: none;">{THANKS}</div>
 				</dd>
 			</dl>
@@ -59,7 +59,7 @@ function toggleElement(oElement)
 			<dl>
 				<dt>{L_RECEIVED}{L_COLON} {POSTER_RECEIVE_COUNT}</dt>
 				<dd>
-					<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
+					<a href="#" onclick="toggleElement(getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
 					<div id="show_thanked" style="display: none;">{THANKED}</div>
 				</dd>
 			</dl>

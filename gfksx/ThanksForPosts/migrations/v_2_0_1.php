@@ -11,46 +11,43 @@
 
 namespace gfksx\ThanksForPosts\migrations;
 
-class v_2_0_1 extends \phpbb\db\migration\migration {
+class v_3_0_0 extends \phpbb\db\migration\migration
+{
 
-	public function effectively_installed() {
-		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.1', '>=');
+	public function effectively_installed()
+	{
+		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.2', '>=');
 	}
 
-	static public function depends_on() {
+	static public function depends_on()
+	{
 		return array(
-			'\gfksx\ThanksForPosts\migrations\v_2_0_0',
-			'\phpbb\db\migration\data\v310\notifications_use_full_name',
+			'\gfksx\ThanksForPosts\migrations\v_2_0_0'
 		);
 	}
 
-	public function update_schema() {
-		return array(
-			'drop_columns' => array(
-				$this->table_prefix . 'users' => array(
-					'user_allow_thanks_email',
-					'user_allow_thanks_pm',
-				),
-			),
-		);
+	public function update_schema()
+	{
+		return array();
 	}
 
-	public function revert_schema() {
-		return array(
-		);
+	public function revert_schema()
+	{
+		return array();
 	}
 
-	public function update_data() {
+	public function update_data()
+	{
 		return array(
 			// Update notification names
-			array('custom', array(array($this, 'update_notifications_name'))),
+			array('custom', array(array($this, 'update_notifications_serialization'))),
 			// Current version
-			array('config.update', array('thanks_for_posts_version', '2.0.1')),
+			array('config.update', array('thanks_for_posts_version', '3.0.0')),
 		);
 	}
 
-	public function update_notifications_name() {
-		// New notification_type_name and re-enable
+	public function update_notifications_serialization()
+	{
 		$sql_ary[] = array(
 			'notification_type_name' => 'gfksx.thanksforposts.notification.type.thanks',
 			'notification_type_enabled' => 1,
@@ -60,7 +57,8 @@ class v_2_0_1 extends \phpbb\db\migration\migration {
 			'notification_type_enabled' => 1,
 		);
 
-		foreach ($sql_ary as $sql) {
+		foreach ($sql_ary as $sql)
+		{
 			$notification_type_name = explode('type.', $sql['notification_type_name']);
 
 			$sql_update = 'UPDATE ' . NOTIFICATION_TYPES_TABLE . '

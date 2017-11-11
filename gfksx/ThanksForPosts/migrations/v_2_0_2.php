@@ -11,29 +11,35 @@
 
 namespace gfksx\ThanksForPosts\migrations;
 
-class v_2_0_2 extends \phpbb\db\migration\migration {
+class v_2_0_2 extends \phpbb\db\migration\migration
+{
 
-	public function effectively_installed() {
+	public function effectively_installed()
+	{
 		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.2', '>=');
 	}
 
-	static public function depends_on() {
+	static public function depends_on()
+	{
 		return array(
 			'\gfksx\ThanksForPosts\migrations\v_2_0_1',
 		);
 	}
 
-	public function update_schema() {
+	public function update_schema()
+	{
 		return array(
 		);
 	}
 
-	public function revert_schema() {
+	public function revert_schema()
+	{
 		return array(
 		);
 	}
 
-	public function update_data() {
+	public function update_data()
+	{
 		return array(
 			// This config value was missing from the original MOD ver. 1.3.4
 			// installation script, so fix and add that

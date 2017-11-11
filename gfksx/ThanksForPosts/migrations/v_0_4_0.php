@@ -1,17 +1,19 @@
 <?php
+
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\ThanksForPosts\migrations;
 
 class v_0_4_0 extends \phpbb\db\migration\migration
 {
+
 	public $thanks_table_exists;
 	public $poster_id_field_exists;
 
@@ -20,8 +22,7 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 		$this->thanks_table_exists = $this->db_tools->sql_table_exists($this->table_prefix . 'thanks');
 		$this->poster_id_field_exists = ($this->thanks_table_exists) ? $this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'poster_id') : false;
 
-		return (isset($this->config['thanks_for_posts_version']) || isset($this->config['thanks_mod_version'])
-			|| ($this->thanks_table_exists && $this->poster_id_field_exists));
+		return (isset($this->config['thanks_for_posts_version']) || isset($this->config['thanks_mod_version']) || ($this->thanks_table_exists && $this->poster_id_field_exists));
 	}
 
 	static public function depends_on()
@@ -40,7 +41,7 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 			return array(
 				'add_columns' => array(
 					$this->table_prefix . 'thanks' => array(
-						'poster_id'		=> array('UINT', 0),
+						'poster_id' => array('UINT', 0),
 					),
 				),
 				'add_primary_keys' => array(
@@ -78,10 +79,11 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 	{
 		$thanks_table = $this->table_prefix . 'thanks';
 
-		$sql = 'UPDATE '. $thanks_table . ' t
+		$sql = 'UPDATE ' . $thanks_table . ' t
 			LEFT JOIN ' . POSTS_TABLE . ' p ON  t.post_id = p.post_id
 			SET t.poster_id = p.poster_id
 			WHERE t.post_id = p.post_id';
 		$this->db->sql_query($sql);
 	}
+
 }

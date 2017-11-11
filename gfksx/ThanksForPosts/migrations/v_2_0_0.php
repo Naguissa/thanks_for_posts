@@ -11,27 +11,33 @@
 
 namespace gfksx\ThanksForPosts\migrations;
 
-class v_2_0_0 extends \phpbb\db\migration\migration {
+class v_2_0_0 extends \phpbb\db\migration\migration
+{
 
-	public function effectively_installed() {
+	public function effectively_installed()
+	{
 		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.0', '>=');
 	}
 
-	static public function depends_on() {
+	static public function depends_on()
+	{
 		return array('\gfksx\ThanksForPosts\migrations\v_1_3_4');
 	}
 
-	public function update_schema() {
+	public function update_schema()
+	{
 		return array(
 		);
 	}
 
-	public function revert_schema() {
+	public function revert_schema()
+	{
 		return array(
 		);
 	}
 
-	public function update_data() {
+	public function update_data()
+	{
 		// Remove phpBB 3.0 Thanks for posts ACP modules
 		$remove_modules = array(
 //			array('module.remove', array('acp', 'ACP_THANKS', array(
@@ -115,7 +121,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration {
 		);
 
 		return (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.7', '>=')) ?
-			array_merge($remove_modules, $add_modules, $update_config) : array_merge($add_modules, $update_config);
+				array_merge($remove_modules, $add_modules, $update_config) : array_merge($add_modules, $update_config);
 	}
 
 }

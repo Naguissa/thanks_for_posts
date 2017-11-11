@@ -1,15 +1,16 @@
 <?php
+
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -30,8 +31,8 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 $lang = array_merge($lang, array(
-	'ACL_F_THANKS' 						=> 'Možeš zahvaliti na post',
-	'ACL_M_THANKS' 						=> 'Možeš obrisati listu zahvala',
-	'ACL_U_VIEWTHANKS' 					=> 'Možeš vidjeti listu svih zahvala',
-	'ACL_U_VIEWTOPLIST'					=> 'Možeš vidjeti toplistu',
-));
+	'ACL_F_THANKS' => 'Možeš zahvaliti na post',
+	'ACL_M_THANKS' => 'Možeš obrisati listu zahvala',
+	'ACL_U_VIEWTHANKS' => 'Možeš vidjeti listu svih zahvala',
+	'ACL_U_VIEWTOPLIST' => 'Možeš vidjeti toplistu',
+		));

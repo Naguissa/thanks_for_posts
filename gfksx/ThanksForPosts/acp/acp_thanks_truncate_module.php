@@ -1,20 +1,22 @@
 <?php
+
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\ThanksForPosts\acp;
 
 /**
-* @package acp
-*/
+ * @package acp
+ */
 class acp_thanks_truncate_module
 {
+
 	var $u_action;
 
 	function main($id, $mode)
@@ -70,8 +72,8 @@ class acp_thanks_truncate_module
 			else
 			{
 				$s_hidden_fields = build_hidden_fields(array(
-					'truncate'		=> true,
-					)
+					'truncate' => true,
+						)
 				);
 				//display mode
 				confirm_box(false, 'TRUNCATE_THANKS', $s_hidden_fields);
@@ -80,13 +82,14 @@ class acp_thanks_truncate_module
 		}
 
 		$template->assign_vars(array(
-			'ALLTHANKS'		=> $all_thanks,
-			'POSTSTHANKS'	=> $all_posts_thanks,
-			'USERSTHANKS'	=> $all_users_thanks,
-			'POSTSEND'		=> $end_posts_thanks,
-			'USERSEND'		=> $end_users_thanks,
-			'THANKSEND'		=> $end_thanks,
-			'S_TRUNCATE' 	=> $truncate,
+			'ALLTHANKS' => $all_thanks,
+			'POSTSTHANKS' => $all_posts_thanks,
+			'USERSTHANKS' => $all_users_thanks,
+			'POSTSEND' => $end_posts_thanks,
+			'USERSEND' => $end_users_thanks,
+			'THANKSEND' => $end_thanks,
+			'S_TRUNCATE' => $truncate,
 		));
 	}
+
 }

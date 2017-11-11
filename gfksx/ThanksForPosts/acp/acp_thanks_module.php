@@ -1,20 +1,22 @@
 <?php
+
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\ThanksForPosts\acp;
 
 /**
-* @package acp
-*/
+ * @package acp
+ */
 class acp_thanks_module
 {
+
 	var $u_action;
 	var $new_config = array();
 
@@ -22,32 +24,32 @@ class acp_thanks_module
 	{
 		global $config, $request, $user, $phpbb_container, $template;
 
-		$action	= $request->variable('action', '');
+		$action = $request->variable('action', '');
 		$submit = (isset($_POST['submit'])) ? true : false;
 
 		$form_key = 'acp_thanks';
 		add_form_key($form_key);
 		/**
-		*	Validation types are:
-		*		string, int, bool,
-		*		script_path (absolute path in url - beginning with / and no trailing slash),
-		*		rpath (relative), rwpath (realtive, writable), path (relative path, but able to escape the root), wpath (writable)
-		*/
+		 * 	Validation types are:
+		 * 		string, int, bool,
+		 * 		script_path (absolute path in url - beginning with / and no trailing slash),
+		 * 		rpath (relative), rwpath (realtive, writable), path (relative path, but able to escape the root), wpath (writable)
+		 */
 		$display_vars = array(
-			'title'	=> 'ACP_THANKS_SETTINGS',
-			'vars'	=> array(
-			'legend'					=> 'GENERAL_OPTIONS',
-			'remove_thanks'				=> array('lang' => 'REMOVE_THANKS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_only_first_post'	=> array('lang' => 'THANKS_ONLY_FIRST_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_global_post'		=> array('lang' => 'THANKS_GLOBAL_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_info_page'			=> array('lang' => 'THANKS_INFO_PAGE', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_postlist_view'		=> array('lang' => 'THANKS_POSTLIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_number_post'		=> array('lang' => 'THANKS_NUMBER_POST', 'validate' => 'int:1:250', 'type' => 'text:4:6', 'explain' => true),
-			'thanks_time_view'			=> array('lang' => 'THANKS_TIME_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_counters_view'		=> array('lang' => 'THANKS_COUNTERS_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_profilelist_view'	=> array('lang' => 'THANKS_PROFILELIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_number'				=> array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1',	'type' => 'text:4:4', 'explain' => true),
-			'thanks_top_number'			=> array('lang' => 'THANKS_TOP_NUMBER', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
+			'title' => 'ACP_THANKS_SETTINGS',
+			'vars' => array(
+				'legend' => 'GENERAL_OPTIONS',
+				'remove_thanks' => array('lang' => 'REMOVE_THANKS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_only_first_post' => array('lang' => 'THANKS_ONLY_FIRST_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_global_post' => array('lang' => 'THANKS_GLOBAL_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_info_page' => array('lang' => 'THANKS_INFO_PAGE', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_postlist_view' => array('lang' => 'THANKS_POSTLIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_number_post' => array('lang' => 'THANKS_NUMBER_POST', 'validate' => 'int:1:250', 'type' => 'text:4:6', 'explain' => true),
+				'thanks_time_view' => array('lang' => 'THANKS_TIME_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_counters_view' => array('lang' => 'THANKS_COUNTERS_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_profilelist_view' => array('lang' => 'THANKS_PROFILELIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_number' => array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1', 'type' => 'text:4:4', 'explain' => true),
+				'thanks_top_number' => array('lang' => 'THANKS_TOP_NUMBER', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
 			)
 		);
 
@@ -86,7 +88,6 @@ class acp_thanks_module
 			if ($submit)
 			{
 				$config->set($config_name, $config_value);
-
 			}
 		}
 
@@ -102,15 +103,13 @@ class acp_thanks_module
 		$this->page_title = $display_vars['title'];
 
 		$template->assign_vars(array(
-			'L_TITLE'			=> $user->lang[$display_vars['title']],
-			'L_TITLE_EXPLAIN'	=> $user->lang[$display_vars['title'] . '_EXPLAIN'],
-			'L_ACP_THANKS_MOD_VER'	=> $user->lang['ACP_THANKS_MOD_VER'],
-			'THANKS_MOD_VERSION'	=> isset($config['thanks_for_posts_version']) ? $config['thanks_for_posts_version'] : false,
-
-			'S_ERROR'			=> (sizeof($error)) ? true : false,
-			'ERROR_MSG'			=> implode('<br />', $error),
-
-			'U_ACTION'			=> $this->u_action)
+			'L_TITLE' => $user->lang[$display_vars['title']],
+			'L_TITLE_EXPLAIN' => $user->lang[$display_vars['title'] . '_EXPLAIN'],
+			'L_ACP_THANKS_MOD_VER' => $user->lang['ACP_THANKS_MOD_VER'],
+			'THANKS_MOD_VERSION' => isset($config['thanks_for_posts_version']) ? $config['thanks_for_posts_version'] : false,
+			'S_ERROR' => (sizeof($error)) ? true : false,
+			'ERROR_MSG' => implode('<br />', $error),
+			'U_ACTION' => $this->u_action)
 		);
 
 		// Output relevant page
@@ -124,8 +123,8 @@ class acp_thanks_module
 			if (strpos($config_key, 'legend') !== false)
 			{
 				$template->assign_block_vars('options', array(
-					'S_LEGEND'		=> true,
-					'LEGEND'		=> (isset($user->lang[$vars])) ? $user->lang[$vars] : $vars)
+					'S_LEGEND' => true,
+					'LEGEND' => (isset($user->lang[$vars])) ? $user->lang[$vars] : $vars)
 				);
 
 				continue;
@@ -150,15 +149,16 @@ class acp_thanks_module
 			}
 
 			$template->assign_block_vars('options', array(
-				'KEY'			=> $config_key,
-				'TITLE'			=> (isset($user->lang[$vars['lang']])) ? $user->lang[$vars['lang']] : $vars['lang'],
-				'S_EXPLAIN'		=> $vars['explain'],
-				'TITLE_EXPLAIN'	=> $l_explain,
-				'CONTENT'		=> $content,
-				)
+				'KEY' => $config_key,
+				'TITLE' => (isset($user->lang[$vars['lang']])) ? $user->lang[$vars['lang']] : $vars['lang'],
+				'S_EXPLAIN' => $vars['explain'],
+				'TITLE_EXPLAIN' => $l_explain,
+				'CONTENT' => $content,
+					)
 			);
 
 			unset($display_vars['vars'][$config_key]);
 		}
 	}
+
 }

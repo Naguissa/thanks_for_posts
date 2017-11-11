@@ -1,16 +1,16 @@
 <?php
-/**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
 
 /**
-* DO NOT CHANGE
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
+/**
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -34,8 +34,8 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'ACL_F_THANKS' 						=> 'Pode agradecer pela mensagem',
-	'ACL_M_THANKS' 						=> 'Pode eliminar os agradecimentos da lista',
-	'ACL_U_VIEWTHANKS' 					=> 'Pode ver a lista de todos os agradecimentos',
-	'ACL_U_VIEWTOPLIST'					=> 'Pode ver a Toplist',
-));
+	'ACL_F_THANKS' => 'Pode agradecer pela mensagem',
+	'ACL_M_THANKS' => 'Pode eliminar os agradecimentos da lista',
+	'ACL_U_VIEWTHANKS' => 'Pode ver a lista de todos os agradecimentos',
+	'ACL_U_VIEWTOPLIST' => 'Pode ver a Toplist',
+		));

@@ -1,24 +1,25 @@
 <?php
+
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\ThanksForPosts\migrations;
 
 class v_1_2_5 extends \phpbb\db\migration\migration
 {
+
 	protected $thanks_table_exists;
 	protected $poster_id_field_exists;
 
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.5', '>='))
-				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.5', '>='));
+		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.5', '>=')) || (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.5', '>='));
 	}
 
 	static public function depends_on()
@@ -33,12 +34,12 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 			return array(
 				'add_tables' => array(
 					$this->table_prefix . 'thanks' => array(
-						'COLUMNS'		=> array(
-							'post_id'		=> array('UINT', 0),
-							'poster_id'		=> array('UINT', 0),
-							'user_id'		=> array('UINT', 0),
+						'COLUMNS' => array(
+							'post_id' => array('UINT', 0),
+							'poster_id' => array('UINT', 0),
+							'user_id' => array('UINT', 0),
 						),
-						'PRIMARY_KEY'	=> array('post_id', 'user_id'),
+						'PRIMARY_KEY' => array('post_id', 'user_id'),
 					),
 				),
 			);
@@ -51,7 +52,7 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 	public function revert_schema()
 	{
 		return array(
-			'drop_tables'	=> array($this->table_prefix . 'thanks'),
+			'drop_tables' => array($this->table_prefix . 'thanks'),
 		);
 	}
 
@@ -66,18 +67,16 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 			array('config.add', array('thanks_number', 100)),
 			array('config.add', array('thanks_info_page', 1)),
 			array('config.add', array('thanks_only_first_post', 0)),
-
 			// Current version
 			array('config.add', array('thanks_for_posts_version', '1.2.5')),
-
 			// Add permissions
 			array('permission.add', array('f_thanks', false)),
 			array('permission.add', array('u_viewthanks', true)),
-
 			// Add permissions sets
 			array('permission.permission_set', array('ROLE_USER_STANDARD', 'u_viewthanks', 'role', true)),
 			array('permission.permission_set', array('REGISTERED', 'u_viewthanks', 'group', true)),
 			array('permission.permission_set', array('ROLE_FORUM_STANDARD', 'f_thanks', 'role', true)),
 		);
 	}
+
 }

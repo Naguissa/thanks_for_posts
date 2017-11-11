@@ -11,11 +11,13 @@
 /**
  * DO NOT CHANGE
  */
-if (!defined('IN_PHPBB')) {
+if (!defined('IN_PHPBB'))
+{
 	exit;
 }
 
-if (empty($lang) || !is_array($lang)) {
+if (empty($lang) || !is_array($lang))
+{
 	$lang = array();
 }
 
@@ -127,4 +129,4 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'Operación cancelada',
 	'ALLOW_THANKS_PM_ON' => 'Notificar por MP si se agradece cualquiera de mis mensajes',
 	'ALLOW_THANKS_EMAIL_ON' => 'Notificar por email si se agradece cualquiera de mis mensajes',
-	));
+		));

@@ -11,11 +11,13 @@
 /**
  * DO NOT CHANGE
  */
-if (!defined('IN_PHPBB')) {
+if (!defined('IN_PHPBB'))
+{
 	exit;
 }
 
-if (empty($lang) || !is_array($lang)) {
+if (empty($lang) || !is_array($lang))
+{
 	$lang = array();
 }
 
@@ -104,4 +106,4 @@ $lang = array_merge($lang, array(
 	'THANKS_CUSTOM1_FUNCTION' => 'Comprobar módulo retirado',
 	'THANKS_CUSTOM2_FUNCTION' => 'Comprobar el refresco de cache',
 	'TOPLIST' => 'Lista TOP de mensajes',
-	));
+		));
