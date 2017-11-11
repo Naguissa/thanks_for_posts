@@ -310,6 +310,7 @@ class thanks extends \phpbb\notification\type\base
 		$row = $this->db->sql_fetchrow($result);
 		if ($row)
 		{
+			$row['notification_read'] = false;
 			$this->set_initial_data($row);
 			$data = $this->get_data(false);
 			if (!empty($data['thankers']))
