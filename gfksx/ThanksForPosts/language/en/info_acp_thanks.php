@@ -129,4 +129,8 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'Operation canceled',
 	'ALLOW_THANKS_PM_ON' => 'Notify me PM if someone thanks my post',
 	'ALLOW_THANKS_EMAIL_ON' => 'Notify me e-mail if someone thanks my post',
+	'THANKS_POST_VIEW_GUESTS' => 'Show to not identified users (guests)',
+	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'If active, it will show thanks and reputation (if active) to not identified users (guests).',
+	'THANKS_POST_VIEW_ROBOTS' => 'Show to search engines (bots)',
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'If active, it will show thanks and reputation (if active) to search engines (bots).'
 		));

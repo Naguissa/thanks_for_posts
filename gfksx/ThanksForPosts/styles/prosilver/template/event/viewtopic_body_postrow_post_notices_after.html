@@ -1,5 +1,5 @@
 <div id='list_thanks{postrow.POST_ID}'>
-	<!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+	<!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT)-->
 	<div class="notice">
 		<dl>
 			<!-- IF postrow.S_MOD_THANKS -->
@@ -17,7 +17,7 @@
 	<!-- ENDIF -->
 </div>
 <div id='div_post_reput{postrow.POST_ID}'>
-	<!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+	<!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and (not postrow.S_POST_ANONYMOUS or postrow.THANKS_POST_VIEW_GUESTS) and (not S_IS_BOT or postrow.THANKS_POST_VIEW_ROBOTS) -->
 	<div class="notice">
 		<dl>
 			<dt class="small"><strong>{L_REPUT}{L_COLON}</strong>&nbsp;{postrow.POST_REPUT}</dt>

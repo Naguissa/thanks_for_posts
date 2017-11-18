@@ -41,6 +41,8 @@ class acp_thanks_module
 				'legend' => 'GENERAL_OPTIONS',
 				'remove_thanks' => array('lang' => 'REMOVE_THANKS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_only_first_post' => array('lang' => 'THANKS_ONLY_FIRST_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_post_view_guests' => array('lang' => 'THANKS_POST_VIEW_GUESTS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'thanks_post_view_robots' => array('lang' => 'THANKS_POST_VIEW_ROBOTS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_global_post' => array('lang' => 'THANKS_GLOBAL_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_info_page' => array('lang' => 'THANKS_INFO_PAGE', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_postlist_view' => array('lang' => 'THANKS_POSTLIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),

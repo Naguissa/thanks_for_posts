@@ -679,6 +679,8 @@ class helper
 				'U_CLEAR_LIST_THANKS_POST' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;list_thanks=post'),
 				'S_MOD_THANKS' => $this->auth->acl_get('m_thanks'),
 				'S_ONLY_TOPICSTART' => ($topic_data['topic_first_post_id'] == $row['post_id']) ? true : false,
+				'THANKS_POST_VIEW_GUESTS' => isset($this->config['thanks_post_view_guests']) && $this->config['thanks_post_view_guests'],
+				'THANKS_POST_VIEW_ROBOTS' => isset($this->config['thanks_post_view_robots']) && $this->config['thanks_post_view_robots']
 			));
 		}
 	}
@@ -711,7 +713,7 @@ class helper
 		}
 
 		//array all user who say thanks on viewtopic page
-		if ($this->auth->acl_get('f_thanks', $forum_id))
+		if ($this->auth->acl_get('f_thanks', $forum_id) || ($this->user->data['user_id'] == ANONYMOUS && $this->config['thanks_post_view_guests']) || ($this->config['thanks_post_view_robots'] && S_IS_BOT))
 		{
 			$sql_array = array(
 				'SELECT' => 't.*, u.username, u.username_clean, u.user_colour',

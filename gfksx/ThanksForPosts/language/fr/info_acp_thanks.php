@@ -134,4 +134,8 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'L’opération a été annulée.',
 	'ALLOW_THANKS_PM_ON' => 'Notifier moi par message privé si quelqu’un remercie un de mes messages',
 	'ALLOW_THANKS_EMAIL_ON' => 'Notifier moi par e-mail si un quelqu’un remercie un de mes messages',
+	'THANKS_POST_VIEW_GUESTS' => 'Montrer aux utilisateurs non identifiés (invités)',
+	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => "S'il est actif, il affichera des remerciements et une réputation (s'il est actif) aux utilisateurs non identifiés (invités).",
+	'THANKS_POST_VIEW_ROBOTS' => 'Montrer aux moteurs de recherche (bots)',
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => "S'il est actif, il affichera remerciements et réputation (s'il est actif) aux moteurs de recherche (bots)."
 		));

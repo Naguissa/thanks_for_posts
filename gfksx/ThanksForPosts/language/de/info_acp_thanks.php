@@ -129,4 +129,8 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'Aktion wurde abgebrochen',
 	'ALLOW_THANKS_PM_ON' => 'Mich mittels Privater Nachricht benachrichtigen, wenn sich jemand bei mir bedankt.',
 	'ALLOW_THANKS_EMAIL_ON' => 'Mich mittels E-Mail benachrichtigen, wenn sich jemand bei mir bedankt.',
+	'THANKS_POST_VIEW_GUESTS' => 'Zeigen an nicht identifizierte Benutzer (Gäste)',
+	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Wenn aktiv, zeigt es Dank und Ruf (falls aktiv) an nicht identifizierte Benutzer (Gäste).',
+	'THANKS_POST_VIEW_ROBOTS' => 'Zeigen an Suchmaschinen (Bots)',
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Wenn aktiv, zeigt es Dank und Ruf (falls aktiv) an Suchmaschinen (Bots).'
 		));

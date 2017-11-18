@@ -126,4 +126,8 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'Operacija poništena',
 	'ALLOW_THANKS_PM_ON' => 'Obavijesti me u PP ako mi netko zahvali na postu',
 	'ALLOW_THANKS_EMAIL_ON' => 'Obavijesti me na e-mail ako mi netko zahvali na postu',
+	'THANKS_POST_VIEW_GUESTS' => 'Prikaži neidentificirane korisnike (gosti)',
+	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Ako je aktivno, prikazivat će hvala i ugled (ako je aktivan) da nisu identificirani korisnici (gosti).',
+	'THANKS_POST_VIEW_ROBOTS' => 'Prikaži tražilicama (robota)',
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Ako je aktivno, pokazat će hvala i ugled (ako je aktivan) tražilicama (robota).'
 		));

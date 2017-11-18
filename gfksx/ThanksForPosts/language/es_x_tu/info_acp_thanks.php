@@ -129,4 +129,8 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'Operación cancelada',
 	'ALLOW_THANKS_PM_ON' => 'Notificar por MP si se agradece cualquiera de mis mensajes',
 	'ALLOW_THANKS_EMAIL_ON' => 'Notificar por email si se agradece cualquiera de mis mensajes',
+	'THANKS_POST_VIEW_GUESTS' => 'Mostrar a los usuarios no identificados (invitados)',
+	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Si está activada, se mostrarán los agradecimientos y la valoración (si está activa) a los usuarios sin identificar (invitados).',
+	'THANKS_POST_VIEW_ROBOTS' => 'Mostrar a los robots',
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Si está activada, se mostrarán los agradecimientos y la valoración (si está activa) a los robots de búsqueda.'
 		));

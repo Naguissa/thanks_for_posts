@@ -129,4 +129,8 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS' => 'Operació cancel·lada',
 	'ALLOW_THANKS_PM_ON' => 'Envia\'m un PM si s\'agraeix un missatge meu',
 	'ALLOW_THANKS_EMAIL_ON' => 'Envia\'m un email si s\'agraeix un missatge meu',
+	'THANKS_POST_VIEW_GUESTS' => 'Mostrar als usuaris no identificats (convidats)',
+	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Si es actiu, es mostrarán els agraeiments i la valoració (si és activa) als usuaris sense identificar (convidats).',
+	'THANKS_POST_VIEW_ROBOTS' => 'Mostrar als robots',
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Si es actiu, es mostrarán els agraeiments i la valoració (si és activa) als usuaris identificats com robots.',
 		));
