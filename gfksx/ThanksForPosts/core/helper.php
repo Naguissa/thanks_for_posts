@@ -56,7 +56,7 @@ class helper
 	/** @var \phpbb\notification\manager */
 	protected $notification_manager;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var \phpbb\event\dispatcher_interface */
@@ -103,7 +103,6 @@ class helper
 	 * @param string                               $users_table           USERS_TABLE
 	 * @param string                               $posts_table           POSTS_TABLE
 	 * @param string                               $notifications_table   NOTIFICATIONS_TABLE
-	 * @return gfksx\ThanksForPosts\controller\thankslist
 	 * @access public
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, \phpbb\controller\helper $controller_helper, \phpbb\event\dispatcher_interface $phpbb_dispatcher, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
@@ -190,7 +189,6 @@ class helper
 	// add a user to the thanks list
 	public function insert_thanks($post_id, $user_id, $forum_id)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = $this->request->variable('to_id', 0);
 		$from_id = $this->request->variable('from_id', 0);
 		$row = $this->get_post_info($post_id);
@@ -242,7 +240,6 @@ class helper
 	// clear list user's thanks
 	public function clear_list_thanks($object_id, $list_thanks = '')
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		// confirm
 		$s_hidden_fields = build_hidden_fields(array(
 			'list_thanks' => $list_thanks,
@@ -321,7 +318,7 @@ class helper
 			confirm_box(false, 'CLEAR_LIST_THANKS', $s_hidden_fields);
 			if ($list_thanks === 'post')
 			{
-				redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $object_id . '#p' . $object_id));
+				redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
 			}
 			else
 			{
@@ -334,7 +331,6 @@ class helper
 	// remove a user's thanks
 	public function delete_thanks($post_id, $forum_id)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = $this->request->variable('to_id', 0);
 		$forum_id = ($forum_id) ?: $this->request->variable('f', 0);
 		$row = $this->get_post_info($post_id);
@@ -415,7 +411,6 @@ class helper
 	// display the text/image saying either to add or remove thanks
 	public function get_thanks_text($post_id)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		if ($this->already_thanked($post_id, $this->user->data['user_id']))
 		{
 			return array(
@@ -465,8 +460,6 @@ class helper
 		$poster_receive_count = 0;
 		$poster_give_count = 0;
 		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
-
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . $this->thanks_table . '
@@ -542,7 +535,7 @@ class helper
 			$thanked .= '<span style="float: left;">&nbsp;' . $further_thanks_text . '</span>';
 		}
 		unset($value);
-		//===
+
 		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
 			FROM ' . $this->thanks_table . "
 			WHERE user_id = " . (int) $user_id . ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -713,7 +706,7 @@ class helper
 		}
 
 		//array all user who say thanks on viewtopic page
-		if ($this->auth->acl_get('f_thanks', $forum_id) || ($this->user->data['user_id'] == ANONYMOUS && $this->config['thanks_post_view_guests']) || ($this->config['thanks_post_view_robots'] && S_IS_BOT))
+		if ($this->auth->acl_get('f_thanks', $forum_id) || ($this->user->data['user_id'] == ANONYMOUS && $this->config['thanks_post_view_guests']) || ($this->config['thanks_post_view_robots'] && $this->user->data['is_bot']))
 		{
 			$sql_array = array(
 				'SELECT' => 't.*, u.username, u.username_clean, u.user_colour',

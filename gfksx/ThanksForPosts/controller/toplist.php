@@ -42,13 +42,13 @@ class toplist
 	/** @var \phpbb\pagination */
 	protected $pagination;
 
-	/** @var gfksx\ThanksForPosts\core\helper */
+	/** @var \gfksx\ThanksForPosts\core\helper */
 	protected $gfksx_helper;
 
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var string THANKS_TABLE */
@@ -78,7 +78,6 @@ class toplist
 	 * @param string                               $thanks_table          THANKS_TABLE
 	 * @param string                               $users_table           USERS_TABLE
 	 * @param string                               $posts_table           POSTS_TABLE
-	 * @return gfksx\ThanksForPosts\controller\thankslist
 	 * @access public
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
@@ -111,14 +110,12 @@ class toplist
 		$end_row_rating = isset($this->config['thanks_number_row_reput']) ? $this->config['thanks_number_row_reput'] : false;
 		$full_post_rating = $full_topic_rating = $full_forum_rating = false;
 		$u_search_post = $u_search_topic = $u_search_forum = '';
-		$total_match_count = 0;
-		//$page_title = $this->user->lang['REPUT_TOPLIST'];
 		$topic_id = $this->request->variable('t', 0);
 		$return_chars = $this->request->variable('ch', ($topic_id) ? -1 : 300);
 		$words = array();
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : true;
-		$pagination_url = append_sid("{$this->phpbb_root_path}toplist", 'mode=' . $mode);
+		$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('mode' => $mode, 'tslash' => ''));
 
 		if (!$this->auth->acl_gets('u_viewtoplist'))
 		{
@@ -169,7 +166,6 @@ class toplist
 				break;
 
 			default:
-				$page_title = $this->user->lang['REPUT_TOPLIST'];
 				$total_match_count = 0;
 		}
 		$page_title = sprintf($this->user->lang['REPUT_TOPLIST'], $total_match_count);
@@ -233,7 +229,6 @@ class toplist
 						$row['post_text'] = $text_only_message;
 						$row['display_text_only'] = true;
 					}
-					$rowset[] = $row;
 					unset($text_only_message);
 
 					// Instantiate BBCode if needed
@@ -415,13 +410,7 @@ class toplist
 			'U_SEARCH_FORUM' => $u_search_forum,
 		));
 
-		page_header($page_title);
-		$this->template->set_filenames(array(
-			'body' => 'toplist_body.html'));
-
-		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));
-		page_footer();
-		return new Response($this->template->return_display('body'), 200);
+		return $this->controller_helper->render('toplist_body.html', $page_title);
 	}
 
 }

@@ -43,7 +43,7 @@ class thankslist
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var string THANKS_TABLE */
@@ -75,7 +75,6 @@ class thankslist
 	 * @param string                               $users_table           USERS_TABLE
 	 * @param string                               $phpbb_root_path       phpbb_root_path
 	 * @param string                               $php_ext               phpEx
-	 * @return gfksx\ThanksForPosts\controller\thankslist
 	 * @access public
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext)
@@ -118,7 +117,6 @@ class thankslist
 		}
 		$top = $this->request->variable('top', 0);
 		$start = $this->request->variable('start', 0);
-		$submit = (isset($_POST['submit'])) ? true : false;
 		$default_key = 'a';
 		$sort_key = $this->request->variable('sk', $default_key);
 		$sort_dir = $this->request->variable('sd', 'd');
@@ -130,7 +128,6 @@ class thankslist
 		{
 			case 'givens':
 				$per_page = $this->config['posts_per_page'];
-				$total_match_count = 0;
 				$page_title = $this->user->lang['SEARCH'];
 				$template_html = 'thanks_results.html';
 
@@ -337,7 +334,7 @@ class thankslist
 				);
 				foreach ($check_params as $key => $call)
 				{
-					if (!isset($_REQUEST[$key]))
+					if ($this->request->variable($key, NULL) === NULL)
 					{
 						continue;
 					}
@@ -524,8 +521,7 @@ class thankslist
 							'U_SEARCH_USER_GIVENS' => ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true', 'tslash' => '')) : '',
 							'U_SEARCH_USER_RECEIVED' => ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false', 'tslash' => '')) : '',
 							'L_VIEWING_PROFILE' => sprintf($this->user->lang['VIEWING_PROFILE'], $row['username']),
-							'VISITED' => (empty($last_visit)) ? ' - ' : $this->user->format_date($last_visit),
-							'S_CUSTOM_FIELDS' => (isset($cp_row['row']) && sizeof($cp_row['row'])) ? true : false,
+							'S_CUSTOM_FIELDS' => (isset($cp_row['row']) && sizeof($cp_row['row'])) ? true : false
 						));
 
 						if (isset($cp_row['row']) && sizeof($cp_row['row']))
@@ -565,16 +561,7 @@ class thankslist
 			'U_THANKS' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => '')),
 			'S_THANKS' => $sthanks,
 		));
-
-		page_header($page_title);
-
-		$this->template->set_filenames(array(
-			'body' => $template_html)
-		);
-
-		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));
-		page_footer();
-		return new Response($this->template->return_display('body'), 200);
+		return $this->controller_helper->render($template_html, $page_title);
 	}
 
 }
