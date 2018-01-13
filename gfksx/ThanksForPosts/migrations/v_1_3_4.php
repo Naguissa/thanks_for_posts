@@ -34,14 +34,23 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 					'forum_id' => array('forum_id'),
 					'user_id' => array('user_id'),
 					'poster_id' => array('poster_id'),
-				),
-			),
+				)
+			)
 		);
 	}
 
 	public function revert_schema()
 	{
 		return array(
+			'drop_keys'	=> array(
+				$this->table_prefix . 'thanks' => array(
+					'post_id',
+					'topic_id',
+					'forum_id',
+					'user_id',
+					'poster_id'
+				)
+			)
 		);
 	}
 

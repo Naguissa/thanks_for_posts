@@ -40,6 +40,13 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 	public function revert_schema()
 	{
 		return array(
+				'drop_columns' => array(
+					$this->table_prefix . 'thanks' => array(
+					'topic_id',
+					'forum_id',
+					'thanks_time'
+					),
+				)
 		);
 	}
 
