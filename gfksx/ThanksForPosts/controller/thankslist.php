@@ -334,7 +334,7 @@ class thankslist
 				);
 				foreach ($check_params as $key => $call)
 				{
-					if ($this->request->variable($key, NULL) === NULL)
+					if ($this->request->variable($key, -1) === -1)
 					{
 						continue;
 					}

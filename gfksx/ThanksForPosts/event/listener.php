@@ -138,7 +138,7 @@ class listener implements EventSubscriberInterface
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-		if ($this->request->variable('list_thanks', NULL) !== NULL)
+		if ($this->request->variable('list_thanks', -1) !== -1)
 		{
 			$this->helper->clear_list_thanks($user_id, $this->request->variable('list_thanks', ''));
 		}
@@ -181,15 +181,16 @@ class listener implements EventSubscriberInterface
 		$forum_id = (int) $event['forum_id'];
 		$this->helper->array_all_thanks($post_list, $forum_id);
 
-		if ($this->request->variable('thanks', NULL) !== NULL && $this->request->variable('rthanks', NULL) === NULL)
+		if ($this->request->variable('thanks', -1) !== -1 && $this->request->variable('rthanks', -1) === -1)
 		{
 			$this->helper->insert_thanks($this->request->variable('thanks', 0), $this->user->data['user_id'], $forum_id);
-		} elseif ($this->request->variable('rthanks', NULL) !== NULL && $this->request->variable('thanks', NULL) === NULL)
+		} 
+		elseif ($this->request->variable('rthanks', -1) !== -1 && $this->request->variable('thanks', -1) === -1)
 		{
 			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $forum_id);
 		}
 
-		if ($this->request->variable('list_thanks', NULL) !== NULL)
+		if ($this->request->variable('list_thanks', -1) !== -1)
 		{
 			$this->helper->clear_list_thanks($this->request->variable('p', 0), $this->request->variable('list_thanks', ''));
 		}
