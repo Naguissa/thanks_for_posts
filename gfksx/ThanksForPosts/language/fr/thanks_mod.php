@@ -63,6 +63,7 @@ $lang = array_merge($lang, array(
 		1 => '<strong>Remerciement retiré</strong> de %1$s pour le message : ',
 		2 => '<strong>Remerciements retirés</strong> de %1$s pour le message : ',
 	),
+	'NOTIFICATION_TYPE_THANKS' => 'Merci pour son message',
 	'NOTIFICATION_TYPE_THANKS_GIVE' => 'Quelqu’un vous a remercié pour votre message.',
 	'NOTIFICATION_TYPE_THANKS_REMOVE' => 'Quelqu’un a retiré son remerciement pour votre message.',
 	'RECEIVED' => 'A été remercié',

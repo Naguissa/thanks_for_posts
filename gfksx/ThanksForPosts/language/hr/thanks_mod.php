@@ -59,6 +59,7 @@ $lang = array_merge($lang, array(
 		1 => '<strong>Uklonjena zahvala</strong> od %1$s za post:',
 		2 => '<strong>Uklonjene zahvale</strong> od %1$s za post:',
 	),
+	'NOTIFICATION_TYPE_THANKS' => 'Hvala na poruci',
 	'NOTIFICATION_TYPE_THANKS_GIVE' => 'Netko je zahvalio na tvojem postu',
 	'NOTIFICATION_TYPE_THANKS_REMOVE' => 'Netko je uklonio zahvalu s tvojeg posta',
 	'RECEIVED' => '&nbsp;pohvaljen',

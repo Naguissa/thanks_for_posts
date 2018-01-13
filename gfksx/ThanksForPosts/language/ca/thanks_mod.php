@@ -62,6 +62,7 @@ $lang = array_merge($lang, array(
 		1 => '<strong>Agraïment cancel·lat</strong> de %1$s pel missatge:',
 		2 => '<strong>Agraïments cancel·lats</strong> de %1$s pel missatge:',
 	),
+	'NOTIFICATION_TYPE_THANKS' => 'Gràcies pel seu missatge',
 	'NOTIFICATION_TYPE_THANKS_GIVE' => 'Algú ha agraït un missatge teu',
 	'NOTIFICATION_TYPE_THANKS_REMOVE' => 'Algú ha cancel·lat un agraïment en un missatge teu',
 	'RECEIVED' => 'Gràcies&nbsp;rebudes',

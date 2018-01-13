@@ -62,6 +62,7 @@ $lang = array_merge($lang, array(
 		1 => '<strong>Removed thank</strong> from %1$s for the post:',
 		2 => '<strong>Removed thanks</strong> from %1$s for the post:',
 	),
+	'NOTIFICATION_TYPE_THANKS' => 'Thanks for your message',
 	'NOTIFICATION_TYPE_THANKS_GIVE' => 'Someone thanks you for a post',
 	'NOTIFICATION_TYPE_THANKS_REMOVE' => 'Someone removed thanks for your post',
 	'RECEIVED' => 'Been&nbsp;thanked',
