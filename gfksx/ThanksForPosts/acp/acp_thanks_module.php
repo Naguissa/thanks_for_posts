@@ -60,7 +60,10 @@ class acp_thanks_module
 		}
 
 		$this->new_config = $config;
-		$cfg_array = $request->variable('config', false) ? $request->variable('config', array('' => ''), true) : $this->new_config;
+		$cfg_array = utf8_normalize_nfc($request->raw_variable('config', array()));
+		if ($cfg_array === array()) {
+			$cfg_array = $this->new_config ;
+		}
 		$error = array();
 
 		// We validate the complete config if whished

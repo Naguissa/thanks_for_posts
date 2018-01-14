@@ -25,6 +25,7 @@ class acp_thanks_reput_module
 		global $request, $user, $template, $config, $phpbb_root_path, $phpbb_container;
 
 		$submit = $request->is_set_post('submit') ? true : false;
+		
 
 		$form_key = 'acp_thanks_reput';
 		add_form_key($form_key);
@@ -61,7 +62,11 @@ class acp_thanks_reput_module
 		}
 
 		$this->new_config = $config;
-		$cfg_array = $request->variable('config', false) ? $request->variable('config', array('' => ''), true) : $this->new_config;
+		$cfg_array = utf8_normalize_nfc($request->raw_variable('config', array()));
+		if ($cfg_array === array()) {
+			$cfg_array = $this->new_config ;
+		}
+
 		$error = array();
 
 		// We validate the complete config if whished
@@ -86,7 +91,7 @@ class acp_thanks_reput_module
 			$error[] = $user->lang['THANKS_REPUT_IMAGE_BACK_NOEXIST'];
 		}
 		// We go through the display_vars to make sure no one is trying to set variables he/she is not allowed to...
-		foreach ($display_vars['vars'] as $config_name => $null)
+		foreach (array_keys($display_vars['vars']) as $config_name)
 		{
 			if (!isset($cfg_array[$config_name]) || strpos($config_name, 'legend') !== false)
 			{
@@ -100,7 +105,6 @@ class acp_thanks_reput_module
 				$config->set($config_name, $config_value);
 			}
 		}
-
 		if ($submit)
 		{
 			$phpbb_log = $phpbb_container->get('log');
