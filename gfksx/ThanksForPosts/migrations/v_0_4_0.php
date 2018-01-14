@@ -57,14 +57,14 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 	public function revert_schema()
 	{
 		return array(
-				'drop_columns' => array(
-					$this->table_prefix . 'thanks' => array(
-						'poster_id'
-					),
-				),
-				'drop_keys' => array(
-					$this->table_prefix . 'thanks' => array('post_id, user_id')
+			'drop_keys' => array(
+				$this->table_prefix . 'thanks' => array('post_id, user_id')
+			),
+			'drop_columns' => array(
+				$this->table_prefix . 'thanks' => array(
+					'poster_id'
 				)
+			)
 		);
 	}
 
