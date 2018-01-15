@@ -24,7 +24,7 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\gfksx\ThanksForPosts\migrations\v_0_4_0');
+		return array('\phpbb\db\migration\data\v320\dev');
 	}
 
 	public function update_schema()
