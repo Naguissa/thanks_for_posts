@@ -1,41 +1,29 @@
-<!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
+<!-- IF THANKS_PROFILELIST_VIEW -->
 <div class="panel bg1">
 	<div class="inner">
 		<h3>{L_GRATITUDES}</h3>
-		<!-- IF POSTER_GIVE_COUNT -->
 		<div class="column1">
 			<!-- IF S_MOD_THANKS -->
 			<ul class="post-buttons" style="float:left">
-				<li>
-					<a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button icon-button delete-icon" style="float:left"><span>{L_CLEAR_LIST_THANKS}</span></a>
-				</li>
+				<li><a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button icon-button delete-icon" style="float:left"><span>{L_CLEAR_LIST_THANKS}</span></a></li>
 			</ul>
 			<!-- ENDIF -->
 			<dl>
-				<dt>{L_GIVEN}{L_COLON} {POSTER_GIVE_COUNT}</dt>
-				<dd>
-					<div>{THANKS}</div>
-				</dd>
+				<dt>{L_GIVEN}{L_COLON} <!-- IF POSTER_GIVE_COUNT and POSTER_GIVE_COUNT > 0 -->{POSTER_GIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></dt>
+			    <dd><div>{THANKS}</div></dd>
 			</dl>
 		</div>
-		<!-- ENDIF -->
-		<!-- IF POSTER_RECEIVE_COUNT -->
 		<div class="<!-- IF not POSTER_GIVE_COUNT -->column1<!-- ELSE -->column2<!-- ENDIF -->">
 			<!-- IF S_MOD_THANKS -->
 			<ul class="post-buttons" style="float:left">
-				<li>
-					<a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button icon-button delete-icon" style="float:left"><span>{L_CLEAR_LIST_THANKS}</span></a>
-				</li>
+				<li><a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button icon-button delete-icon" style="float:left"><span>{L_CLEAR_LIST_THANKS}</span></a></li>
 			</ul>
 			<!-- ENDIF -->
 			<dl>
-				<dt>{L_RECEIVED}{L_COLON} {POSTER_RECEIVE_COUNT}</dt>
-				<dd>
-					<div>{THANKED}</div>
-				</dd>
+				<dt>{L_RECEIVED}{L_COLON} <!-- IF POSTER_RECEIVE_COUNT and POSTER_RECEIVE_COUNT > 0  -->{POSTER_RECEIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></dt>
+				<dd><div>{THANKED}</div></dd>
 			</dl>
 		</div>
-		<!-- ENDIF -->
 	</div>
 </div>
 <!-- ENDIF -->

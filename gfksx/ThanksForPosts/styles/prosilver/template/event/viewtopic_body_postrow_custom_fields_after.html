@@ -1,4 +1,10 @@
-<!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT)-->
-<dd class="profile-posts" data-user-give-id="{postrow.POSTER_ID}"><!-- IF postrow.POSTER_GIVE_COUNT --><strong>{L_GIVEN}{L_COLON}</strong> <a href="{postrow.POSTER_GIVE_COUNT_LINK}">{postrow.POSTER_GIVE_COUNT}</a><!-- ENDIF --></dd>
-<dd class="profile-posts" data-user-receive-id="{postrow.POSTER_ID}"><!-- IF postrow.POSTER_RECEIVE_COUNT --><strong>{L_RECEIVED}{L_COLON}</strong> <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{postrow.POSTER_RECEIVE_COUNT}</a><!-- ENDIF --></dd>
+<!-- IF postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT)-->
+<dd class="profile-posts" data-user-give-id="{postrow.POSTER_ID}">
+    <strong>{L_GIVEN}{L_COLON}</strong>
+    <a href="{postrow.POSTER_GIVE_COUNT_LINK}"><!-- IF postrow.POSTER_GIVE_COUNT -->{postrow.POSTER_GIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></a>
+</dd>
+<dd class="profile-posts" data-user-receive-id="{postrow.POSTER_ID}">
+    <strong>{L_RECEIVED}{L_COLON}</strong>
+    <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}"><!-- IF postrow.POSTER_RECEIVE_COUNT -->{postrow.POSTER_RECEIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></a>
+</dd>
 <!-- ENDIF -->

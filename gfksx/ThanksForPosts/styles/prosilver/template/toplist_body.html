@@ -12,69 +12,91 @@
 
 <!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_POST}" class="forumtitle">{L_RATING_TOP_POST}</a></h3>
-<div class="forumbg forumbg-table">
+<div class="forumbg">
 	<div class="inner">
 
-		<table class="table1" cellspacing="1">
-			<thead>
-				<tr>
-					<th class="topictitle">{L_RATING_POST}</th>
-					<th class="rating">{L_RECEIVED}</th>
-					<th class="name">{L_AUTHOR}</th>
-					<th class="rating">{L_REPUT}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<!-- BEGIN toppostrow -->
-				<tr class="<!-- IF toppostrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td><a href="{toppostrow.POST_ID}" class="post">{toppostrow.MINI_POST_IMG}{toppostrow.POST_DATE}&nbsp;{toppostrow.POST_SUBJECT}</a><br />{toppostrow.MESSAGE}</td>
-					<td>{toppostrow.POST_THANKS}</td>
-					<td>{toppostrow.POST_AUTHOR}</td>
-					<td><span style="display: block;">{L_REPUT}{L_COLON}&nbsp;{toppostrow.POST_REPUT}
-							<!-- IF toppostrow.S_THANKS_REPUT_GRAPHIC -->
-							<span style="display: block; width: {toppostrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toppostrow.THANKS_REPUT_HEIGHT}; background: url({toppostrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toppostrow.THANKS_REPUT_HEIGHT}; width: {toppostrow.POST_REPUT}; background: url({toppostrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
-							<!-- ENDIF -->
-						</span></td>
-				</tr>
-				<!-- END toppostrow -->
-			</tbody>
-		</table>
-	</div>
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt class="posttitle">{L_RATING_POST}</dt>
+					<dd class="views">{L_RECEIVED}</dd>
+					<dd class="views">{L_AUTHOR}</dd>
+					<dd class="lastpost">{L_REPUT}</dd>
+				</dl>
+			</li>
+		</ul>
+
+		<ul class="topiclist topics">
+		    <!-- BEGIN toppostrow -->
+		    <li class="row <!-- IF toppostrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+			    <dl class="row-item">
+                    <dt>
+				        <div class="list-inner">
+							<a href="{toppostrow.POST_ID}" class="post">{toppostrow.MINI_POST_IMG}{toppostrow.POST_DATE}&nbsp;{toppostrow.POST_SUBJECT}</a><br>
+							{toppostrow.MESSAGE}
+						</div>
+				    </dt>
+				    <dd class="views">{toppostrow.POST_THANKS}</dd>
+				    <dd class="views">{toppostrow.POST_AUTHOR}</dd>
+				    <dd class="lastpost">
+                        <span style="display: block;">{toppostrow.POST_REPUT}
+						    <!-- IF toppostrow.S_THANKS_REPUT_GRAPHIC -->
+						    <span style="display: block; width: {toppostrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toppostrow.THANKS_REPUT_HEIGHT}; background: url({toppostrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toppostrow.THANKS_REPUT_HEIGHT}; width: {toppostrow.POST_REPUT}; background: url({toppostrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
+						    <!-- ENDIF -->
+					    </span>
+                    </dd>
+			    </dl>
+		    </li>
+		    <!-- END toppostrow -->
+	    </ul>
+    </div>
 </div>
+
+
+
+
 <!-- ENDIF -->
 <!-- IF S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_TOPIC}" class="forumtitle">{L_RATING_TOP_TOPIC}</a></h3>
-<div class="forumbg forumbg-table">
+<div class="forumbg">
 	<div class="inner">
 
-		<table class="table1" cellspacing="1">
-			<thead>
-				<tr>
-					<th class="topictitle">&nbsp;</th>
-					<th class="topictitle">{L_RATING_TOPIC}</th>
-					<th class="name">{L_RECEIVED}</th>
-					<th class="name">{L_AUTHOR}</th>
-					<th class="rating">{L_REPUT}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<!-- BEGIN toptopicrow -->
-				<tr class="<!-- IF toptopicrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td class="icon {toptopicrow.TOPIC_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
-					<td><a href="{toptopicrow.U_VIEW_TOPIC}" class="forumtitle">{toptopicrow.TOPIC_TITLE}</a></td>
-					<td>{toptopicrow.TOPIC_THANKS}</td>
-					<td>{toptopicrow.TOPIC_AUTHOR}</td>
-					<td><span style="display: block;">{L_REPUT}{L_COLON}&nbsp;{toptopicrow.TOPIC_REPUT}
-							<!-- IF toptopicrow.S_THANKS_REPUT_GRAPHIC -->
-							<span style="display: block; width: {toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toptopicrow.THANKS_REPUT_HEIGHT}; background: url({toptopicrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toptopicrow.THANKS_REPUT_HEIGHT}; width: {toptopicrow.TOPIC_REPUT}; background: url({toptopicrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
-							<!-- ENDIF -->
-						</span></td>
-				</tr>
-				<!-- END toptopicrow -->
-			</tbody>
-		</table>
-	</div>
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt class="topictitle">{L_RATING_TOPIC}</dt>
+					<dd class="views">{L_RECEIVED}</dd>
+					<dd class="views">{L_AUTHOR}</dd>
+					<dd class="lastpost">{L_REPUT}</dd>
+				</dl>
+			</li>
+		</ul>
+
+		<ul class="topiclist topics">
+		    <!-- BEGIN toptopicrow -->
+		    <li class="row <!-- IF topforumrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+			    <dl class="row-item {toptopicrow.TOPIC_IMG_STYLE}">
+                    <dt>
+				        <div class="list-inner"><a href="{toptopicrow.U_VIEW_TOPIC}" class="topictitle">{toptopicrow.TOPIC_TITLE}</a></div>
+				    </dt>
+				    <dd class="views">{toptopicrow.TOPIC_THANKS}</dd>
+				    <dd class="views">{toptopicrow.TOPIC_AUTHOR}</dd>
+				    <dd class="lastpost">
+                        <span style="display: block;">{toptopicrow.TOPIC_REPUT}
+						    <!-- IF toptopicrow.S_THANKS_REPUT_GRAPHIC -->
+						    <span style="display: block; width: {toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toptopicrow.THANKS_REPUT_HEIGHT}; background: url({toptopicrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toptopicrow.THANKS_REPUT_HEIGHT}; width: {toptopicrow.TOPIC_REPUT}; background: url({toptopicrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
+						    <!-- ENDIF -->
+					    </span>
+                    </dd>
+			    </dl>
+		    </li>
+		    <!-- END toptopicrow -->
+	    </ul>
+    </div>
 </div>
+
+
+
 <!-- ENDIF -->
 <!-- IF S_THANKS_FORUM_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_POST_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_FORUM}" class="forumtitle">{L_RATING_TOP_FORUM}</a></h3>
