@@ -63,21 +63,6 @@ dl.thanks dt {
 
 
 /* Profile & navigation icons */
-.thanks-icon:before
-{
-	background-position: -3px -1px;
-	background-image: url("./images/icons_button_likes.png");
-}
-.thanks-icon:hover:before{ background-position: -3px -19px; }
-
-.removethanks-icon:before
-{
-	background-position: -18px -2px;
-    background-image: url("./images/icons_button_likes.png");
-
-}
-.removethanks-icon:hover:before	{background-position: -18px -20px; }
-
 .thanks_reput_image_back
 {
 	background:  url(../../../images/rating/reput_star_back.gif);
