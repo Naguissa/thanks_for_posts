@@ -252,17 +252,17 @@ class toplist
 						{
 							$bbcode->bbcode_second_pass($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield']);
 						}
-
-						$row['post_text'] = bbcode_nl2br($row['post_text']);
-						$row['post_text'] = smiley_text($row['post_text']);
+						$parse_flags = ($row['bbcode_bitfield'] ? OPTION_FLAG_BBCODE : 0) | OPTION_FLAG_SMILIES;
+						$row['post_text'] = generate_text_for_display($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], $parse_flags, false);
 					}
+
 
 					$post_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id']);
 					$this->template->assign_block_vars('toppostrow', array(
 						'MESSAGE' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['post_text']),
 						'POST_DATE' => !empty($row['post_time']) ? $this->user->format_date($row['post_time']) : '',
 						'MINI_POST_IMG' => $this->user->img('icon_post_target', 'POST'),
-						'POST_ID' => $post_url,
+						'POST_URL' => $post_url,
 						'POST_SUBJECT' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_subject'] : ((!empty($row['forum_id'])) ? '' : $row['post_subject']),
 						'POST_AUTHOR' => get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
 						'POST_REPUT' => round($row['post_thanks'] / ($max_post_thanks / 100), $this->config['thanks_number_digits']) . '%',
@@ -318,8 +318,10 @@ class toplist
 					$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", $view_topic_url_params);
 					$this->template->assign_block_vars('toptopicrow', array(
 						'TOPIC_IMG_STYLE' => $folder_img,
-						'TOPIC_FOLDER_IMG_SRC' => $row['forum_id'] ? 'topic_read' : 'announce_read',
-						'TOPIC_TITLE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['topic_title']),
+						'TOPIC_FOLDER_IMG' => $this->user->img($folder_img, $folder_alt),
+						'TOPIC_FOLDER_IMG_ALT'	=> $user->lang[$folder_alt],
+						'TOPIC_TITLE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : censor_text($row['topic_title'])),
+			            'FIRST_POST_TIME'			=> $this->user->format_date($row['topic_time']),
 						'U_VIEW_TOPIC' => $view_topic_url,
 						'TOPIC_AUTHOR' => get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
 						'TOPIC_THANKS' => $row['topic_thanks'],
@@ -329,7 +331,7 @@ class toplist
 						'THANKS_REPUT_HEIGHT' => sprintf('%dpx', $this->config['thanks_reput_height']),
 						'THANKS_REPUT_GRAPHIC_WIDTH' => sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']),
 						'THANKS_REPUT_IMAGE' => (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK' => (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+						'THANKS_REPUT_IMAGE_BACK' => (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : ''
 					));
 				}
 				while ($row = $this->db->sql_fetchrow($result));

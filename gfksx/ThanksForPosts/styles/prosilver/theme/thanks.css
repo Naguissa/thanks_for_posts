@@ -74,3 +74,6 @@ dl.thanks dt {
 	background-repeat: repeat-x;
 }
 
+/* Responsive toplists */
+.thanks-topposts dl.row-item dt .list-inner { padding-left: 5px; }
+.thanks-topposts ul.topiclist dd, .thanks-toptopics ul.topiclist dd { display: block; }

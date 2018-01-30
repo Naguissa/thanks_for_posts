@@ -12,7 +12,7 @@
 
 <!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_POST}" class="forumtitle">{L_RATING_TOP_POST}</a></h3>
-<div class="forumbg">
+<div class="forumbg thanks-topposts">
 	<div class="inner">
 
 		<ul class="topiclist">
@@ -21,7 +21,7 @@
 					<dt class="posttitle">{L_RATING_POST}</dt>
 					<dd class="views">{L_RECEIVED}</dd>
 					<dd class="views">{L_AUTHOR}</dd>
-					<dd class="lastpost">{L_REPUT}</dd>
+					<dd class="views">{L_REPUT}</dd>
 				</dl>
 			</li>
 		</ul>
@@ -30,15 +30,30 @@
 		    <!-- BEGIN toppostrow -->
 		    <li class="row <!-- IF toppostrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
 			    <dl class="row-item">
-                    <dt>
-				        <div class="list-inner">
-							<a href="{toppostrow.POST_ID}" class="post">{toppostrow.MINI_POST_IMG}{toppostrow.POST_DATE}&nbsp;{toppostrow.POST_SUBJECT}</a><br>
+					<dt>
+						<div class="list-inner">
+							<!-- IF toppostrow.POST_URL -->
+								<a href="{toppostrow.POST_URL}" class="topictitle">
+							<!-- ENDIF -->
+							<!-- IF toppostrow.MINI_POST_IMG -->{toppostrow.MINI_POST_IMG}<!-- ENDIF -->
+							{toppostrow.POST_SUBJECT}
+							<!-- IF toppostrow.POST_URL -->
+								</a>
+							<!-- ENDIF -->
+							<br />
+							<div class="topic-poster responsive-hide left-box">
+								{toppostrow.POST_AUTHOR} &raquo; {toppostrow.POST_DATE}
+							</div>
+							<br />
+							<br />
 							{toppostrow.MESSAGE}
-						</div>
-				    </dt>
+					    </div>
+					</dt>
+
+
 				    <dd class="views">{toppostrow.POST_THANKS}</dd>
 				    <dd class="views">{toppostrow.POST_AUTHOR}</dd>
-				    <dd class="lastpost">
+				    <dd class="views">
                         <span style="display: block;">{toppostrow.POST_REPUT}
 						    <!-- IF toppostrow.S_THANKS_REPUT_GRAPHIC -->
 						    <span style="display: block; width: {toppostrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toppostrow.THANKS_REPUT_HEIGHT}; background: url({toppostrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toppostrow.THANKS_REPUT_HEIGHT}; width: {toppostrow.POST_REPUT}; background: url({toppostrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
@@ -52,13 +67,13 @@
     </div>
 </div>
 
-
-
-
 <!-- ENDIF -->
+
+
 <!-- IF S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING -->
+
 <h3 class="solo"><a href="{U_SEARCH_TOPIC}" class="forumtitle">{L_RATING_TOP_TOPIC}</a></h3>
-<div class="forumbg">
+<div class="forumbg thanks-toptopics">
 	<div class="inner">
 
 		<ul class="topiclist">
@@ -67,7 +82,7 @@
 					<dt class="topictitle">{L_RATING_TOPIC}</dt>
 					<dd class="views">{L_RECEIVED}</dd>
 					<dd class="views">{L_AUTHOR}</dd>
-					<dd class="lastpost">{L_REPUT}</dd>
+					<dd class="views">{L_REPUT}</dd>
 				</dl>
 			</li>
 		</ul>
@@ -76,29 +91,66 @@
 		    <!-- BEGIN toptopicrow -->
 		    <li class="row <!-- IF topforumrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
 			    <dl class="row-item {toptopicrow.TOPIC_IMG_STYLE}">
-                    <dt>
-				        <div class="list-inner"><a href="{toptopicrow.U_VIEW_TOPIC}" class="topictitle">{toptopicrow.TOPIC_TITLE}</a></div>
-				    </dt>
-				    <dd class="views">{toptopicrow.TOPIC_THANKS}</dd>
-				    <dd class="views">{toptopicrow.TOPIC_AUTHOR}</dd>
-				    <dd class="lastpost">
+				    <dt<!-- IF toptopicrow.TOPIC_ICON_IMG and S_TOPIC_ICONS --> style="background-image: url({T_ICONS_PATH}{toptopicrow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"<!-- ENDIF --> title="{toptopicrow.TOPIC_FOLDER_IMG_ALT}">
+						<!-- IF toptopicrow.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{toptopicrow.U_NEWEST_POST}" class="row-item-link"></a><!-- ENDIF -->
+						<div class="list-inner">
+							<!-- EVENT topiclist_row_prepend -->
+							<!-- IF toptopicrow.S_UNREAD_TOPIC and not S_IS_BOT -->
+								<a class="unread" href="{toptopicrow.U_NEWEST_POST}">
+									<i class="icon fa-file fa-fw icon-red icon-md" aria-hidden="true"></i><span class="sr-only">{NEW_POST}</span>
+								</a>
+							<!-- ENDIF -->
+							<!-- IF toptopicrow.U_VIEW_TOPIC --><a href="{toptopicrow.U_VIEW_TOPIC}" class="topictitle">{toptopicrow.TOPIC_TITLE}</a><!-- ELSE -->{toptopicrow.TOPIC_TITLE}<!-- ENDIF -->
+							<br />
+							<!-- EVENT topiclist_row_topic_title_after -->
+							<div class="topic-poster responsive-hide left-box">
+								<!-- IF toptopicrow.S_HAS_POLL --><i class="icon fa-bar-chart fa-fw" aria-hidden="true"></i><!-- ENDIF -->
+								<!-- IF toptopicrow.ATTACH_ICON_IMG --><i class="icon fa-paperclip fa-fw" aria-hidden="true"></i><!-- ENDIF -->
+								{toptopicrow.TOPIC_AUTHOR} &raquo; {toptopicrow.FIRST_POST_TIME}
+								<!-- IF toptopicrow.S_POST_GLOBAL and FORUM_ID != toptopicrow.FORUM_ID --> &raquo; {L_IN} <a href="{toptopicrow.U_VIEW_FORUM}">{toptopicrow.FORUM_NAME}</a><!-- ENDIF -->
+							</div>
+
+							<!-- IF .toptopicrow.pagination -->
+								<div class="pagination">
+									<span><i class="icon fa-clone fa-fw" aria-hidden="true"></i></span>
+									<ul>
+									<!-- BEGIN pagination -->
+										<!-- IF toptopicrow.pagination.S_IS_PREV -->
+										<!-- ELSEIF toptopicrow.pagination.S_IS_CURRENT --><li class="active"><span>{toptopicrow.pagination.PAGE_NUMBER}</span></li>
+										<!-- ELSEIF toptopicrow.pagination.S_IS_ELLIPSIS --><li class="ellipsis"><span>{L_ELLIPSIS}</span></li>
+										<!-- ELSEIF toptopicrow.pagination.S_IS_NEXT -->
+										<!-- ELSE --><li><a class="button" href="{toptopicrow.pagination.PAGE_URL}">{toptopicrow.pagination.PAGE_NUMBER}</a></li>
+										<!-- ENDIF -->
+									<!-- END pagination -->
+									</ul>
+								</div>
+							<!-- ENDIF -->
+							<!-- EVENT topiclist_row_append -->
+					    </div>
+					</dt>
+			        <dd class="views">{toptopicrow.TOPIC_THANKS}</dd>
+			        <dd class="views">{toptopicrow.TOPIC_AUTHOR}</dd>
+			        <dd class="views">
                         <span style="display: block;">{toptopicrow.TOPIC_REPUT}
-						    <!-- IF toptopicrow.S_THANKS_REPUT_GRAPHIC -->
-						    <span style="display: block; width: {toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toptopicrow.THANKS_REPUT_HEIGHT}; background: url({toptopicrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toptopicrow.THANKS_REPUT_HEIGHT}; width: {toptopicrow.TOPIC_REPUT}; background: url({toptopicrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
-						    <!-- ENDIF -->
-					    </span>
+					        <!-- IF toptopicrow.S_THANKS_REPUT_GRAPHIC -->
+        					    <span style="display: block; width: {toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toptopicrow.THANKS_REPUT_HEIGHT}; background: url({toptopicrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toptopicrow.THANKS_REPUT_HEIGHT}; width: {toptopicrow.TOPIC_REPUT}; background: url({toptopicrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
+					        <!-- ENDIF -->
+    				    </span>
                     </dd>
-			    </dl>
-		    </li>
+    		    </dl>
+    			<!-- EVENT viewforum_body_topic_row_append -->
+    	    </li>
+    		<!-- EVENT viewforum_body_topic_row_after -->
 		    <!-- END toptopicrow -->
 	    </ul>
     </div>
 </div>
 
-
-
 <!-- ENDIF -->
+
+
 <!-- IF S_THANKS_FORUM_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_POST_RATING -->
+
 <h3 class="solo"><a href="{U_SEARCH_FORUM}" class="forumtitle">{L_RATING_TOP_FORUM}</a></h3>
 <div class="forumbg forumbg-table">
 	<div class="inner">
