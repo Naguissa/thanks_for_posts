@@ -56,24 +56,10 @@ dl.thanks dt {
 	background-position: 5px 95%;		/* Position of topic icon */
 }
 
-/* Icon images
----------------------------------------- */
-.icon-thanks			{ background-image: url("./images/icon_thanks.gif"); background-repeat: no-repeat; }
-.icon-thanks_toplist	{ background-image: url("./images/icon_thanks_toplist.gif"); background-repeat: no-repeat; }
-
-
-/* Profile & navigation icons */
-.thanks_reput_image_back
-{
-	background:  url(../../../images/rating/reput_star_back.gif);
-	background-repeat: repeat-x;
-}
-.thanks_reput_image
-{
-	background:  url(../../../images/rating/reput_star_gold.gif);
-	background-repeat: repeat-x;
-}
 
 /* Responsive toplists */
 .thanks-topposts dl.row-item dt .list-inner { padding-left: 5px; }
-.thanks-topposts ul.topiclist dd, .thanks-toptopics ul.topiclist dd { display: block; }
+.thanks-topposts ul.topiclist dd, .thanks-toptopics ul.topiclist dd, .thanks-topforums ul.topiclist dd { display: block; }
+.thanks-topposts dd.views, .thanks-toptopics dd.views, .thanks-topforums dd.views { line-height: 1em; }
+
+.thanks-topiclist-rating { display: block; clear: both; }

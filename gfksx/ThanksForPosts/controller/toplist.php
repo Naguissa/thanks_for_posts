@@ -166,7 +166,7 @@ class toplist
 				break;
 
 			default:
-				$total_match_count = 0;
+				$total_match_count = '';
 		}
 		$page_title = sprintf($this->user->lang['REPUT_TOPLIST'], $total_match_count);
 		//post rating
@@ -195,8 +195,7 @@ class toplist
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
-			}
-			else
+			} else
 			{
 				$notoplist = false;
 				$bbcode_bitfield = $text_only_message = '';
@@ -223,8 +222,7 @@ class toplist
 						{
 							$attach_list[$row['forum_id']][] = $row['post_id'];
 						}
-					}
-					else
+					} else
 					{
 						$row['post_text'] = $text_only_message;
 						$row['display_text_only'] = true;
@@ -244,8 +242,7 @@ class toplist
 					{
 						$row['post_text'] = get_context($row['post_text'], $words, $return_chars);
 						$row['post_text'] = bbcode_nl2br($row['post_text']);
-					}
-					else
+					} else
 					{
 						// Second parse bbcode here
 						if ($row['bbcode_bitfield'])
@@ -256,7 +253,7 @@ class toplist
 						$row['post_text'] = generate_text_for_display($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], $parse_flags, false);
 					}
 
-
+					$reputation_pct = round($row['post_thanks'] / ($max_post_thanks / 100), $this->config['thanks_number_digits']);
 					$post_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id']);
 					$this->template->assign_block_vars('toppostrow', array(
 						'MESSAGE' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['post_text']),
@@ -265,17 +262,13 @@ class toplist
 						'POST_URL' => $post_url,
 						'POST_SUBJECT' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_subject'] : ((!empty($row['forum_id'])) ? '' : $row['post_subject']),
 						'POST_AUTHOR' => get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
-						'POST_REPUT' => round($row['post_thanks'] / ($max_post_thanks / 100), $this->config['thanks_number_digits']) . '%',
+						'POST_REPUT' => $reputation_pct . '%',
 						'POST_THANKS' => $row['post_thanks'],
 						'S_THANKS_POST_REPUT_VIEW' => isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_HEIGHT' => sprintf('%dpx', $this->config['thanks_reput_height']),
-						'THANKS_REPUT_GRAPHIC_WIDTH' => sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']),
-						'THANKS_REPUT_IMAGE' => isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK' => isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+						'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct)
 					));
-				}
-				while ($row = $this->db->sql_fetchrow($result));
+				} while ($row = $this->db->sql_fetchrow($result));
 				$this->db->sql_freeresult($result);
 			}
 		}
@@ -305,8 +298,7 @@ class toplist
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
-			}
-			else
+			} else
 			{
 				$notoplist = false;
 				do
@@ -316,25 +308,23 @@ class toplist
 					topic_status($row, 0, false, $folder_img, $folder_alt, $topic_type);
 					$view_topic_url_params = 'f=' . (($row['forum_id']) ? $row['forum_id'] : '') . '&amp;t=' . $row['topic_id'];
 					$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", $view_topic_url_params);
+
+					$reputation_pct = round($row['topic_thanks'] / ($max_topic_thanks / 100), $this->config['thanks_number_digits']);
 					$this->template->assign_block_vars('toptopicrow', array(
 						'TOPIC_IMG_STYLE' => $folder_img,
 						'TOPIC_FOLDER_IMG' => $this->user->img($folder_img, $folder_alt),
-						'TOPIC_FOLDER_IMG_ALT'	=> $user->lang[$folder_alt],
+						'TOPIC_FOLDER_IMG_ALT' => $this->user->lang[$folder_alt],
 						'TOPIC_TITLE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : censor_text($row['topic_title'])),
-			            'FIRST_POST_TIME'			=> $this->user->format_date($row['topic_time']),
+						'FIRST_POST_TIME' => $this->user->format_date($row['topic_time']),
 						'U_VIEW_TOPIC' => $view_topic_url,
 						'TOPIC_AUTHOR' => get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
 						'TOPIC_THANKS' => $row['topic_thanks'],
-						'TOPIC_REPUT' => round($row['topic_thanks'] / ($max_topic_thanks / 100), $this->config['thanks_number_digits']) . '%',
+						'TOPIC_REPUT' => $reputation_pct . '%',
 						'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_HEIGHT' => sprintf('%dpx', $this->config['thanks_reput_height']),
-						'THANKS_REPUT_GRAPHIC_WIDTH' => sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']),
-						'THANKS_REPUT_IMAGE' => (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK' => (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : ''
+						'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct)
 					));
-				}
-				while ($row = $this->db->sql_fetchrow($result));
+				} while ($row = $this->db->sql_fetchrow($result));
 				$this->db->sql_freeresult($result);
 			}
 		}
@@ -344,8 +334,8 @@ class toplist
 			$end = ($full_forum_rating) ? $this->config['topics_per_page'] : $end_row_rating;
 
 			$sql_f_array['FROM'] = array($this->thanks_table => 't');
-			$sql_f_array['SELECT'] = 'f.forum_name, f.forum_id';
-			$sql_f_array['SELECT'] .= ', t.forum_id, COUNT(*) AS forum_thanks';
+			$sql_f_array['SELECT'] = 'f.*, COUNT(*) AS forum_thanks';
+
 			$sql_f_array['LEFT_JOIN'][] = array(
 				'FROM' => array(FORUMS_TABLE => 'f'),
 				'ON' => 't.forum_id = f.forum_id',
@@ -360,33 +350,50 @@ class toplist
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
-			}
-			else
+			} else
 			{
 				$notoplist = false;
 				do
 				{
 					if (!empty($row['forum_id']))
 					{
+						if ($row['forum_status'] == ITEM_LOCKED)
+						{
+							$folder_image = 'forum_read_locked';
+							$folder_alt = 'FORUM_LOCKED';
+						} else
+						{
+							switch ($row['forum_type'])
+							{
+								case FORUM_LINK:
+									$folder_image = 'forum_link';
+									break;
+
+								case FORUM_POST:
+								default:
+									$folder_image = 'forum_read';
+									break;
+							}
+							$folder_alt = 'NO_UNREAD_POSTS';
+						}
+
+
 						$u_viewforum = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
-						$folder_image = 'forum_read';
+						$reputation_pct = round($row['forum_thanks'] / ($max_forum_thanks / 100), $this->config['thanks_number_digits']);
 						$this->template->assign_block_vars('topforumrow', array(
-							'FORUM_FOLDER_IMG_SRC' => $this->user->img('forum_read', 'NO_NEW_POSTS', false, '', 'src'),
+							'FORUM_FOLDER_IMG_SRC' => $this->user->img($folder_image, $folder_alt, false, '', 'src'),
 							'FORUM_IMG_STYLE' => $folder_image,
+							'FORUM_IMAGE' => ($row['forum_image']) ? '<img src="' . $this->phpbb_root_path . $row['forum_image'] . '" alt="' . $this->user->lang[$folder_alt] . '" />' : '',
 							'FORUM_NAME' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['forum_name'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['forum_name']),
 							'U_VIEW_FORUM' => $u_viewforum,
 							'FORUM_THANKS' => $row['forum_thanks'],
-							'FORUM_REPUT' => round($row['forum_thanks'] / ($max_forum_thanks / 100), $this->config['thanks_number_digits']) . '%',
+							'FORUM_REPUT' => $reputation_pct . '%',
 							'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
 							'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-							'THANKS_REPUT_HEIGHT' => sprintf('%dpx', $this->config['thanks_reput_height']),
-							'THANKS_REPUT_GRAPHIC_WIDTH' => sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']),
-							'THANKS_REPUT_IMAGE' => (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-							'THANKS_REPUT_IMAGE_BACK' => (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+							'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct)
 						));
 					}
-				}
-				while ($row = $this->db->sql_fetchrow($result));
+				} while ($row = $this->db->sql_fetchrow($result));
 				$this->db->sql_freeresult($result);
 			}
 		}
@@ -409,7 +416,7 @@ class toplist
 			'S_FULL_FORUM_RATING' => $full_forum_rating,
 			'U_SEARCH_POST' => $u_search_post,
 			'U_SEARCH_TOPIC' => $u_search_topic,
-			'U_SEARCH_FORUM' => $u_search_forum,
+			'U_SEARCH_FORUM' => $u_search_forum
 		));
 
 		return $this->controller_helper->render('toplist_body.html', $page_title);

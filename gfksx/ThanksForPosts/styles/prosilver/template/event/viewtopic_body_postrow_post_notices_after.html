@@ -22,9 +22,7 @@
 		<dl>
 			<dt class="small"><strong>{L_REPUT}{L_COLON}</strong>&nbsp;{postrow.POST_REPUT}</dt>
 			<dd>
-				<!-- IF postrow.S_THANKS_REPUT_GRAPHIC -->
-				<div style="width: {postrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {postrow.THANKS_REPUT_HEIGHT};" class="thanks_reput_image_back"><div style="height: {postrow.THANKS_REPUT_HEIGHT}; width: {postrow.POST_REPUT};" class="thanks_reput_image"></div></div>&nbsp;
-				<!-- ENDIF -->
+				<!-- IF postrow.S_THANKS_REPUT_GRAPHIC -->{postrow.THANKS_REPUT_GRAPHIC_TEXT}<!-- ENDIF -->
 			</dd>
 		</dl>
 	</div>

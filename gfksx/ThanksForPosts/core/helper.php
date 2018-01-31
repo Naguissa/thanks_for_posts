@@ -149,8 +149,7 @@ class helper
 				if ($count >= $maxcount)
 				{
 					$further_thanks++;
-				}
-				else
+				} else
 				{
 					$user_list[] = get_username_string('full', $thanker['user_id'], $thanker['username'], $thanker['user_colour']) .
 							(($this->config['thanks_time_view'] && $thanker['thanks_time']) ? ' (' . $this->user->format_date($thanker['thanks_time'], false, ($view == 'print') ? true : false) . ')' : '');
@@ -219,17 +218,14 @@ class helper
 				{
 					meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
 					trigger_error($this->user->lang['THANKS_INFO_' . $lang_act] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
-				}
-				else
+				} else
 				{
 					redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
 				}
-			}
-			else if (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true))
+			} else if (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true))
 			{
 				trigger_error($this->user->lang['GLOBAL_INCORRECT_THANKS'] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
-			}
-			else
+			} else
 			{
 				trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
 			}
@@ -254,13 +250,11 @@ class helper
 				{
 					$lang_act = 'GIVE';
 					$field_act = 'user_id';
-				}
-				else if ($list_thanks === 'receive')
+				} else if ($list_thanks === 'receive')
 				{
 					$lang_act = 'RECEIVE';
 					$field_act = 'poster_id';
-				}
-				else if ($list_thanks === 'post')
+				} else if ($list_thanks === 'post')
 				{
 					$lang_act = 'POST';
 					$field_act = 'post_id';
@@ -280,47 +274,40 @@ class helper
 							{
 								meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
 								trigger_error($this->user->lang['CLEAR_LIST_THANKS_' . $lang_act] . '<br /><br />' . $this->user->lang('BACK_TO_PREV', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id) . '">', '</a>'));
-							}
-							else
+							} else
 							{
 								meta_refresh(1, append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));
 								trigger_error($this->user->lang['CLEAR_LIST_THANKS_' . $lang_act] . '<br /><br />' . $this->user->lang('BACK_TO_PREV', '<a href="' . append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id) . '">', '</a>'));
 							}
-						}
-						else
+						} else
 						{
 							if ($list_thanks === 'post')
 							{
 								redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
-							}
-							else
+							} else
 							{
 								redirect(append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));
 							}
 						}
 					}
 				}
-			}
-			else
+			} else
 			{
 				if ($list_thanks === 'post')
 				{
 					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br />' . $this->user->lang('BACK_TO_PREV', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id) . '">', '</a>'));
-				}
-				else
+				} else
 				{
 					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br />' . $this->user->lang('BACK_TO_PREV', '<a href="' . append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id) . '">', '</a>'));
 				}
 			}
-		}
-		else
+		} else
 		{
 			confirm_box(false, 'CLEAR_LIST_THANKS', $s_hidden_fields);
 			if ($list_thanks === 'post')
 			{
 				redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
-			}
-			else
+			} else
 			{
 				redirect(append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));
 			}
@@ -388,19 +375,16 @@ class helper
 					{
 						meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
 						trigger_error($this->user->lang['THANKS_INFO_' . $lang_act] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
-					}
-					else
+					} else
 					{
 						redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
 					}
-				}
-				else
+				} else
 				{
 					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
 				}
 			}
-		}
-		else
+		} else
 		{
 			confirm_box(false, 'REMOVE_THANKS', $hidden);
 			redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
@@ -640,6 +624,8 @@ class helper
 			$u_receive_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false', 'tslash' => ''));
 			$u_give_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true', 'tslash' => ''));
 
+			$reputation_pct = round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']);
+
 			$postrow = array_merge($postrow, $thanks_text, array(
 				'COND' => ($already_thanked) ? true : false,
 				'THANKS' => $this->get_thanks($row['post_id']),
@@ -661,13 +647,10 @@ class helper
 				'S_ALREADY_THANKED' => $already_thanked,
 				'S_REMOVE_THANKS' => isset($this->config['remove_thanks']) ? $this->config['remove_thanks'] : false,
 				'S_FIRST_POST_ONLY' => isset($this->config['thanks_only_first_post']) ? $this->config['thanks_only_first_post'] : false,
-				'POST_REPUT' => ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']) . '%' : '',
+				'POST_REPUT' => $reputation_pct > 0 ? $reputation_pct . '%' : '',
 				'S_THANKS_POST_REPUT_VIEW' => isset($this->config['thanks_post_reput_view']) ? (bool) $this->config['thanks_post_reput_view'] : false,
 				'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-				'THANKS_REPUT_HEIGHT' => isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
-				'THANKS_REPUT_GRAPHIC_WIDTH' => isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']) : false) : false,
-				'THANKS_REPUT_IMAGE' => isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-				'THANKS_REPUT_IMAGE_BACK' => isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+				'THANKS_REPUT_GRAPHIC_TEXT' => $reputation_pct > 0 ? $this->get_reputation_stars_from_rating($reputation_pct) : '',
 				'S_GLOBAL_POST_THANKS' => ($topic_data['topic_type'] == POST_GLOBAL) ? (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true) : false,
 				'U_CLEAR_LIST_THANKS_POST' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;list_thanks=post'),
 				'S_MOD_THANKS' => $this->auth->acl_get('m_thanks'),
@@ -699,8 +682,7 @@ class helper
 			$result = $this->db->sql_query($sql);
 			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
 			$this->db->sql_freeresult($result);
-		}
-		else
+		} else
 		{
 			$this->max_post_thanks = 1;
 		}
@@ -774,15 +756,12 @@ class helper
 	// topic reput
 	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks)
 	{
+		$reputation_pct = (isset($topic_thanks[$topic_id])) ? round((int) $topic_thanks[$topic_id] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) : '';
 		return array(
-			'TOPIC_REPUT' => (isset($topic_thanks[$topic_id])) ? round((int) $topic_thanks[$topic_id] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+			'TOPIC_REPUT' => $reputation_pct == '' ? '' : $reputation_pct . '%',
 			'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? (bool) $this->config['thanks_topic_reput_view'] : false,
-			'S_THANKS_TOPIC_REPUT_VIEW_COLUMN' => isset($this->config['thanks_topic_reput_view_column']) ? (bool) $this->config['thanks_topic_reput_view_column'] : false,
 			'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-			'THANKS_REPUT_HEIGHT' => isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
-			'THANKS_REPUT_GRAPHIC_WIDTH' => isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']) : false) : false,
-			'THANKS_REPUT_IMAGE' => isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-			'THANKS_REPUT_IMAGE_BACK' => isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+			'THANKS_REPUT_GRAPHIC_TEXT' => $reputation_pct == '' ? '' : $this->get_reputation_stars_from_rating($reputation_pct)
 		);
 	}
 
@@ -854,15 +833,12 @@ class helper
 	// forum reput
 	public function get_thanks_forum_reput($forum_id)
 	{
+		$reputation_pct = (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) : '';
 		return array(
-			'FORUM_REPUT' => (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) . '%' : '',
+			'FORUM_REPUT' => $reputation_pct == '' ? '' : $reputation_pct . '%',
 			'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) ? (bool) $this->config['thanks_forum_reput_view'] : false,
 			'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view_column']) ? (bool) $this->config['thanks_forum_reput_view_column'] : false,
-			'THANKS_REPUT_HEIGHT' => isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
-			'THANKS_REPUT_GRAPHIC_WIDTH' => isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level'] * $this->config['thanks_reput_height']) : false) : false,
-			'THANKS_REPUT_IMAGE' => (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-			'THANKS_REPUT_IMAGE_BACK' => (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+			'THANKS_REPUT_GRAPHIC_TEXT' => $reputation_pct == '' ? '' : $this->get_reputation_stars_from_rating($reputation_pct)
 		);
 	}
 
@@ -909,8 +885,7 @@ class helper
 		if ($this->notification_exists($notification_data, $notification_type_name))
 		{
 			$this->notification_manager->update_notifications($notification_type_name, $notification_data);
-		}
-		else
+		} else
 		{
 			$this->notification_manager->add_notifications($notification_type_name, $notification_data);
 		}
@@ -954,6 +929,39 @@ class helper
 		$this->db->sql_freeresult($result);
 
 		return ($row) ?: array();
+	}
+
+	/**
+	 * R
+	 *
+	 * @param float $rating (percent)
+	 * @return String Reputation text using FontAwesome
+	 */
+	public function get_reputation_stars_from_rating($rating)
+	{
+		$ratingRounded = round($rating / 10);
+		$count = 2;
+		$string = "";
+		for (; $count < $ratingRounded; $count += 2)
+		{
+			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star\"></i>";
+		}
+		if ($ratingRounded < 1)
+		{
+			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star-o\"></i>";
+		} elseif (($ratingRounded % 2) === 0)
+		{
+			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star\"></i>";
+		} else
+		{
+			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star-half-o\"></i>";
+		}
+		$count += 2;
+		for (; $count <= 10; $count += 2)
+		{
+			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star-o\"></i>";
+		}
+		return $string;
 	}
 
 }
