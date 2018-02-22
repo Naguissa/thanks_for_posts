@@ -681,6 +681,9 @@ class helper
 				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
 			$result = $this->db->sql_query($sql);
 			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
+			if ($this->max_post_thanks == 0) {
+				$this->max_post_thanks = 1;
+			}
 			$this->db->sql_freeresult($result);
 		} else
 		{
@@ -806,6 +809,9 @@ class helper
 			FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
 		$result = $this->db->sql_query($sql);
 		$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
+		if ($this->max_post_thanks == 0) {
+			$this->max_post_thanks = 1;
+		}
 		$this->db->sql_freeresult($result);
 		return $this->max_post_thanks;
 	}
@@ -874,6 +880,9 @@ class helper
 				WHERE forum_id <> 0';
 			$result = $this->db->sql_query($sql);
 			$this->max_forum_thanks = (int) $this->db->sql_fetchfield('max_forum_thanks');
+			if ($this->max_forum_thanks == 0) {
+				$this->max_forum_thanks = 1;
+			}
 			$this->db->sql_freeresult($result);
 			return $this->max_forum_thanks;
 		}
