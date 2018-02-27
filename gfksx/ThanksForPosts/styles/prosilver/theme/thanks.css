@@ -66,19 +66,19 @@ dl.thanks dt {
 /* Profile thanks lists */
 .profile-thanks .list span { display: inline-block; }
 
-@media (max-width: 319px) {
+@media (max-width: 380px) {
 	.profile-thanks .list span { width:99%; }
 }
-@media (max-width: 500px) and (min-width: 320px) {
+@media (max-width: 570px) and (min-width: 381px) {
 	.profile-thanks .list span { width:49.6%; }
 }
-@media (max-width: 670px) and (min-width: 501px) {
+@media (max-width: 760px) and (min-width: 571px) {
 	.profile-thanks .list span { width:32.4%; }
 }
-@media (max-width: 900px) and (min-width: 671px) {
+@media (max-width: 950px) and (min-width: 761px) {
 	.profile-thanks .list span { width:24.5%; }
 }
-@media (min-width: 901px) {
+@media (min-width: 951px) {
 	.profile-thanks .list span { width:19.6%; }
 }
 
