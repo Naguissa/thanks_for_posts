@@ -519,7 +519,7 @@ class helper
 		}
 		$this->db->sql_freeresult($result);
 
-		$further_thanks_text = ($poster_give_count <= $poster_limit ? $this->user->lang('FURTHER_THANKS', $poster_give_count - $poster_limit, $poster_give_count - $poster_limit) : '');
+		$further_thanks_text = ($poster_give_count > $poster_limit ? $this->user->lang('FURTHER_THANKS', $poster_give_count - $poster_limit, $poster_give_count - $poster_limit) : '');
 
 		$l_poster_receive_count = ($poster_receive_count) ? $this->user->lang('THANKS', $poster_receive_count) : '';
 		$l_poster_give_count = ($poster_give_count) ? $this->user->lang('THANKS', $poster_give_count) : '';
