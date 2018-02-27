@@ -84,7 +84,7 @@ class acp_thanks_refresh_module
 
 			$template->assign_vars(array(
 				'S_REFRESH' => false,
-				'L_WARNING' => sprintf($user->lang['WARNING']),
+				'L_WARNING' => $user->lang('WARNING'),
 			));
 		}
 		//update
@@ -240,7 +240,7 @@ class acp_thanks_refresh_module
 				);
 				//display mode
 				confirm_box(false, 'REFRESH_THANKS', $s_hidden_fields);
-				trigger_error($user->lang['TRUNCATE_NO_THANKS'] . adm_back_link($this->u_action));
+				trigger_error($user->lang('TRUNCATE_NO_THANKS') . adm_back_link($this->u_action));
 			}
 		}
 		$template->assign_vars(array(

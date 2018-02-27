@@ -74,7 +74,7 @@ class acp_thanks_truncate_module
 				);
 				//display mode
 				confirm_box(false, 'TRUNCATE_THANKS', $s_hidden_fields);
-				trigger_error($user->lang['TRUNCATE_NO_THANKS'] . adm_back_link($this->u_action));
+				trigger_error($user->lang('TRUNCATE_NO_THANKS') . adm_back_link($this->u_action));
 			}
 		}
 
