@@ -165,7 +165,7 @@ class helper
 
 		if ($further_thanks > 0)
 		{
-			$further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
+			$further_thanks_text = $this->user->lang('FURTHER_THANKS', $further_thanks, $further_thanks);
 		}
 		$return = ($return == '') ? false : ($return . $further_thanks_text);
 		return $return;
@@ -437,14 +437,11 @@ class helper
 	// stuff goes here to avoid over-editing memberlist.php
 	public function output_thanks_memberlist($user_id, $ex_fid_ary)
 	{
-		$thankers_member = array();
-		$thankered_member = array();
-		$thanks = '';
-		$thanked = '';
-		$poster_receive_count = 0;
-		$poster_give_count = 0;
+		$thanks = array();
+		$thanked = array();
 		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
 
+		// Thanks received:
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . $this->thanks_table . '
 			WHERE poster_id = ' . (int) $user_id . ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -463,63 +460,28 @@ class helper
 		$sql_array['ORDER_BY'] = 't.post_id DESC LIMIT ' . (int) $poster_limit;
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query($sql);
+
+		$i = 0;
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$thankers_member[] = array(
-				'user_id' => $row['user_id'],
-				'poster_id' => $row['poster_id'],
-				'post_id' => $row['post_id'],
-				'username' => $row['username'],
-				'user_colour' => $row['user_colour'],
-			);
-		}
-		$this->db->sql_freeresult($result);
-		$user_list = array();
-		$post_list = array();
-		$i = 0;
-		foreach ($thankers_member as $key => $value)
-		{
-			if ($thankers_member[$key]['poster_id'] == $user_id)
+			if ($row['poster_id'] == $user_id)
 			{
 				$i++;
-				$user_list[$i] = array(
-					'username' => $thankers_member[$key]['username'],
-					'user_id' => $thankers_member[$key]['user_id'],
-					'user_colour' => $thankers_member[$key]['user_colour'],
-					'post_id' => $thankers_member[$key]['post_id'],
-				);
-			}
-		}
-		unset($value);
-		$collim = ($poster_limit > $poster_receive_count) ? ceil($poster_receive_count / 4) : ceil($poster_limit / 4);
-		$thanked .= '<span style="float: left;">';
-		$i = $j = 0;
-		foreach ($user_list as $value)
-		{
-			$i++;
-			if ($i <= $poster_limit)
-			{
-				$thanked .= '&nbsp;&nbsp;&bull;&nbsp;&nbsp;' . get_username_string('full', $value['user_id'], $value['username'], $value['user_colour']) . ' &#8594; <a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $value['post_id'] . '#p' . $value['post_id']) . '">' . $this->user->lang['FOR_MESSAGE'] . '</a><br />';
-				$j++;
-				if ($j > $collim or $i == $poster_receive_count or $i == $poster_limit)
+				if ($i > $poster_limit)
 				{
-					$thanked .= '&nbsp;</span>';
-					$j = 0;
-					if ($i < $poster_limit and $i < $poster_receive_count)
-					{
-						$thanked .= '<span style="float: left;">';
-					}
+					break;
 				}
+				$this->template->assign_block_vars('THANKEDLIST', array(
+					'user' => get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour']),
+					'post_url' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id'])
+				));
 			}
 		}
-		if ($poster_receive_count > $poster_limit)
-		{
-			$further_thanks = $poster_receive_count - $poster_limit;
-			$further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
-			$thanked .= '<span style="float: left;">&nbsp;' . $further_thanks_text . '</span>';
-		}
-		unset($value);
+		$this->db->sql_freeresult($result);
 
+		$further_thanked_text = ($poster_receive_count > $poster_limit ? $this->user->lang('FURTHER_THANKS', $poster_receive_count - $poster_limit, $poster_receive_count - $poster_limit) : '');
+
+		// Thanks given:
 		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
 			FROM ' . $this->thanks_table . "
 			WHERE user_id = " . (int) $user_id . ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -538,78 +500,44 @@ class helper
 		$sql_array['ORDER_BY'] = 't.post_id DESC LIMIT ' . (int) $poster_limit;
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query($sql);
+
+		$i = 0;
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$thankered_member[] = array(
-				'user_id' => $row['user_id'],
-				'poster_id' => $row['poster_id'],
-				'post_id' => $row['post_id'],
-				'username' => $row['username'],
-				'user_colour' => $row['user_colour'],
-			);
+			if ($row['user_id'] == $user_id)
+			{
+				$i++;
+				if ($i > $poster_limit)
+				{
+					break;
+				}
+				$this->template->assign_block_vars('THANKSLIST', array(
+					'user' => get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour']),
+					'url' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id'])
+				));
+			}
 		}
 		$this->db->sql_freeresult($result);
 
-		$i = 0;
-		foreach ($thankered_member as $key => $value)
-		{
-			if ($thankered_member[$key]['user_id'] == $user_id)
-			{
-				$i++;
-				$post_list[$i] = array(
-					'postername' => $thankered_member[$key]['username'],
-					'poster_id' => $thankered_member[$key]['poster_id'],
-					'poster_colour' => $thankered_member[$key]['user_colour'],
-					'post_id' => $thankered_member[$key]['post_id'],
-				);
-			}
-		}
-		unset($value);
-		$collim = ($poster_limit > $poster_give_count) ? ceil($poster_give_count / 4) : ceil($poster_limit / 4);
-		$thanks .= '<span style="float: left;">';
-		$i = $j = 0;
-		foreach ($post_list as $value)
-		{
-			$i++;
-			if ($i <= $poster_limit)
-			{
-				$thanks .= '&nbsp;&nbsp;&bull;&nbsp;&nbsp;' . get_username_string('full', $value['poster_id'], $value['postername'], $value['poster_colour']) . ' &#8592; <a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $value['post_id'] . '#p' . $value['post_id']) . '">' . $this->user->lang['FOR_MESSAGE'] . '</a><br />';
-				$j++;
-				if ($j > $collim or $i == $poster_give_count or $i == $poster_limit)
-				{
-					$thanks .= '</span>';
-					$j = 0;
-					if ($i < $poster_limit and $i < $poster_give_count)
-					{
-						$thanks .= '<span style="float: left;">';
-					}
-				}
-			}
-		}
-		if ($poster_give_count > $poster_limit)
-		{
-			$further_thanks = $poster_give_count - $poster_limit;
-			$further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
-			$thanks .= '<span style="float: left;">&nbsp;' . $further_thanks_text . '</span>';
-		}
-		unset($value);
+		$further_thanks_text = ($poster_give_count <= $poster_limit ? $this->user->lang('FURTHER_THANKS', $poster_give_count - $poster_limit, $poster_give_count - $poster_limit) : '');
 
 		$l_poster_receive_count = ($poster_receive_count) ? $this->user->lang('THANKS', $poster_receive_count) : '';
 		$l_poster_give_count = ($poster_give_count) ? $this->user->lang('THANKS', $poster_give_count) : '';
+
 		$this->template->assign_vars(array(
 			'DELETE_IMG' => $this->user->img('icon_post_delete', $this->user->lang['CLEAR_LIST_THANKS']),
 			'POSTER_RECEIVE_COUNT' => $l_poster_receive_count,
-			'THANKS' => $thanks,
+			'MORE_THANKS' => $further_thanks_text,
 			'POSTER_GIVE_COUNT' => $l_poster_give_count,
-			'THANKED' => $thanked,
+			'MORE_THANKED' => $further_thanked_text,
 			'THANKS_PROFILELIST_VIEW' => isset($this->config['thanks_profilelist_view']) ? $this->config['thanks_profilelist_view'] : false,
 			'S_MOD_THANKS' => $this->auth->acl_get('m_thanks'),
 			'U_CLEAR_LIST_THANKS_GIVE' => append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=give'),
-			'U_CLEAR_LIST_THANKS_RECEIVE' => append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=receive'),
+			'U_CLEAR_LIST_THANKS_RECEIVE' => append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=receive')
 		));
 	}
 
-	// stuff goes here to avoid over-editing viewtopic.php
+
 	public function output_thanks($poster_id, &$postrow, $row, $topic_data, $forum_id)
 	{
 		if (!empty($postrow))
@@ -621,8 +549,8 @@ class helper
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
 
 			// Correctly form URLs
-			$u_receive_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false', 'tslash' => ''));
-			$u_give_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true', 'tslash' => ''));
+			$u_receive_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false'));
+			$u_give_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true'));
 
 			$reputation_pct = round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']);
 

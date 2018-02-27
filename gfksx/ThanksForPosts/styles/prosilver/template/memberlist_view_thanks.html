@@ -1,28 +1,35 @@
 <!-- IF THANKS_PROFILELIST_VIEW -->
-<div class="panel bg1">
-	<div class="inner">
+<div class="panel bg1 profile-thanks">
+	<div class="row">
 		<h3>{L_GRATITUDES}</h3>
-		<div class="column1">
-			<!-- IF S_MOD_THANKS -->
-			<ul class="post-buttons" style="float:left">
-				<li><a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button button-icon-only" style="float:left"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span></a></li>
-			</ul>
-			<!-- ENDIF -->
+		<div>
 			<dl>
-				<dt>{L_GIVEN}{L_COLON} <!-- IF POSTER_GIVE_COUNT and POSTER_GIVE_COUNT > 0 -->{POSTER_GIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></dt>
-			    <dd><div>{THANKS}</div></dd>
-			</dl>
+				<dt>
+					<!-- IF S_MOD_THANKS --><a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button button-icon-only"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span></a><!-- ENDIF -->
+					{L_GIVEN}{L_COLON} <!-- IF POSTER_GIVE_COUNT and POSTER_GIVE_COUNT > 0 -->{POSTER_GIVE_COUNT}<!-- ELSE -->0<!-- ENDIF -->
+				</dt>
+				<dd><div class="list">
+					<!-- BEGIN THANKSLIST -->
+						<span>{THANKSLIST.user} &#8592; <a href="{THANKSLIST.url}">{L_FOR_MESSAGE}</a></span>
+					<!-- END THANKSLIST -->
+					<!-- IF MORE_THANKED --><span>{MORE_THANKED}</span><!-- ENDIF -->
+				</div></dd>
+			</div>
 		</div>
-		<div class="<!-- IF not POSTER_GIVE_COUNT -->column1<!-- ELSE -->column2<!-- ENDIF -->">
-			<!-- IF S_MOD_THANKS -->
-			<ul class="post-buttons" style="float:left">
-				<li><a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button button-icon-only" style="float:left"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span></a></li>
-			</ul>
-			<!-- ENDIF -->
+		<br>
+		<div>
 			<dl>
-				<dt>{L_RECEIVED}{L_COLON} <!-- IF POSTER_RECEIVE_COUNT and POSTER_RECEIVE_COUNT > 0  -->{POSTER_RECEIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></dt>
-				<dd><div>{THANKED}</div></dd>
-			</dl>
+				<dt>
+					<!-- IF S_MOD_THANKS --><a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button button-icon-only"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span></a><!-- ENDIF -->
+					{L_RECEIVED}{L_COLON} <!-- IF POSTER_RECEIVE_COUNT and POSTER_RECEIVE_COUNT > 0  -->{POSTER_RECEIVE_COUNT}<!-- ELSE -->0<!-- ENDIF -->
+				</dt>
+				<dd><div class="list">
+					<!-- BEGIN THANKEDLIST -->
+						<span>{THANKEDLIST.user} &#8592; <a href="{THANKEDLIST.url}">{L_FOR_MESSAGE}</a></span>
+					<!-- END THANKEDLIST -->
+					<!-- IF MORE_THANKED --><span>{MORE_THANKED}</span><!-- ENDIF -->
+				</div></dd>
+			</div>
 		</div>
 	</div>
 </div>

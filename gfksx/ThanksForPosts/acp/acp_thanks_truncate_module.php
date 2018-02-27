@@ -26,14 +26,12 @@ class acp_thanks_truncate_module
 		$this->tpl_name = 'acp_thanks_truncate';
 		$this->page_title = 'ACP_THANKS_TRUNCATE';
 
-		$all_posts_thanks = $all_thanks = $del_thanks = $del_uposts = $del_posts = 0;
-
 		$thanks_table = $phpbb_container->getParameter('tables.thanks');
 
 		$sql = 'SELECT COUNT(post_id) as total_match_count
 			FROM ' . $thanks_table;
 		$result = $db->sql_query($sql);
-		$all_thanks = $end_thanks = $del_thanks = $db->sql_fetchfield('total_match_count');
+		$all_thanks = $end_thanks = $db->sql_fetchfield('total_match_count');
 		$db->sql_freeresult($result);
 
 		$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
@@ -67,7 +65,6 @@ class acp_thanks_truncate_module
 
 				$end_posts_thanks = $all_posts_thanks - $del_posts;
 				$end_users_thanks = $all_users_thanks - $del_uposts;
-				$del_thanks = $all_thanks - $end_thanks;
 			}
 			else
 			{

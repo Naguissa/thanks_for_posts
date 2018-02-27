@@ -147,9 +147,7 @@ class thanks extends \phpbb\notification\type\base
 			$usernames[] = $this->user->lang('NOTIFICATION_X_OTHERS', $trimmed_thankers_cnt);
 		}
 
-		return $this->user->lang(
-						$this->language_key, phpbb_generate_string_list($usernames, $this->user), $thankers_cnt
-		);
+		return $this->user->lang($this->language_key, phpbb_generate_string_list($usernames, $this->user), $thankers_cnt);
 	}
 
 	/**
@@ -210,9 +208,7 @@ class thanks extends \phpbb\notification\type\base
 	 */
 	public function get_reference()
 	{
-		return $this->user->lang(
-						'NOTIFICATION_REFERENCE', censor_text($this->get_data('post_subject'))
-		);
+		return $this->user->lang('NOTIFICATION_REFERENCE', censor_text($this->get_data('post_subject')));
 	}
 
 	/**
@@ -246,7 +242,7 @@ class thanks extends \phpbb\notification\type\base
 			'POST_SUBJECT' => htmlspecialchars_decode(censor_text($this->get_data('post_subject'))),
 			'POST_THANKS' => htmlspecialchars_decode($this->user->lang['THANKS_PM_MES_' . $this->get_data('lang_act')]),
 			'POSTER_NAME' => htmlspecialchars_decode($username),
-			'U_POST_THANKS' => generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
+			'U_POST_THANKS' => generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}"
 		);
 	}
 
@@ -269,7 +265,6 @@ class thanks extends \phpbb\notification\type\base
 				if ($item['user_id'] == $thanks_data['user_id'])
 				{
 					$existing_yet = TRUE;
-					$item['ntimes'] = (isset($item['ntimes']) && $item['ntimes'] > 1 ? $item['ntimes'] + 1 : 2);
 					break;
 				}
 			}
@@ -291,7 +286,7 @@ class thanks extends \phpbb\notification\type\base
 		$this->set_data('poster_id', $thanks_data['poster_id']);
 
 		parent::create_insert_array($thanks_data, $pre_create_data);
-		return $this->get_insert_array();
+		$ret = $this->get_insert_array();
 	}
 
 	/**
@@ -311,6 +306,8 @@ class thanks extends \phpbb\notification\type\base
 		if ($row)
 		{
 			$row['notification_read'] = false;
+			$row['notification_time'] = time();
+
 			$this->set_initial_data($row);
 			$data = $this->get_data(false);
 			if (!empty($data['thankers']))
@@ -339,8 +336,18 @@ class thanks extends \phpbb\notification\type\base
 			}
 		}
 		$this->create_insert_array($thanks_data);
-
 		return $this->get_insert_array();
 	}
+
+
+	/**
+	* {@inheritdoc}
+	*/
+	public function update_notification_date($id, int $notification_time)
+	{
+		$sql = 'UPDATE ' . $this->notifications_table . ' SET notification_time = ' . (int) $notification_time. ' WHERE notification_id = ' . (int) $id;
+		$this->db->sql_query($sql);
+	}
+
 
 }

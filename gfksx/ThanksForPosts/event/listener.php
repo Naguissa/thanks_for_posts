@@ -16,7 +16,8 @@ namespace gfksx\ThanksForPosts\event;
  */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class listener implements EventSubscriberInterface {
+class listener implements EventSubscriberInterface
+{
 
 	/** @var array topic_thanks */
 	protected $topic_thanks;
@@ -72,7 +73,8 @@ class listener implements EventSubscriberInterface {
 	 * @param \rxu\PostsMerging\core\helper        $helper                The extension helper object
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $helper) {
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $helper)
+	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
@@ -88,7 +90,8 @@ class listener implements EventSubscriberInterface {
 		$this->max_topic_thanks = 0;
 	}
 
-	static public function getSubscribedEvents() {
+	static public function getSubscribedEvents()
+	{
 		return array(
 			'core.index_modify_page_title' => 'get_thanks_list',
 			'core.memberlist_view_profile' => 'memberlist_viewprofile',
@@ -110,12 +113,14 @@ class listener implements EventSubscriberInterface {
 		);
 	}
 
-	public function get_thanks_list($event) {
+	public function get_thanks_list($event)
+	{
 		// Generate thankslist if required ...
 		$thanks_list = '';
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : 0;
-		if (isset($this->config['thanks_top_number']) && $this->config['thanks_top_number']) {
+		if (isset($this->config['thanks_top_number']) && $this->config['thanks_top_number'])
+		{
 			$thanks_list = $this->helper->get_toplist_index($ex_fid_ary);
 		}
 		$this->template->assign_vars(array(
@@ -125,60 +130,74 @@ class listener implements EventSubscriberInterface {
 		));
 	}
 
-	public function memberlist_viewprofile($event) {
+	public function memberlist_viewprofile($event)
+	{
 		$member = $event['member'];
 		$user_id = (int) $member['user_id'];
 
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-		if ($this->request->variable('list_thanks', -1) !== -1) {
+		if ($this->request->variable('list_thanks', -1) !== -1)
+		{
 			$this->helper->clear_list_thanks($user_id, $this->request->variable('list_thanks', ''));
 		}
-		if (isset($this->config['thanks_for_posts_version'])) {
+		if (isset($this->config['thanks_for_posts_version']))
+		{
 			$this->helper->output_thanks_memberlist($user_id, $ex_fid_ary);
 		}
 	}
 
-	public function delete_post_thanks($event) {
+	public function delete_post_thanks($event)
+	{
 		$post_ids = $event['post_ids'];
 		$this->helper->delete_post_thanks($post_ids);
 	}
 
-	public function viewforum_get_topics_reput($event) {
+	public function viewforum_get_topics_reput($event)
+	{
 		$topic_list = $event['topic_list'];
-		if (!empty($topic_list)) {
+		if (!empty($topic_list))
+		{
 			$this->topic_thanks = $this->helper->get_thanks_topic_number($topic_list);
 			$this->max_topic_thanks = $this->helper->get_max_topic_thanks();
 		}
 	}
 
-	public function viewforum_output_topics_reput($event) {
+	public function viewforum_output_topics_reput($event)
+	{
 		$topic_row = $event['topic_row'];
 		$topic_id = $topic_row['TOPIC_ID'];
-		if ($this->max_topic_thanks && !empty($this->topic_thanks)) {
+		if ($this->max_topic_thanks && !empty($this->topic_thanks))
+		{
 			$topic_row = array_merge($topic_row, $this->helper->get_thanks_topic_reput($topic_id, $this->max_topic_thanks, $this->topic_thanks));
 		}
 		$event['topic_row'] = $topic_row;
 	}
 
-	public function viewtopic_handle_thanks($event) {
+	public function viewtopic_handle_thanks($event)
+	{
 		$post_list = $event['post_list'];
 		$forum_id = (int) $event['forum_id'];
 		$this->helper->array_all_thanks($post_list, $forum_id);
 
-		if ($this->request->variable('thanks', -1) !== -1 && $this->request->variable('rthanks', -1) === -1) {
+		if ($this->request->variable('thanks', -1) !== -1 && $this->request->variable('rthanks', -1) === -1)
+		{
 			$this->helper->insert_thanks($this->request->variable('thanks', 0), $this->user->data['user_id'], $forum_id);
-		} elseif ($this->request->variable('rthanks', -1) !== -1 && $this->request->variable('thanks', -1) === -1) {
+		}
+		elseif ($this->request->variable('rthanks', -1) !== -1 && $this->request->variable('thanks', -1) === -1)
+		{
 			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $forum_id);
 		}
 
-		if ($this->request->variable('list_thanks', -1) !== -1) {
+		if ($this->request->variable('list_thanks', -1) !== -1)
+		{
 			$this->helper->clear_list_thanks($this->request->variable('p', 0), $this->request->variable('list_thanks', ''));
 		}
 	}
 
-	public function viewtopic_modify_postrow($event) {
+	public function viewtopic_modify_postrow($event)
+	{
 		$row = $event['row'];
 		$postrow = $event['post_row'];
 		$topic_data = $event['topic_data'];
@@ -190,11 +209,13 @@ class listener implements EventSubscriberInterface {
 		$event['post_row'] = $postrow;
 	}
 
-	public function forumlist_display_rating($event) {
+	public function forumlist_display_rating($event)
+	{
 		$forum_rows = $event['forum_rows'];
 		$this->helper->get_max_forum_thanks();
 		$forum_thanks_rating = array();
-		foreach ($forum_rows as $row) {
+		foreach ($forum_rows as $row)
+		{
 			$forum_thanks_rating[] = $row['forum_id'];
 		}
 
@@ -203,16 +224,19 @@ class listener implements EventSubscriberInterface {
 		$this->cache->destroy('_forum_thanks_rating');
 	}
 
-	public function forumlist_modify_template_vars($event) {
+	public function forumlist_modify_template_vars($event)
+	{
 		$forum_row = $event['forum_row'];
 		$row = $event['row'];
-		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view']) {
+		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'])
+		{
 			$forum_row = array_merge($forum_row, $this->helper->get_thanks_forum_reput($row['forum_id']));
 		}
 		$event['forum_row'] = $forum_row;
 	}
 
-	public function load_language_on_setup($event) {
+	public function load_language_on_setup($event)
+	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
 			'ext_name' => 'gfksx/ThanksForPosts',
@@ -221,50 +245,61 @@ class listener implements EventSubscriberInterface {
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
-	public function add_header_quicklinks($event) {
+	public function add_header_quicklinks($event)
+	{
 		$newVars = array();
-		if ($this->auth->acl_get('u_viewthanks')) {
-			$newVars['U_THANKS_LIST'] = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => ''));
+		if ($this->auth->acl_get('u_viewthanks'))
+		{
+			$newVars['U_THANKS_LIST'] = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller');
 		}
 		$show_top = (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view']) || (isset($this->config['thanks_topic_reput_view']) && $this->config['thanks_topic_reput_view']) || (isset($this->config['thanks_post_reput_view']) && $this->config['thanks_post_reput_view']);
-		if ($show_top && $this->auth->acl_get('u_viewtoplist')) {
-			$newVars['U_REPUT_TOPLIST'] = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('tslash' => ''));
+		if ($show_top && $this->auth->acl_get('u_viewtoplist'))
+		{
+			$newVars['U_REPUT_TOPLIST'] = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller');
 		}
-		if ($newVars !== array()) {
+		if ($newVars !== array())
+		{
 			$this->template->assign_vars($newVars);
 		}
 	}
 
-	public function markread($event) {
+	public function markread($event)
+	{
 		$post_list = $event['post_list'];
 		$this->helper->notification_markread($post_list);
 	}
 
-	public function viewtopic_check_f_thanks_auth($event) {
+	public function viewtopic_check_f_thanks_auth($event)
+	{
 		$forum_id = (int) $event['forum_id'];
 		$this->template->assign_vars(array(
 			'S_FORUM_THANKS' => (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
 		));
 	}
 
-	public function recenttopics_output_topics_reput($event) {
+	public function recenttopics_output_topics_reput($event)
+	{
 		$topic_row = $event['tpl_ary'];
 		$topic_id = $topic_row['TOPIC_ID'];
-		if ($this->max_topic_thanks && !empty($this->topic_thanks)) {
+		if ($this->max_topic_thanks && !empty($this->topic_thanks))
+		{
 			$topic_row = array_merge($topic_row, $this->helper->get_thanks_topic_reput($topic_id, $this->max_topic_thanks, $this->topic_thanks));
 		}
 		$event['tpl_ary'] = $topic_row;
 	}
 
-	public function recenttopics_get_topics_reput($event) {
+	public function recenttopics_get_topics_reput($event)
+	{
 		$topic_list = $event['topic_list'];
-		if (!empty($topic_list)) {
+		if (!empty($topic_list))
+		{
 			$this->topic_thanks = $this->helper->get_thanks_topic_number($topic_list);
 			$this->max_topic_thanks = $this->helper->get_max_topic_thanks();
 		}
 	}
 
-	public function add_permission($event) {
+	public function add_permission($event)
+	{
 		$permissions = $event['permissions'];
 		$permissions['f_thanks'] = array('lang' => 'ACL_F_THANKS', 'cat' => 'misc');
 		$permissions['m_thanks'] = array('lang' => 'ACL_M_THANKS', 'cat' => 'misc');

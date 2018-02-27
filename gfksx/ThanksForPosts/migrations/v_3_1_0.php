@@ -27,16 +27,6 @@ class v_3_1_0 extends \phpbb\db\migration\migration
 		return array('\gfksx\ThanksForPosts\migrations\v_3_0_7');
 	}
 
-	public function update_schema()
-	{
-		return array();
-	}
-
-	public function revert_schema()
-	{
-		return array();
-	}
-
 	public function update_data()
 	{
 		return array(

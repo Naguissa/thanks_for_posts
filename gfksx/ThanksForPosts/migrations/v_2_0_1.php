@@ -26,16 +26,6 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 		);
 	}
 
-	public function update_schema()
-	{
-		return array();
-	}
-
-	public function revert_schema()
-	{
-		return array();
-	}
-
 	public function update_data()
 	{
 		return array(

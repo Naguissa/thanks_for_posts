@@ -51,8 +51,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_FORUM' => 'Ir al foro',
 	'JUMP_TO_TOPIC' => 'Ir al tema',
 	'FOR_MESSAGE' => ' por mensaje',
-	'FURTHER_THANKS' => ' y otro usario',
-	'FURTHER_THANKS_PL' => ' y %d usuarios más',
+	'FURTHER_THANKS' => array(
+		1 => ' y otro usario',
+		2 => ' y %d usuarios más'
+	),
 	'NO_VIEW_USERS_THANKS' => 'No está autorizado para ver la lista de gracias.',
 	'NOTIFICATION_THANKS_GIVE' => array(
 		1 => '<strong>Agradecimiento recibido</strong> de %1$s por el mensaje:',
@@ -80,7 +82,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST' => 'Valoración de mensajes',
 	'RATING_TOP_TOPIC' => 'Valoración de temas',
 	'RATING_TOPIC' => 'Tema',
-//	'RETURN_POST'				=> 'Volver',
 	'THANK' => 'vez',
 	'THANK_FROM' => 'de',
 	'THANK_TEXT_1' => 'Estos usuarios agradecierón al autor ',
@@ -101,10 +102,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Gracias por el mensaje',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Eliminar gracias',
 	'THANKS_USER' => 'Lista de gracias',
-	'THANKS_INSTALLED' => 'Gracias por el Mensaje',
-	'THANKS_INSTALLED_EXPLAIN' => '<strong>¡Precaución!<br />Recomendamos ejecutar el instalador despues de hacer los cambios de codigo en los archivos indicados en el install_thanks_mod.xml(o instalar co automod)< /br>Tambien recomedamos Seleccionar "Si" para mostrar resultados completos</strong>',
-	'THANKS_CUSTOM_FUNCTION' => 'Actualizando los valores de la tabla _thanks',
-	'THANKS_CUSTOM1_FUNCTION' => 'Comprobar módulo retirado',
-	'THANKS_CUSTOM2_FUNCTION' => 'Comprobar el refresco de cache',
-	'TOPLIST' => 'Lista TOP de mensajes',
-		));
+	'TOPLIST' => 'Lista TOP de mensajes'
+));

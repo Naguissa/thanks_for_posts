@@ -56,10 +56,29 @@ dl.thanks dt {
 	background-position: 5px 95%;		/* Position of topic icon */
 }
 
-
 /* Responsive toplists */
 .thanks-topposts dl.row-item dt .list-inner { padding-left: 5px; }
 .thanks-topposts ul.topiclist dd, .thanks-toptopics ul.topiclist dd, .thanks-topforums ul.topiclist dd { display: block; }
 .thanks-topposts dd.views, .thanks-toptopics dd.views, .thanks-topforums dd.views { line-height: 1em; }
 
 .thanks-topiclist-rating { display: block; clear: both; }
+
+/* Profile thanks lists */
+.profile-thanks .list span { display: inline-block; }
+
+@media (max-width: 319px) {
+	.profile-thanks .list span { width:99%; }
+}
+@media (max-width: 500px) and (min-width: 320px) {
+	.profile-thanks .list span { width:49.6%; }
+}
+@media (max-width: 670px) and (min-width: 501px) {
+	.profile-thanks .list span { width:32.4%; }
+}
+@media (max-width: 900px) and (min-width: 671px) {
+	.profile-thanks .list span { width:24.5%; }
+}
+@media (min-width: 901px) {
+	.profile-thanks .list span { width:19.6%; }
+}
+

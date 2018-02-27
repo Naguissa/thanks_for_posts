@@ -1,0 +1,224 @@
+Denied as requested.
+
+    kasimi wrote:
+
+        acp/acp_thanks_module.php
+
+        From last report:
+
+            Code: Select all
+
+            $cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc($request->variable('config', array('' => ''), true)) : $this->new_config;
+
+            Line 64: the variable() method already applies utf8_normalize_nfc() for you if the third parameter is true. Please remove it.
+
+        Same issue in acp_thanks_reput_module.php
+        acp/acp_thanks_refresh_module.php
+
+
+
+
+[b]Done.[/b]
+
+
+
+
+        Line 49: $db->sql_affectedrows() doesn't take any arguments. Same issue many times in this file and in core/helper.php. Also, $db->sql_affectedrows() only works for INSERT, UPDATE and DELETE queries. Please use SELECT COUNT(DISTINCT post_id) instead (this issue appears 4 times in this file).
+
+[b]Done.
+
+
+        Line 50: the $result of a DELETE query doesn't need to be freed. Only SELECTs need to be freed. Same issue many times in this file.
+
+[b]Done.[/b]
+
+        Code: Select all
+
+        LEFT JOIN ' . POSTS_TABLE . ' p ON (t.post_id = p.post_id)
+
+        Line 69: consider using $db->sql_build_query() here. Same issue many times all over your extension.
+
+
+[b]Waiting for response about being mandatory or not.[/b]
+
+
+        acp/acp_thanks_truncate_module.php
+
+        Code: Select all
+
+        $all_posts_thanks = $all_thanks = $del_thanks = $del_uposts = $del_posts = 0;
+
+        Line 29: these variables are all re-assigned a few lines below. Please remove them here.
+
+[b]Done.[/b]
+
+
+        Code: Select all
+
+        $del_thanks = $all_thanks - $end_thanks;
+
+        Line 70: $del_thanks isn't used, please remove any unused variables.
+
+[b]Done. Also other assignment before (never was used).
+
+
+        config/routing.yml
+
+        You should set requirements for all numeric values. This affects all of your routes. Please remove the tslash : "/?" entirely, it is not needed.
+[b]Done.[/b]
+
+
+        controller/thankslist.php
+
+        Code: Select all
+
+        WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND user_id = ' . $author_id;
+
+        Line 141, 150, 169: please cast $author to (int)
+
+[b]Done.[/b]
+
+        Code: Select all
+
+        $result = $this->db->sql_query($sql);
+
+        Line 356, 365: $result should be freed.
+
+[b]Done.[/b]
+
+        Code: Select all
+
+        include_once($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
+
+        Line 496: please use function_exists() and include() instead of include_once()
+
+[b]Not needed for phpBB 3.2.2, but I've left it there (fixed version and just before loop start) for compatibility with older versions.[/b]
+
+
+        controller/toplist.php
+
+        Code: Select all
+
+        include_once($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
+
+        Line 104: please use function_exists() and include() instead of include_once()
+
+
+[b]Done.[/b]
+
+        Code: Select all
+
+        $u_search_post = append_sid("{$this->phpbb_root_path}toplist", "mode=post");
+
+        Line 194, 297, 349: please use the controller helper to generate the URL for your toplist route. This applies to all places where you generate URLs for your routes in your extension. Don't hardcode them, always use the route() method.
+
+[b]Done.[/b]
+
+
+
+        core/helper.php
+
+
+
+        Code: Select all
+
+        public function output_thanks_memberlist($user_id, $ex_fid_ary)
+
+        Code: Select all
+
+[b]Done.[/b]
+
+
+        public function get_reputation_stars_from_rating($rating)
+
+[b]This is only a 5 stars using FontAwesome, and is used in a lot of places. Moving this to templates generates a lot of copied code.[/b]
+
+
+        A lot of HTML is generated in these methods. Please move as much HTML as possible to the template.
+
+
+        Code: Select all
+
+        $poster_receive_count = 0;
+        $poster_give_count = 0;
+        Line 444, 445: please remove unused variables.
+
+[b]Removed, not needed.[/b]
+
+
+
+        language/*/thanks_mod.php
+
+
+
+        Code: Select all
+
+        'FURTHER_THANKS'     	    => ' and one more user',
+        'FURTHER_THANKS_PL'         => ' and %d more users',
+
+        You should use proper pluralization by using array() here, as you already do a few lines below.
+
+[b]Done.[/b]
+
+        Code: Select all
+
+        'THANKS_INSTALLED' => 'Thanks for the post',
+        'THANKS_INSTALLED_EXPLAIN' => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>',
+        'THANKS_CUSTOM0_FUNCTION' => 'Update values for the _thanks table',
+        'THANKS_CUSTOM1_FUNCTION' => 'Check remove module',
+        'THANKS_CUSTOM2_FUNCTION' => 'Check refrech cache',
+
+        These language values aren't used. Please remove all unused language entries.
+
+[b]Done.[/b]
+
+        Warning: Language file ca/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file de/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file de_x_sie/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file en/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+
+[b]Not needed, as removed in previous step.[/b]
+
+        Warning: Language file es/info_acp_thanks.php is missing the language key THANKS_REPUT_IMAGE
+        Warning: Language file es/info_acp_thanks.php is missing the language key THANKS_REPUT_IMAGE_DEFAULT
+        Warning: Language file es/thanks_mod.php is missing the language key THANKS_CUSTOM0_FUNCTION
+        Warning: Language file es_x_tu/thanks_mod.php is missing the language key THANKS_CUSTOM0_FUNCTION
+        Warning: Language file fr/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file hr/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file pt/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file ru/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file sk/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+        Warning: Language file uk/thanks_mod.php is missing the language key THANKS_CUSTOM_FUNCTION
+
+[b]Not needed anymore. Cleared with other unused keys.[/b]
+
+        gfksx/ThanksForPosts/migrations/v_1_2_6.php
+
+        From last report:
+
+            Code: Select all
+
+            public function update_schema()
+            {
+            	return array(
+            	);
+            }
+
+            public function revert_schema()
+            {
+            	return array(
+            	);
+            }
+
+            As you don't do anything in these methods, you should remove them. Same issue in most other migration files.
+
+[b]Done.[/b]
+
+    Please make sure all issues mentioned in our reports are fixed before submitting a new revision.
+
+
+    Test and deny.
+
+
+
+

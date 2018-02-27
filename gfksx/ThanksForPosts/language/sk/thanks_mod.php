@@ -51,8 +51,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_FORUM' => 'Prejsť na fórum',
 	'JUMP_TO_TOPIC' => 'Prejsť na tému',
 	'FOR_MESSAGE' => ' za príspevok',
-	'FURTHER_THANKS' => ' a ďalší používateľ',
-	'FURTHER_THANKS_PL' => ' a %d viac používateľov',
+	'FURTHER_THANKS' => array(
+		1 => ' a ďalší používateľ',
+		2 => ' a %d viac používateľov'
+	),
 	'NO_VIEW_USERS_THANKS' => 'Nemáte oprávnenie na zobrazenie zoznamu poďakovaní.',
 	'NOTIFICATION_THANKS_GIVE' => array(
 		1 => '<strong>Prijaté poďakovanie</strong> od %1$s za príspevok:',
@@ -80,7 +82,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST' => 'Hodnotenie príspevkov',
 	'RATING_TOP_TOPIC' => 'Hodnotenie tém',
 	'RATING_TOPIC' => 'Téma',
-//	'RETURN_POST'				=> 'Return',
 	'THANK' => 'čas',
 	'THANK_FROM' => 'od',
 	'THANK_TEXT_1' => 'Títo používatelia poďakovali autorovi ',
@@ -101,10 +102,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Ďakujem za príspevok',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Odstránené poďakovanie za príspevok',
 	'THANKS_USER' => 'Zoznam poďakovaní',
-	'THANKS_INSTALLED' => 'Ďakujem za príspevok',
-	'THANKS_INSTALLED_EXPLAIN' => '<strong>POZOR!<br />Dôrazne odporúčame spustiť túto inštaláciu iba po vykonaní pokynov na zmeny kódu v súboroch (alebo vykonať inštaláciu pomocou funkcie AutoMod)! <br /> Dôrazne odporúčame vybrať Áno, ak chcete zobraziť úplné výsledky (nižšie)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION' => 'Aktualizovať hodnoty pre tabuľku _thanks',
-	'THANKS_CUSTOM1_FUNCTION' => 'Skontrolujte odstránenie modulu',
-	'THANKS_CUSTOM2_FUNCTION' => 'Skontrolujte obnovenie vyrovnávacej pamäte',
-	'TOPLIST' => 'Príspevky toplist',
-		));
+	'TOPLIST' => 'Príspevky toplist'
+));
