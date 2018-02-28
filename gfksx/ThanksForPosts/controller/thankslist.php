@@ -133,7 +133,7 @@ class thankslist
 			{
 				trigger_error('NO_VIEW_USERS_THANKS');
 			}
-			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)] : $this->user->lang['LOGIN_EXPLAIN_MEMBERLIST']));
+			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang('LOGIN_EXPLAIN_' . strtoupper($mode)) : $this->user->lang('LOGIN_EXPLAIN_MEMBERLIST')));
 		}
 
 		
@@ -143,7 +143,7 @@ class thankslist
 		{
 			case 'givens':
 				$per_page = $this->config['posts_per_page'];
-				$page_title = $this->user->lang['SEARCH'];
+				$page_title = $this->user->lang('SEARCH');
 				$template_html = 'thanks_results.html';
 
 				switch ($give)
@@ -245,7 +245,7 @@ class thankslist
 								'U_POST_AUTHOR' => get_username_string('profile', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
 								'POST_SUBJECT' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['post_subject'] : ((!empty($row['forum_id'])) ? '' : $row['post_subject']),
 								'POST_DATE' => (!empty($row['post_time'])) ? $this->user->format_date($row['post_time']) : '',
-								'MESSAGE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['post_text']),
+								'MESSAGE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : $row['post_text']),
 								'FORUM_ID' => $row['forum_id'],
 								'TOPIC_ID' => $row['topic_id'],
 								'POST_ID' => $row['post_id'],
@@ -279,7 +279,7 @@ class thankslist
 				break;
 
 			default:
-				$page_title = $this->user->lang['THANKS_USER'];
+				$page_title = $this->user->lang('THANKS_USER');
 				$template_html = 'thankslist_body.html';
 
 				// Grab relevant data thanks
@@ -306,12 +306,12 @@ class thankslist
 				$this->db->sql_freeresult($result);
 
 				// Sorting
-				$sort_key_text = array('a' => $this->user->lang['SORT_USERNAME'], 'b' => $this->user->lang['SORT_LOCATION'], 'c' => $this->user->lang['SORT_JOINED'], 'd' => $this->user->lang['SORT_POST_COUNT'], 'e' => 'R_THANKS', 'f' => 'G_THANKS',);
+				$sort_key_text = array('a' => $this->user->lang('SORT_USERNAME'), 'b' => $this->user->lang('SORT_LOCATION'), 'c' => $this->user->lang('SORT_JOINED'), 'd' => $this->user->lang('SORT_POST_COUNT'), 'e' => 'R_THANKS', 'f' => 'G_THANKS');
 				$sort_key_sql = array('a' => 'u.username_clean', 'b' => 'u.user_from', 'c' => 'u.user_regdate', 'd' => 'u.user_posts', 'e' => 'count_thanks', 'f' => 'count_thanks');
-				$sort_dir_text = array('a' => $this->user->lang['ASCENDING'], 'd' => $this->user->lang['DESCENDING']);
+				$sort_dir_text = array('a' => $this->user->lang('ASCENDING'), 'd' => $this->user->lang('DESCENDING'));
 				if ($this->auth->acl_get('u_viewonline'))
 				{
-					$sort_key_text['l'] = $this->user->lang['SORT_LAST_ACTIVE'];
+					$sort_key_text['l'] = $this->user->lang('SORT_LAST_ACTIVE');
 					$sort_key_sql['l'] = 'u.user_lastvisit';
 				}
 
@@ -406,7 +406,7 @@ class thankslist
 				{
 					$total_users = $top;
 					$start = 0;
-					$page_title = $this->user->lang['REPUT_TOPLIST'];
+					$page_title = $this->user->lang('REPUT_TOPLIST');
 				}
 				else
 				{
@@ -528,7 +528,7 @@ class thankslist
 							'U_SEARCH_USER' => ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}search.$this->php_ext", "author_id=$user_id&amp;sr=posts") : '',
 							'U_SEARCH_USER_GIVENS' => ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true')) : '',
 							'U_SEARCH_USER_RECEIVED' => ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false')) : '',
-							'L_VIEWING_PROFILE' => sprintf($this->user->lang['VIEWING_PROFILE'], $row['username']),
+							'L_VIEWING_PROFILE' => sprintf($this->user->lang('VIEWING_PROFILE'), $row['username']),
 							'S_CUSTOM_FIELDS' => (isset($cp_row['row']) && sizeof($cp_row['row'])) ? true : false
 						));
 
