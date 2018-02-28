@@ -95,7 +95,7 @@ class thankslist
 		$this->users_table = $users_table;
 	}
 
-	public function main()
+	public function main($mode, $author_id, $give)
 	{
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
@@ -116,9 +116,15 @@ class thankslist
 		$sort_key = $this->request->variable('sort_key', $default_key);
 		$sort_dir = $this->request->variable('sort_dir', 'd');
 		$return_chars = $this->request->variable('return_chars', 300);
-		$mode = $this->request->variable('mode', "");
-		$author_id = $this->request->variable('author_id', 1);
-		$give =  $this->request->variable('give', "");
+		if (!$mode) {
+			$mode = "";
+		}
+		if (!$author_id) {
+			$author_id = 1;
+		}
+		if (!$give) {
+			$give =  "";
+		}
 		
 		
 		if (!$this->auth->acl_gets('u_viewthanks'))
@@ -328,7 +334,12 @@ class thankslist
 				$params = array();
 				$check_params = array(
 					'sort_key' => array('sort_key', $default_key),
-					'sort_dir' => array('sort_dir', 'a'),
+					'sort_dir' => array('sort_dir', $sort_dir),
+					'top' => array('top', $top),
+					'return_chars' => array('return_chars', $return_chars),
+					'mode' => array('mode', $mode),
+					'author_id' => array('author_id', $author_id),
+					'give' => array('give', $give),
 				);
 				foreach ($check_params as $key => $call)
 				{
@@ -340,11 +351,6 @@ class thankslist
 					$param = call_user_func_array(array($this->request, 'variable'), $call);
 					$param = (is_string($param)) ? urlencode($param) : $param;
 					$params[$key] = $param;
-
-					if ($key != 'sort_key' && $key != 'sort_dir')
-					{
-						$sort_params[] = $param;
-					}
 				}
 				$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', $params);
 
