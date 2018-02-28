@@ -106,6 +106,8 @@ class acp_thanks_refresh_module
 						WHERE " . $db->sql_in_set('post_id', $all_posts, false);
 					$result = $db->sql_query($sql);
 					$del_thanks = $db->sql_affectedrows();
+				} else {
+					$del_thanks = 0;
 				}
 				$end_thanks = $all_thanks - $del_thanks;
 				// update delete users
@@ -127,6 +129,10 @@ class acp_thanks_refresh_module
 					$sql = 'DELETE FROM ' . $thanks_table . "
 						WHERE " . $db->sql_in_set('post_id', $posts_delete_us);
 					$result = $db->sql_query($sql);
+				}
+				else
+				{
+					$del_uthanks = 0;
 				}
 				//update move posts /topics /forums and change posters
 				$sql = 'SELECT p.post_id
