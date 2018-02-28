@@ -99,7 +99,7 @@ class toplist
 		$this->posts_table = $posts_table;
 	}
 
-	public function main()
+	public function main($mode)
 	{
 		if (!function_exists('topic_status'))
 		{
@@ -108,17 +108,26 @@ class toplist
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
-		// Grab data
-		$mode = $this->request->variable('mode', '');
 		$end_row_rating = isset($this->config['thanks_number_row_reput']) ? $this->config['thanks_number_row_reput'] : false;
 		$full_post_rating = $full_topic_rating = $full_forum_rating = false;
 		$u_search_post = $u_search_topic = $u_search_forum = '';
-		$topic_id = $this->request->variable('t', 0);
-		$return_chars = $this->request->variable('ch', ($topic_id) ? -1 : 300);
+
+		// Grab data
+		if (empty($mode)) {
+			$mode = '';
+		}
+		$return_chars = $this->request->variable('return_chars', 300);
 		$words = array();
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : true;
-		$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('mode' => $mode));
+		
+		if ($mode == 'post' || $mode == 'topic' || $mode == 'forum') {
+			$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => $mode));
+		}
+		else
+		{
+			$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller');
+		}
 
 		if (!$this->auth->acl_gets('u_viewtoplist'))
 		{
@@ -126,13 +135,14 @@ class toplist
 			{
 				trigger_error('RATING_NO_VIEW_TOPLIST');
 			}
-			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)] : $this->user->lang['RATING_LOGIN_EXPLAIN']));
+			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang('LOGIN_EXPLAIN_' . strtoupper($mode)) : $this->user->lang('RATING_LOGIN_EXPLAIN')));
 		}
 		$notoplist = true;
 		$start = $this->request->variable('start', 0);
 		$max_post_thanks = $this->config['thanks_post_reput_view'] ? $this->gfksx_helper->get_max_post_thanks() : 1;
 		$max_topic_thanks = $this->config['thanks_topic_reput_view'] ? $this->gfksx_helper->get_max_topic_thanks() : 1;
-		$max_forum_thanks = $this->config['thanks_forum_reput_view'] ? $this->gfksx_helper->get_max_forum_thanks() : 1;
+		$max_forum_thanks = $this->config['thanks_forum_reput_view'] ? $this->gfksx_helper->get_max_forum_thanks() : 1;	
+		
 		switch ($mode)
 		{
 			case 'post':
@@ -171,7 +181,7 @@ class toplist
 			default:
 				$total_match_count = '';
 		}
-		$page_title = sprintf($this->user->lang['REPUT_TOPLIST'], $total_match_count);
+		$page_title = sprintf($this->user->lang('REPUT_TOPLIST'), $total_match_count);
 		//post rating
 		if (!$full_forum_rating && !$full_topic_rating && $this->config['thanks_post_reput_view'])
 		{
@@ -195,7 +205,7 @@ class toplist
 			$sql = $this->db->sql_build_query('SELECT', $sql_p_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
 
-			$u_search_post = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('mode' => 'post'));
+			$u_search_post = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'post'));
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -260,7 +270,7 @@ class toplist
 					$reputation_pct = round($row['post_thanks'] / ($max_post_thanks / 100), $this->config['thanks_number_digits']);
 					$post_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id']);
 					$this->template->assign_block_vars('toppostrow', array(
-						'MESSAGE' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['post_text']),
+						'MESSAGE' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : $row['post_text']),
 						'POST_DATE' => !empty($row['post_time']) ? $this->user->format_date($row['post_time']) : '',
 						'MINI_POST_IMG' => $this->user->img('icon_post_target', 'POST'),
 						'POST_URL' => $post_url,
@@ -298,7 +308,7 @@ class toplist
 
 			$sql = $this->db->sql_build_query('SELECT', $sql_t_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_topic = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('mode' => 'topic'));
+			$u_search_topic = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'topic'));
 
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
@@ -318,8 +328,8 @@ class toplist
 					$this->template->assign_block_vars('toptopicrow', array(
 						'TOPIC_IMG_STYLE' => $folder_img,
 						'TOPIC_FOLDER_IMG' => $this->user->img($folder_img, $folder_alt),
-						'TOPIC_FOLDER_IMG_ALT' => $this->user->lang[$folder_alt],
-						'TOPIC_TITLE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : censor_text($row['topic_title'])),
+						'TOPIC_FOLDER_IMG_ALT' => $this->user->lang($folder_alt),
+						'TOPIC_TITLE' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : censor_text($row['topic_title'])),
 						'FIRST_POST_TIME' => $this->user->format_date($row['topic_time']),
 						'U_VIEW_TOPIC' => $view_topic_url,
 						'TOPIC_AUTHOR' => get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
@@ -351,7 +361,7 @@ class toplist
 
 			$sql = $this->db->sql_build_query('SELECT', $sql_f_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_forum = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('mode' => 'forum'));
+			$u_search_forum = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'forum'));
 
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
@@ -389,8 +399,8 @@ class toplist
 						$this->template->assign_block_vars('topforumrow', array(
 							'FORUM_FOLDER_IMG_SRC' => $this->user->img($folder_image, $folder_alt, false, '', 'src'),
 							'FORUM_IMG_STYLE' => $folder_image,
-							'FORUM_IMAGE' => ($row['forum_image']) ? '<img src="' . $this->phpbb_root_path . $row['forum_image'] . '" alt="' . $this->user->lang[$folder_alt] . '" />' : '',
-							'FORUM_NAME' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['forum_name'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['forum_name']),
+							'FORUM_IMAGE' => ($row['forum_image']) ? '<img src="' . $this->phpbb_root_path . $row['forum_image'] . '" alt="' . $this->user->lang($folder_alt) . '" />' : '',
+							'FORUM_NAME' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['forum_name'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : $row['forum_name']),
 							'U_VIEW_FORUM' => $u_viewforum,
 							'FORUM_THANKS' => $row['forum_thanks'],
 							'FORUM_REPUT' => $reputation_pct . '%',

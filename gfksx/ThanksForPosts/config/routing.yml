@@ -19,11 +19,19 @@ gfksx_ThanksForPosts_thankslist_controller:
         start: \d+
         return_chars: \d+
 
+gfksx_ThanksForPosts_toplist_controller_mode:
+    pattern: /toplist/{mode}
+    defaults: { _controller: gfksx.ThanksForPosts.controller.toplist:main, mode: "", start: 0, return_chars: 300 }
+    requirements:
+        mode: \w+
+        start: \d+
+        return_chars: \d+
+
 gfksx_ThanksForPosts_toplist_controller:
     pattern: /toplist
-    defaults: { _controller: gfksx.ThanksForPosts.controller.toplist:main, mode: "", start: 0, topic_id: 0, return_chars: 300 }
+    defaults: { _controller: gfksx.ThanksForPosts.controller.toplist:main, mode: "", start: 0, return_chars: 300 }
     requirements:
+        mode: \w+
         start: \d+
-        topic_id: \d+
         return_chars: \d+
 
