@@ -12,12 +12,11 @@ gfksx_ThanksForPosts_thankslist_controller_user:
 
 gfksx_ThanksForPosts_thankslist_controller:
     pattern: /thankslist
-    defaults: { _controller: gfksx.ThanksForPosts.controller.thankslist:main, mode: "", author_id: 1, give: "", top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
+    defaults: { _controller: gfksx.ThanksForPosts.controller.thankslist:main, mode: "", author_id: 1, give: "", top: 0, start: 0, sort_key: "e", sort_dir: "d", return_chars: 300 }
     requirements:
         author_id: \d+
         top: \d+
         start: \d+
-        topic_id: \d+
         return_chars: \d+
 
 gfksx_ThanksForPosts_toplist_controller:

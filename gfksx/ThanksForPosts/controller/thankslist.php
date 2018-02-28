@@ -95,7 +95,7 @@ class thankslist
 		$this->users_table = $users_table;
 	}
 
-	public function main($mode, $author_id, $give)
+	public function main()
 	{
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
@@ -107,6 +107,20 @@ class thankslist
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
+		// Default sorting key
+		$default_key = 'e';
+
+		// Optional variables. Modes, orders, etc.
+		$top = $this->request->variable('top', 0);
+		$start = $this->request->variable('start', 0);
+		$sort_key = $this->request->variable('sort_key', $default_key);
+		$sort_dir = $this->request->variable('sort_dir', 'd');
+		$return_chars = $this->request->variable('return_chars', 300);
+		$mode = $this->request->variable('mode', "");
+		$author_id = $this->request->variable('author_id', 1);
+		$give =  $this->request->variable('give', "");
+		
+		
 		if (!$this->auth->acl_gets('u_viewthanks'))
 		{
 			if ($this->user->data['user_id'] != ANONYMOUS)
@@ -115,13 +129,8 @@ class thankslist
 			}
 			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)] : $this->user->lang['LOGIN_EXPLAIN_MEMBERLIST']));
 		}
-		$top = $this->request->variable('top', 0);
-		$start = $this->request->variable('start', 0);
-		$default_key = 'a';
-		$sort_key = $this->request->variable('sk', $default_key);
-		$sort_dir = $this->request->variable('sd', 'd');
-		$topic_id = $this->request->variable('t', 0);
-		$return_chars = $this->request->variable('ch', ($topic_id) ? -1 : 300);
+
+		
 		$order_by = '';
 
 		switch ($mode)
@@ -142,7 +151,8 @@ class thankslist
 						$where = 'user_id';
 						break;
 
-					case 'false':
+					default:
+						$give = false;
 						$u_search = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $author_id, 'give' => 'false'));
 
 						$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
@@ -202,12 +212,6 @@ class thankslist
 							{
 								$row['display_text_only'] = false;
 								$bbcode_bitfield = $bbcode_bitfield | base64_decode($row['bbcode_bitfield']);
-
-								// Does this post have an attachment? If so, add it to the list
-								if ($row['post_attachment'] && $this->config['allow_attachments'])
-								{
-									$attach_list[$row['forum_id']][] = $row['post_id'];
-								}
 							}
 							else
 							{
@@ -318,19 +322,13 @@ class thankslist
 					$s_sort_dir .= '<option value="' . $key . '"' . $selected . '>' . $value . '</option>';
 				}
 
-				// Sorting and order
-				if (!isset($sort_key_sql[$sort_key]))
-				{
-					$sort_key = $default_key;
-				}
-
 				$order_by .= $sort_key_sql[$sort_key] . ' ' . (($sort_dir == 'a') ? 'ASC' : 'DESC');
 
 				// Build a relevant pagination_url
 				$params = array();
 				$check_params = array(
-					'sk' => array('sk', $default_key),
-					'sd' => array('sd', 'a'),
+					'sort_key' => array('sort_key', $default_key),
+					'sort_dir' => array('sort_dir', 'a'),
 				);
 				foreach ($check_params as $key => $call)
 				{
@@ -343,7 +341,7 @@ class thankslist
 					$param = (is_string($param)) ? urlencode($param) : $param;
 					$params[$key] = $param;
 
-					if ($key != 'sk' && $key != 'sd')
+					if ($key != 'sort_key' && $key != 'sort_dir')
 					{
 						$sort_params[] = $param;
 					}
@@ -547,13 +545,13 @@ class thankslist
 					$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_users, $this->config['topics_per_page'], $start);
 					$this->template->assign_vars(array(
 						'PAGE_NUMBER' => $this->pagination->on_page($total_users, $this->config['topics_per_page'], $start),
-						'U_SORT_POSTS' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'd', 'sd' => (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'))),
-						'U_SORT_USERNAME' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'a', 'sd' => (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a'))),
-						'U_SORT_FROM' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'b', 'sd' => (($sort_key == 'b' && $sort_dir == 'a') ? 'd' : 'a'))),
-						'U_SORT_JOINED' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'c', 'sd' => (($sort_key == 'c' && $sort_dir == 'a') ? 'd' : 'a'))),
-						'U_SORT_THANKS_R' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'e', 'sd' => (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd'))),
-						'U_SORT_THANKS_G' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'f', 'sd' => (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd'))),
-						'U_SORT_ACTIVE' => ($this->auth->acl_get('u_viewonline')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'l', 'sd' => (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a'))) : '',
+						'U_SORT_POSTS' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'd', 'sort_dir' => (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'))),
+						'U_SORT_USERNAME' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'a', 'sort_dir' => (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a'))),
+						'U_SORT_FROM' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'b', 'sort_dir' => (($sort_key == 'b' && $sort_dir == 'a') ? 'd' : 'a'))),
+						'U_SORT_JOINED' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'c', 'sort_dir' => (($sort_key == 'c' && $sort_dir == 'a') ? 'd' : 'a'))),
+						'U_SORT_THANKS_R' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'e', 'sort_dir' => (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd'))),
+						'U_SORT_THANKS_G' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'f', 'sort_dir' => (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd'))),
+						'U_SORT_ACTIVE' => ($this->auth->acl_get('u_viewonline')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'l', 'sort_dir' => (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a'))) : '',
 					));
 				}
 				break;
