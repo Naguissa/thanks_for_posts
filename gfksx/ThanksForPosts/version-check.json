@@ -1,7 +1,7 @@
 {
 	"stable": {
 		"3.2": {
-			"current": "3.2.5",
+			"current": "3.2.6",
 			"announcement": "https://www.phpbb.com/community/viewtopic.php?f=456&t=2423931",
 			"download": "https://github.com/Naguissa/thanks_for_posts",
 			"eol": null,
