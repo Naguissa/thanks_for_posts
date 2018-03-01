@@ -109,8 +109,8 @@ class acp_thanks_module
 		$template->assign_vars(array(
 			'L_TITLE' => $user->lang($display_vars['title']),
 			'L_TITLE_EXPLAIN' => $user->lang($display_vars['title'] . '_EXPLAIN'),
-			'L_ACP_THANKS_MOD_VER' => $user->lang('ACP_THANKS_MOD_VER'),
-			'THANKS_MOD_VERSION' => isset($config['thanks_for_posts_version']) ? $config['thanks_for_posts_version'] : false,
+			'L_ACP_THANKS_DB_VER' => $user->lang('ACP_THANKS_DB_VER'),
+			'THANKS_DB_VERSION' => isset($config['thanks_for_posts_version']) ? $config['thanks_for_posts_version'] : false,
 			'S_ERROR' => (sizeof($error)) ? true : false,
 			'ERROR_MSG' => implode('<br />', $error),
 			'U_ACTION' => $this->u_action)
