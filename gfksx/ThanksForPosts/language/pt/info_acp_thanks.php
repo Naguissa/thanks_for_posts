@@ -39,7 +39,7 @@ $lang = array_merge($lang, array(
 	'ACP_POSTSEND' => 'Restantes mensagens com agradecimentos',
 	'ACP_POSTSTHANKS' => 'Total de mensagens com agradecimentos',
 	'ACP_THANKS' => 'Obrigado pela mensagem',
-	'ACP_THANKS_MOD_VER' => 'Versão da Modificação: ',
+	'ACP_THANKS_DB_VER' => 'Versão do banco de dados:',
 	'ACP_THANKS_TRUNCATE' => 'Limpar lista de agradecimentos',
 	'ACP_ALLTHANKS' => 'Agradecimentos considerados',
 	'ACP_THANKSEND' => 'Restantes agradecimentos:',
@@ -110,4 +110,4 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Se estiver ativo, mostrará agradecimentos e reputação (se ativos) para usuários não identificados (convidados).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Mostrar para motores de busca (bots)',
 	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Se estiver ativo, mostrará agradecimentos e reputação (se ativos) aos motores de busca (bots).'
-		));
+));
