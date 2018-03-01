@@ -1,0 +1,10 @@
+Konu: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Merhaba {POSTER_NAME},
+
+{USERNAME}, şu eylemi gerçekleştirdiğinden bu bildirimi siz alıyorsunuz: "{SITENAME}" adresinden {POST_THANKS} "{POST_SUBJECT}".
+
+Gönderi görüntülemek isterseniz, aşağıdaki bağlantıyı tıklayın:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
