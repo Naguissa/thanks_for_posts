@@ -878,27 +878,32 @@ class helper
 	{
 		$ratingRounded = round($rating / 10);
 		$count = 2;
-		$string = "";
+		$output = array();
+
 		for (; $count < $ratingRounded; $count += 2)
 		{
-			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star\"></i>";
+			$output[] = "star";
 		}
+
 		if ($ratingRounded < 1)
 		{
-			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star-o\"></i>";
-		} elseif (($ratingRounded % 2) === 0)
-		{
-			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star\"></i>";
-		} else
-		{
-			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star-half-o\"></i>";
+			$output[] = "star-o";
 		}
+		elseif (($ratingRounded % 2) === 0)
+		{
+			$output[] = "star";
+		}
+		else
+		{
+			$output[] = "star-half-o";
+		}
+
 		$count += 2;
 		for (; $count <= 10; $count += 2)
 		{
-			$string .= "<i aria-hidden=\"true\" class=\"icon icon-tiny fa-fw fa-star-o\"></i>";
+			$output[] = "star-o";
 		}
-		return $string;
+		return $output;
 	}
 
 }

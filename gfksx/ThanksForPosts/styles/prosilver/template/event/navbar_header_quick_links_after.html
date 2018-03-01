@@ -1,2 +1,2 @@
-<!-- IF U_REPUT_TOPLIST --><li><a href="{U_REPUT_TOPLIST}"  role="menuitem"><i class="icon fa-star fa-fw" aria-hidden="true"></i><span>{L_TOPLIST}</span></a></li><!-- ENDIF -->
-<!-- IF U_THANKS_LIST --><li><a href="{U_THANKS_LIST}"  role="menuitem"><i class="icon fa-thumbs-o-up fa-fw" aria-hidden="true"></i><span>{L_GRATITUDES}</span></a></li><!-- ENDIF -->
+{% if U_REPUT_TOPLIST %}<li><a href="{{ U_REPUT_TOPLIST }}"  role="menuitem"><i class="icon fa-star fa-fw" aria-hidden="true"></i><span>{{ lang('TOPLIST') }}</span></a></li>{% endif %}
+{% if U_THANKS_LIST %}<li><a href="{{ U_THANKS_LIST }}"  role="menuitem"><i class="icon fa-thumbs-o-up fa-fw" aria-hidden="true"></i><span>{{ lang('GRATITUDES') }}</span></a></li>{% endif %}

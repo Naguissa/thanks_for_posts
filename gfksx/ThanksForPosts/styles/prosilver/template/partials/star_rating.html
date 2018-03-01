@@ -1,0 +1,5 @@
+{% if STAR_RATING %}
+	{% for ACTUAL_RATING_STAR in STAR_RATING %}
+		<i aria-hidden="true" class="icon icon-tiny fa-fw fa-{{ ACTUAL_RATING_STAR }}"></i>
+    {% endfor %}
+{% endif %}

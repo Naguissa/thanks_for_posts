@@ -1,10 +1,10 @@
-<!-- IF postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT)-->
-<dd class="profile-posts" data-user-give-id="{postrow.POSTER_ID}">
-    <strong>{L_GIVEN}{L_COLON}</strong>
-    <a href="{postrow.POSTER_GIVE_COUNT_LINK}"><!-- IF postrow.POSTER_GIVE_COUNT -->{postrow.POSTER_GIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></a>
+{% if postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT) %}
+<dd class="profile-posts" data-user-give-id="{{ postrow.POSTER_ID }}">
+    <strong>{{ lang('GIVEN') }}{{ lang('COLON') }}</strong>
+    <a href="{{ postrow.POSTER_GIVE_COUNT_LINK }}">{% if postrow.POSTER_GIVE_COUNT %}{{ postrow.POSTER_GIVE_COUNT }}{% else %}0{% endif %}</a>
 </dd>
-<dd class="profile-posts" data-user-receive-id="{postrow.POSTER_ID}">
-    <strong>{L_RECEIVED}{L_COLON}</strong>
-    <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}"><!-- IF postrow.POSTER_RECEIVE_COUNT -->{postrow.POSTER_RECEIVE_COUNT}<!-- ELSE -->0<!-- ENDIF --></a>
+<dd class="profile-posts" data-user-receive-id="{{ postrow.POSTER_ID }}">
+    <strong>{{ lang('RECEIVED') }}{{ lang('COLON') }}</strong>
+    <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{% if postrow.POSTER_RECEIVE_COUNT %}{postrow.POSTER_RECEIVE_COUNT}{% else %}0{% endif %}</a>
 </dd>
-<!-- ENDIF -->
+{% endif %}
