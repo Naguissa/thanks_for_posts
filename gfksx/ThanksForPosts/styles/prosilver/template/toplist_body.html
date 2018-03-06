@@ -53,7 +53,7 @@
                         <span style="display: block;">{{ ITEM.POST_REPUT }}
 							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
 								<br>
-								{% set STAR_RATING = ITEM.POST_REPUT %}
+								{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
 								{% include 'partials/star_rating.html' %}
 							{% endif %}
 						</span>
@@ -184,7 +184,7 @@
                         <span style="display: block;">{{ ITEM.FORUM_REPUT }}
 							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
 								<br>
-								{% set STAR_RATING = ITEM.S_THANKS_REPUT_GRAPHIC %}
+								{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
 								{% include 'partials/star_rating.html' %}
 							{% endif %}
 						</span>
