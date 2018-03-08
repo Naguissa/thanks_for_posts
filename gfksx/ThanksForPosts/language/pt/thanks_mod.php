@@ -85,8 +85,10 @@ $lang = array_merge($lang, array(
 	'THANK' => 'vez',
 	'THANK_FROM' => 'de',
 	'THANK_TEXT_1' => 'Estes utilizadores agradeceram ao autor ',
-	'THANK_TEXT_2' => ' pela mensagem: ',
-	'THANK_TEXT_2PL' => ' pela mensagem (total %d):',
+	'THANK_TEXT_2' => array(
+		1 => ' pela mensagem: ',
+		2 => ' pela mensagem (total %d):'
+	),
 	'THANK_POST' => 'Agradecer por esta mensagem ao autor: ',
 	'THANK_POST_SHORT' => 'Obrigado',
 	'THANKS' => array(

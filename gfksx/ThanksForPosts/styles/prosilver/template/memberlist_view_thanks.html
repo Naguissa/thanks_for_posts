@@ -6,7 +6,7 @@
 			<dl>
 				<dt>
 					{% if S_MOD_THANKS %}<a href="{{ U_CLEAR_LIST_THANKS_GIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button button-icon-only"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{{ lang('CLEAR_LIST_THANKS') }}</span></a>{% endif %}
-					{{ lang('GIVEN') }}{{ lang('COLON') }} {% if POSTER_GIVE_COUNT and POSTER_GIVE_COUNT > 0  %}{{ POSTER_GIVE_COUNT }}{% else %}0{% endif %}
+					{{ lang('GIVEN') }}{{ lang('COLON') }} {% if POSTER_GIVE_COUNT and POSTER_GIVE_COUNT > 0  %}<a href="{{ POSTER_GIVE_COUNT_LINK }}">{{ POSTER_GIVE_COUNT }}</a>{% else %}0{% endif %}
 				</dt>
 				<dd><div class="list">
     				{% for ITEM in THANKSLIST %}
@@ -21,7 +21,7 @@
 			<dl>
 				<dt>
 					{% if S_MOD_THANKS %}<a href="{{ U_CLEAR_LIST_THANKS_RECEIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button button-icon-only"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{{ lang('CLEAR_LIST_THANKS') }}</span></a>{% endif %}
-					{{ lang('RECEIVED') }}{{ lang('COLON') }}{% if POSTER_RECEIVE_COUNT and POSTER_RECEIVE_COUNT > 0 %}{{ POSTER_RECEIVE_COUNT }}{% else %}0{% endif %}
+					{{ lang('RECEIVED') }}{{ lang('COLON') }} {% if POSTER_RECEIVE_COUNT and POSTER_RECEIVE_COUNT > 0 %}<a href="{{ POSTER_RECEIVE_COUNT_LINK }}">{{ POSTER_RECEIVE_COUNT }}</a>{% else %}0{% endif %}
 				</dt>
 				<dd><div class="list">
     				{% for ITEM in THANKEDLIST %}

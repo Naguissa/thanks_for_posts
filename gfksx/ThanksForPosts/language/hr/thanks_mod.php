@@ -82,8 +82,10 @@ $lang = array_merge($lang, array(
 	'THANK' => 'vrijeme',
 	'THANK_FROM' => 'od',
 	'THANK_TEXT_1' => 'Ovi su korisnici zahvalili autoru ',
-	'THANK_TEXT_2' => ' za post: ',
-	'THANK_TEXT_2PL' => ' za post (ukupno %d):',
+	'THANK_TEXT_2' => array(
+		1 => ' za post: ',
+		2 => ' za post (ukupno %d):'
+	),
 	'THANK_POST' => 'Zahvali se autoru posta:  ',
 	'THANK_POST_SHORT' => 'Hvala',
 	'THANKS' => array(
