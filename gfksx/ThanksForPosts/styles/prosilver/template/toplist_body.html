@@ -96,7 +96,7 @@
 								<i class="icon fa-file fa-fw icon-red icon-md" aria-hidden="true"></i><span class="sr-only">{{ NEW_POST }}</span>
 							</a>
 							{% endif %}
-							{% if ITEM.U_VIEW_TOPIC %}<a href="{{ ITEMITEM.U_VIEW_TOPIC }}" class="topictitle">{{ ITEM.TOPIC_TITLE }}</a>{% else %}{{ ITEM.TOPIC_TITLE }}{% endif %}
+							{% if ITEM.U_VIEW_TOPIC %}<a href="{{ ITEM.U_VIEW_TOPIC }}" class="topictitle">{{ ITEM.TOPIC_TITLE }}</a>{% else %}{{ ITEM.TOPIC_TITLE }}{% endif %}
 							<br>
 							{% EVENT topiclist_row_topic_title_after %}
 							<div class="topic-poster responsive-hide left-box">

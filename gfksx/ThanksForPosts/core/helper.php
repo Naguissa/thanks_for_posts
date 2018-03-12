@@ -473,7 +473,7 @@ class helper
 				}
 				$this->template->assign_block_vars('THANKEDLIST', array(
 					'user' => get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-					'post_url' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id'])
+					'url' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id'])
 				));
 			}
 		}
