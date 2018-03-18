@@ -86,10 +86,25 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 	{
 		$thanks_table = $this->table_prefix . 'thanks';
 
-		$sql = 'UPDATE ' . $thanks_table . ' t
-			LEFT JOIN ' . POSTS_TABLE . ' p ON  t.post_id = p.post_id
-			SET t.forum_id = p.forum_id, t.topic_id = p.topic_id
-			WHERE t.post_id = p.post_id';
+		switch ($this->db->get_sql_layer())
+		{
+			case 'postgres':
+				$sql = 'UPDATE ' . $thanks_table . ' AS t
+					SET forum_id = p.forum_id, topic_id = p.topic_id
+					FROM ' . POSTS_TABLE . ' AS p
+					WHERE t.post_id = p.post_id';
+
+				break;
+
+			default:
+				$sql = 'UPDATE ' . $thanks_table . ' t
+					LEFT JOIN ' . POSTS_TABLE . ' p ON  t.post_id = p.post_id
+					SET t.forum_id = p.forum_id, t.topic_id = p.topic_id
+					WHERE t.post_id = p.post_id';
+				break;
+
+		}
+
 		$this->db->sql_query($sql);
 	}
 

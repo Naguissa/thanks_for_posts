@@ -749,12 +749,29 @@ class helper
 	public function get_toplist_index($ex_fid_ary)
 	{
 		$thanks_list = '';
-		$sql = 'SELECT t.poster_id, COUNT(t.user_id) AS tally, u.user_id, u.username, u.user_colour
-			FROM ' . $this->users_table . ' u
-			LEFT JOIN ' . $this->thanks_table . ' t ON (u.user_id = t.poster_id)
-			WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
-			GROUP BY t.poster_id
-			ORDER BY tally DESC';
+
+		switch ($this->db->get_sql_layer())
+		{
+			case 'postgres':
+				$sql = 'SELECT t.poster_id, COUNT(t.user_id) AS tally, u.user_id, u.username, u.user_colour
+					FROM ' . $this->users_table . ' u
+					LEFT JOIN ' . $this->thanks_table . ' t ON (u.user_id = t.poster_id)
+					WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
+					GROUP BY t.poster_id, u.user_id
+					ORDER BY tally DESC';
+				break;
+
+			default:
+				$sql = 'SELECT t.poster_id, COUNT(t.user_id) AS tally, u.user_id, u.username, u.user_colour
+					FROM ' . $this->users_table . ' u
+					LEFT JOIN ' . $this->thanks_table . ' t ON (u.user_id = t.poster_id)
+					WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
+					GROUP BY t.poster_id
+					ORDER BY tally DESC';
+				break;
+
+		}
+
 		$result = $this->db->sql_query_limit($sql, (int) $this->config['thanks_top_number']);
 
 		while ($row = $this->db->sql_fetchrow($result))
