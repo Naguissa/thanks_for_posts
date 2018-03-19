@@ -413,15 +413,25 @@ class thankslist
 					$top = $this->config['topics_per_page'];
 				}
 
-				if ($sortparam)
-				{
+				if ($sortparam) {
 					$sql_array['FROM'] = array($this->thanks_table => 't');
 					$sql_array['SELECT'] .= ', count(t.' . $sortparam . '_id) as count_thanks';
 					$sql_array['LEFT_JOIN'][] = array(
 						'FROM' => array($this->users_table => 'u'),
 						'ON' => 't.' . $sortparam . '_id = u.user_id'
 					);
-					$sql_array['GROUP_BY'] = 't.' . $sortparam . '_id';
+
+					switch ($this->db->get_sql_layer())
+					{
+						case 'postgres':
+							$sql_array['GROUP_BY'] = 't.' . $sortparam . '_id, u.user_id';
+							break;
+
+						default:
+							$sql_array['GROUP_BY'] = 't.' . $sortparam . '_id';
+							break;
+
+					}
 				}
 
 				$where[] = $rows[0];
