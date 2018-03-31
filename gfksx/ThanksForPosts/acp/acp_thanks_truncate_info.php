@@ -19,7 +19,7 @@ class acp_thanks_truncate_info
 		return array(
 			'filename' => '\gfksx\ThanksForPosts\acp\acp_thanks_truncate_module',
 			'title' => 'ACP_THANKS_TRUNCATE',
-			'version' => '3.2.9',
+			'version' => '3.2.10',
 			'modes' => array(
 				'thanks' => array('title' => 'ACP_THANKS_TRUNCATE', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
