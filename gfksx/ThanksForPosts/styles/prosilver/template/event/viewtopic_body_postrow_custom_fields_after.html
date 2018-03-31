@@ -1,4 +1,4 @@
-{% if postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT) %}
+{% if postrow.THANKS_COUNTERS_VIEW and postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT) %}
 <dd class="profile-posts" data-user-give-id="{{ postrow.POSTER_ID }}">
     <strong>{{ lang('GIVEN') }}{{ lang('COLON') }}</strong>
     <a href="{{ postrow.POSTER_GIVE_COUNT_LINK }}">{% if postrow.POSTER_GIVE_COUNT %}{{ postrow.POSTER_GIVE_COUNT }}{% else %}0{% endif %}</a>
