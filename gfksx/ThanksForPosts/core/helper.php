@@ -457,20 +457,13 @@ class helper
 		$sql_array['WHERE'] = 't.poster_id =' . (int) $user_id . ' AND ';
 		$sql_array['WHERE'] .= 'u.user_id = t.user_id AND ';
 		$sql_array['WHERE'] .= '(' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)';
-		$sql_array['ORDER_BY'] = 't.post_id DESC LIMIT ' . (int) $poster_limit;
+		$sql_array['ORDER_BY'] = 't.post_id DESC';
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query($sql);
-
-		$i = 0;
+		$result = $this->db->sql_query_limit($sql, (int) $poster_limit);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			if ($row['poster_id'] == $user_id)
 			{
-				$i++;
-				if ($i > $poster_limit)
-				{
-					break;
-				}
 				$this->template->assign_block_vars('THANKEDLIST', array(
 					'user' => get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 					'url' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id'])
@@ -497,20 +490,14 @@ class helper
 		$sql_array['WHERE'] = 't.user_id =' . (int) $user_id . ' AND ';
 		$sql_array['WHERE'] .= 'u.user_id = t.poster_id AND ';
 		$sql_array['WHERE'] .= '(' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)';
-		$sql_array['ORDER_BY'] = 't.post_id DESC LIMIT ' . (int) $poster_limit;
+		$sql_array['ORDER_BY'] = 't.post_id DESC';
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query($sql);
+		$result = $this->db->sql_query_limit($sql, (int) $poster_limit);
 
-		$i = 0;
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			if ($row['user_id'] == $user_id)
 			{
-				$i++;
-				if ($i > $poster_limit)
-				{
-					break;
-				}
 				$this->template->assign_block_vars('THANKSLIST', array(
 					'user' => get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour']),
 					'url' => append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id'])

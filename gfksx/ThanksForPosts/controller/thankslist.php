@@ -125,8 +125,8 @@ class thankslist
 		if (!$give) {
 			$give =  "";
 		}
-		
-		
+
+
 		if (!$this->auth->acl_gets('u_viewthanks'))
 		{
 			if ($this->user->data['user_id'] != ANONYMOUS)
@@ -136,7 +136,7 @@ class thankslist
 			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang('LOGIN_EXPLAIN_' . strtoupper($mode)) : $this->user->lang('LOGIN_EXPLAIN_MEMBERLIST')));
 		}
 
-		
+
 		$order_by = '';
 
 		switch ($mode)
@@ -343,7 +343,7 @@ class thankslist
 				);
 				foreach ($check_params as $key => $call)
 				{
-					if ($this->request->variable($key, -1) === -1)
+					if (!$this->request->is_set($key))
 					{
 						continue;
 					}
