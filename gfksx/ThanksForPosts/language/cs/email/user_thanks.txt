@@ -1,0 +1,10 @@
+Pøedmìt: {THANKS_SUBG} â€” "{POST_SUBJECT}"
+
+Ahoj {POSTER_NAME},
+
+Toto upozornìní jste dostali, protože{USERNAME} {POST_THANKS} "{POST_SUBJECT}" na "{SITENAME}".
+
+Pokud chcete zobrazit pøíspìvek, kliknìte na následující odkaz:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
