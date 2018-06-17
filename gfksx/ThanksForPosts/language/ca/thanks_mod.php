@@ -38,15 +38,15 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CLEAR_LIST_THANKS' => 'Esborrar la llista d\'agraïments',
-	'CLEAR_LIST_THANKS_CONFIRM' => 'Realment vols esborrar la llista d\'agraïments de l\'usuari?',
-	'CLEAR_LIST_THANKS_GIVE' => 'S\'ha esborrat la llista d\'agraïments fets per l\'usuari.',
-	'CLEAR_LIST_THANKS_POST' => 'S\'ha esborrat la lista d\'agraïments del missatge.',
-	'CLEAR_LIST_THANKS_RECEIVE' => 'S\'ha esborrat la llista d\'agraïments obtinguts per l\'usuari.',
-	'DISABLE_REMOVE_THANKS' => 'L\'administrador ha desactivat l\'opció de retirar els agraïments',
+	'CLEAR_LIST_THANKS' => 'Esborrar la llista d´agraïments',
+	'CLEAR_LIST_THANKS_CONFIRM' => 'Realment vols esborrar la llista d´agraïments de l´usuari?',
+	'CLEAR_LIST_THANKS_GIVE' => 'S´ha esborrat la llista d´agraïments fets per l´usuari.',
+	'CLEAR_LIST_THANKS_POST' => 'S´ha esborrat la lista d´agraïments del missatge.',
+	'CLEAR_LIST_THANKS_RECEIVE' => 'S´ha esborrat la llista d´agraïments obtinguts per l´usuari.',
+	'DISABLE_REMOVE_THANKS' => 'L´administrador ha desactivat l´opció de retirar els agraïments',
 	'GIVEN' => 'Gràcies donades',
 	'GLOBAL_INCORRECT_THANKS' => 'No pots agrair un Anunci Global que no fa referència a cap fòrum en particular.',
-	'GRATITUDES' => 'Llista d\'agraïments',
+	'GRATITUDES' => 'Llista d´agraïments',
 	'INCORRECT_THANKS' => 'Agraïment invàlid',
 	'JUMP_TO_FORUM' => 'Vés al fòrum',
 	'JUMP_TO_TOPIC' => 'Vés al tema',
@@ -55,7 +55,7 @@ $lang = array_merge($lang, array(
 		1 => ' i un usuari més',
 		2 => ' i %d usuaris més'
 	),
-	'NO_VIEW_USERS_THANKS' => 'No tens permís per veure la llista d\'agraïments.',
+	'NO_VIEW_USERS_THANKS' => 'No tens permís per veure la llista d´agraïments.',
 	'NOTIFICATION_THANKS_GIVE' => array(
 		1 => '<strong>Agraïment rebut</strong> de %1$s pel missatge:',
 		2 => '<strong>Agraïments rebuts</strong> de %1$s pel missatge:',
@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 	'REPUT_TOPLIST' => 'Més agraïts — %d',
 	'RATING_LOGIN_EXPLAIN' => 'No tens permís per veure la llista de més agraïts.',
 	'RATING_NO_VIEW_TOPLIST' => 'No tens permís per veure la llista de més agraïts.',
-	'RATING_VIEW_TOPLIST_NO' => 'La llista de més agraïts és buida o deshabilitada per l\'administrador',
+	'RATING_VIEW_TOPLIST_NO' => 'La llista de més agraïts és buida o deshabilitada per l´administrador',
 	'RATING_FORUM' => 'Fòrum',
 	'RATING_POST' => 'Missatge',
 	'RATING_TOP_FORUM' => 'Valoració de fòrums',
@@ -84,25 +84,25 @@ $lang = array_merge($lang, array(
 	'RATING_TOPIC' => 'Tema',
 	'THANK' => 'cop',
 	'THANK_FROM' => 'de',
-	'THANK_TEXT_1' => 'Aquests usuaris han agraït l\'autor ',
+	'THANK_TEXT_1' => 'Aquests usuaris han agraït l´autor ',
 	'THANK_TEXT_2' => array(
 		1 => ' pel missatge: ',
 		2 => ' pel missatge (%d en total):'
 	),
-	'THANK_POST' => 'Agraeix l\'autor del missatge: ',
+	'THANK_POST' => 'Agraeix l´autor del missatge: ',
 	'THANK_POST_SHORT' => 'Gràcies',
 	'THANKS' => array(
 		1 => '%d cop',
 		2 => '%d cops',
 	),
 	'THANKS_BACK' => 'Torna',
-	'THANKS_INFO_GIVE' => 'Acabes d\'agrair el missatge.',
+	'THANKS_INFO_GIVE' => 'Acabes d´agrair el missatge.',
 	'THANKS_INFO_REMOVE' => 'Acabes de cancel·lar el teu agraïment.',
 	'THANKS_LIST' => 'Veure/tancar llista',
-	'THANKS_PM_MES_GIVE' => 't\'ha agraït pel missatge',
+	'THANKS_PM_MES_GIVE' => 't´ha agraït pel missatge',
 	'THANKS_PM_MES_REMOVE' => 'ha cancel·lat el seu agraïment pel missatge',
 	'THANKS_PM_SUBJECT_GIVE' => 'Gràcies pel missatge',
-	'THANKS_PM_SUBJECT_REMOVE' => 'Cancel·la l\'agraïment',
-	'THANKS_USER' => 'Llista d\'agraïments',
+	'THANKS_PM_SUBJECT_REMOVE' => 'Cancel·la l´agraïment',
+	'THANKS_USER' => 'Llista d´agraïments',
 	'TOPLIST' => 'Llista de més agraïts'
 ));

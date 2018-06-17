@@ -35,7 +35,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACL_F_THANKS' => 'Pot agraïr missatges',
-	'ACL_M_THANKS' => 'Pot esborrar la llista d\'agraïments',
+	'ACL_M_THANKS' => 'Pot esborrar la llista d´agraïments',
 	'ACL_U_VIEWTHANKS' => 'Pot veure la llista de tots els agraïments',
 	'ACL_U_VIEWTOPLIST' => 'Pot veure la llista de més agraïts',
 		));

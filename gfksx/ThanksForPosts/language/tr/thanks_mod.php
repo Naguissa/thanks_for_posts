@@ -55,14 +55,14 @@ $lang = array_merge($lang, array(
 		1 => ' ve başka bir kullanıcı',
 		2 => ' ve %d diğer kullanıcılar'
 	),
-	'NO_VIEW_USERS_THANKS' => 'Teşekkür Listesi\'ni görüntülemeye yetkili değilsiniz.',
+	'NO_VIEW_USERS_THANKS' => 'Teşekkür Listesi´ni görüntülemeye yetkili değilsiniz.',
 	'NOTIFICATION_THANKS_GIVE' => array(
-		1 => 'Mesaj için %1$s\'den <strong> teşekkür aldınız </strong>:',
-		2 => 'Mesaj için %1$s\'den <strong> teşekkürler </strong>:',
+		1 => 'Mesaj için %1$s´den <strong> teşekkür aldınız </strong>:',
+		2 => 'Mesaj için %1$s´den <strong> teşekkürler </strong>:',
 	),
 	'NOTIFICATION_THANKS_REMOVE' => array(
-		1 => 'Mesaj için %1$s\'den <strong> teşekkür kaldırıldı</strong>:',
-		2 => 'Mesaj için %1$s\'den <strong> teşekkürler kaldırıldı </strong>:',
+		1 => 'Mesaj için %1$s´den <strong> teşekkür kaldırıldı</strong>:',
+		2 => 'Mesaj için %1$s´den <strong> teşekkürler kaldırıldı </strong>:',
 	),
 	'NOTIFICATION_TYPE_THANKS' => 'Mesajın için teşekkürler',
 	'NOTIFICATION_TYPE_THANKS_GIVE' => 'Birisi mesajın için sana teşekkür etti.',
