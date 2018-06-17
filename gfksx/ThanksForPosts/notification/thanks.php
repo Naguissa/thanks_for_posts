@@ -286,7 +286,6 @@ class thanks extends \phpbb\notification\type\base
 		$this->set_data('poster_id', $thanks_data['poster_id']);
 
 		parent::create_insert_array($thanks_data, $pre_create_data);
-		$ret = $this->get_insert_array();
 	}
 
 	/**
@@ -343,7 +342,7 @@ class thanks extends \phpbb\notification\type\base
 	/**
 	* {@inheritdoc}
 	*/
-	public function update_notification_date($id, int $notification_time)
+	public function update_notification_date($id, $notification_time)
 	{
 		$sql = 'UPDATE ' . $this->notifications_table . ' SET notification_time = ' . (int) $notification_time. ' WHERE notification_id = ' . (int) $id;
 		$this->db->sql_query($sql);
