@@ -12,8 +12,7 @@ namespace gfksx\ThanksForPosts\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class toplist
-{
+class toplist {
 
 	/** @var \phpbb\config\config */
 	protected $config;
@@ -80,8 +79,7 @@ class toplist
 	 * @param string                               $posts_table           POSTS_TABLE
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
-	{
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
@@ -99,10 +97,8 @@ class toplist
 		$this->posts_table = $posts_table;
 	}
 
-	public function main($mode)
-	{
-		if (!function_exists('topic_status'))
-		{
+	public function main($mode) {
+		if (!function_exists('topic_status')) {
 			include($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 		}
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
@@ -120,19 +116,15 @@ class toplist
 		$words = array();
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : true;
-		
+
 		if ($mode == 'post' || $mode == 'topic' || $mode == 'forum') {
 			$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => $mode));
-		}
-		else
-		{
+		} else {
 			$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller');
 		}
 
-		if (!$this->auth->acl_gets('u_viewtoplist'))
-		{
-			if ($this->user->data['user_id'] != ANONYMOUS)
-			{
+		if (!$this->auth->acl_gets('u_viewtoplist')) {
+			if ($this->user->data['user_id'] != ANONYMOUS) {
 				trigger_error('RATING_NO_VIEW_TOPLIST');
 			}
 			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang('LOGIN_EXPLAIN_' . strtoupper($mode)) : $this->user->lang('RATING_LOGIN_EXPLAIN')));
@@ -141,10 +133,9 @@ class toplist
 		$start = $this->request->variable('start', 0);
 		$max_post_thanks = $this->config['thanks_post_reput_view'] ? $this->gfksx_helper->get_max_post_thanks() : 1;
 		$max_topic_thanks = $this->config['thanks_topic_reput_view'] ? $this->gfksx_helper->get_max_topic_thanks() : 1;
-		$max_forum_thanks = $this->config['thanks_forum_reput_view'] ? $this->gfksx_helper->get_max_forum_thanks() : 1;	
-		
-		switch ($mode)
-		{
+		$max_forum_thanks = $this->config['thanks_forum_reput_view'] ? $this->gfksx_helper->get_max_forum_thanks() : 1;
+
+		switch ($mode) {
 			case 'post':
 				$sql = 'SELECT COUNT(DISTINCT post_id) as total_post_count
 					FROM ' . $this->thanks_table . '
@@ -179,12 +170,11 @@ class toplist
 				break;
 
 			default:
-				$total_match_count = '';
+				$total_match_count = 0;
 		}
 		$page_title = sprintf($this->user->lang('REPUT_TOPLIST'), $total_match_count);
 		//post rating
-		if (!$full_forum_rating && !$full_topic_rating && $this->config['thanks_post_reput_view'])
-		{
+		if (!$full_forum_rating && !$full_topic_rating && $this->config['thanks_post_reput_view']) {
 			$end = ($full_post_rating) ? $this->config['topics_per_page'] : $end_row_rating;
 
 			$sql_p_array['FROM'] = array($this->thanks_table => 't');
@@ -206,61 +196,50 @@ class toplist
 			$result = $this->db->sql_query_limit($sql, $end, $start);
 
 			$u_search_post = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'post'));
-			if (!$row = $this->db->sql_fetchrow($result))
-			{
+			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
-			} else
-			{
+			} else {
 				$notoplist = false;
 				$bbcode_bitfield = $text_only_message = '';
-				do
-				{
+				do {
 					// We pre-process some variables here for later usage
 					$row['post_text'] = censor_text($row['post_text']);
 					$text_only_message = $row['post_text'];
 					// make list items visible as such
-					if ($row['bbcode_uid'])
-					{
+					if ($row['bbcode_uid']) {
 						$text_only_message = str_replace('[*:' . $row['bbcode_uid'] . ']', '&sdot;&nbsp;', $text_only_message);
 						// no BBCode in text only message
 						strip_bbcode($text_only_message, $row['bbcode_uid']);
 					}
 
-					if ($return_chars == -1 || utf8_strlen($text_only_message) < ($return_chars + 3))
-					{
+					if ($return_chars == -1 || utf8_strlen($text_only_message) < ($return_chars + 3)) {
 						$row['display_text_only'] = false;
 						$bbcode_bitfield = $bbcode_bitfield | base64_decode($row['bbcode_bitfield']);
 
 						// Does this post have an attachment? If so, add it to the list
-						if ($row['post_attachment'] && $this->config['allow_attachments'])
-						{
+						if ($row['post_attachment'] && $this->config['allow_attachments']) {
 							$attach_list[$row['forum_id']][] = $row['post_id'];
 						}
-					} else
-					{
+					} else {
 						$row['post_text'] = $text_only_message;
 						$row['display_text_only'] = true;
 					}
 					unset($text_only_message);
 
 					// Instantiate BBCode if needed
-					if ($bbcode_bitfield !== '' and ! class_exists('bbcode'))
-					{
+					if ($bbcode_bitfield !== '' and ! class_exists('bbcode')) {
 						include($this->phpbb_root_path . 'includes/bbcode.' . $this->php_ext);
 						$bbcode = new \bbcode(base64_encode($bbcode_bitfield));
 					}
 					// Replace naughty words such as farty pants
 					$row['post_subject'] = censor_text($row['post_subject']);
 
-					if ($row['display_text_only'])
-					{
+					if ($row['display_text_only']) {
 						$row['post_text'] = get_context($row['post_text'], $words, $return_chars);
 						$row['post_text'] = bbcode_nl2br($row['post_text']);
-					} else
-					{
+					} else {
 						// Second parse bbcode here
-						if ($row['bbcode_bitfield'])
-						{
+						if ($row['bbcode_bitfield']) {
 							$bbcode->bbcode_second_pass($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield']);
 						}
 						$parse_flags = ($row['bbcode_bitfield'] ? OPTION_FLAG_BBCODE : 0) | OPTION_FLAG_SMILIES;
@@ -287,8 +266,7 @@ class toplist
 			}
 		}
 		//topic rating
-		if (!$full_forum_rating && !$full_post_rating && $this->config['thanks_topic_reput_view'])
-		{
+		if (!$full_forum_rating && !$full_post_rating && $this->config['thanks_topic_reput_view']) {
 			$end = ($full_topic_rating) ? $this->config['topics_per_page'] : $end_row_rating;
 
 			$sql_t_array['FROM'] = array($this->thanks_table => 'f');
@@ -310,14 +288,11 @@ class toplist
 			$result = $this->db->sql_query_limit($sql, $end, $start);
 			$u_search_topic = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'topic'));
 
-			if (!$row = $this->db->sql_fetchrow($result))
-			{
+			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
-			} else
-			{
+			} else {
 				$notoplist = false;
-				do
-				{
+				do {
 					// Get folder img, topic status/type related information
 					$folder_img = $folder_alt = $topic_type = '';
 					topic_status($row, 0, false, $folder_img, $folder_alt, $topic_type);
@@ -344,8 +319,7 @@ class toplist
 			}
 		}
 		//forum rating
-		if (!$full_topic_rating && !$full_post_rating && $this->config['thanks_forum_reput_view'])
-		{
+		if (!$full_topic_rating && !$full_post_rating && $this->config['thanks_forum_reput_view']) {
 			$end = ($full_forum_rating) ? $this->config['topics_per_page'] : $end_row_rating;
 
 			$sql_f_array['FROM'] = array($this->thanks_table => 't');
@@ -363,24 +337,17 @@ class toplist
 			$result = $this->db->sql_query_limit($sql, $end, $start);
 			$u_search_forum = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'forum'));
 
-			if (!$row = $this->db->sql_fetchrow($result))
-			{
+			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
-			} else
-			{
+			} else {
 				$notoplist = false;
-				do
-				{
-					if (!empty($row['forum_id']))
-					{
-						if ($row['forum_status'] == ITEM_LOCKED)
-						{
+				do {
+					if (!empty($row['forum_id'])) {
+						if ($row['forum_status'] == ITEM_LOCKED) {
 							$folder_image = 'forum_read_locked';
 							$folder_alt = 'FORUM_LOCKED';
-						} else
-						{
-							switch ($row['forum_type'])
-							{
+						} else {
+							switch ($row['forum_type']) {
 								case FORUM_LINK:
 									$folder_image = 'forum_link';
 									break;
@@ -413,8 +380,7 @@ class toplist
 				$this->db->sql_freeresult($result);
 			}
 		}
-		if ($notoplist)
-		{
+		if ($notoplist) {
 			trigger_error('RATING_VIEW_TOPLIST_NO');
 		}
 
