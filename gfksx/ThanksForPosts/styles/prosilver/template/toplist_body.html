@@ -35,7 +35,7 @@
 							{% if ITEM.POST_URL %}<a href="{{ ITEM.POST_URL }}" class="topictitle">{% endif %}
 								{% if ITEM.MINI_POST_IMG %}{{ ITEM.MINI_POST_IMG }}{% endif %}
 								{ITEM.POST_SUBJECT}
-							{% if ITEM.POST_URL %}</a>{% endif %}
+								{% if ITEM.POST_URL %}</a>{% endif %}
 							<br>
 							<div class="topic-poster responsive-hide left-box">
 								{{ ITEM.POST_AUTHOR }} &raquo; {{ ITEM.POST_DATE }}
@@ -52,9 +52,9 @@
 					<dd class="views">
                         <span style="display: block;">{{ ITEM.POST_REPUT }}
 							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
-								<br>
-								{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
-								{% include '@gfksx_ThanksForPosts/partials/star_rating.html' %} 
+							<br>
+							{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
+							{% include '@gfksx_ThanksForPosts/partials/star_rating.html' %}
 							{% endif %}
 						</span>
                     </dd>
@@ -111,12 +111,12 @@
 								<span><i class="icon fa-clone fa-fw" aria-hidden="true"></i></span>
 								<ul>
 									{% for PAGE in ITEM.PAGINATION %}
-										{% if PAGE.S_IS_PREV %}
-										{% elseif PAGE.S_IS_CURRENT %}<li class="active"><span>{{ PAGE.PAGE_NUMBER }}</span></li>
-										{% elseif PAGE.S_IS_ELLIPSIS %}<li class="ellipsis"><span>{{ lang('ELLIPSIS') }}</span></li>
-										{% elseif PAGE.S_IS_NEXT %}
-										{% else %}<li><a class="button" href="{{ PAGE.PAGE_URL }}">{{ PAGE.PAGE_NUMBER }}</a></li>
-										{% endif %}
+									{% if PAGE.S_IS_PREV %}
+									{% elseif PAGE.S_IS_CURRENT %}<li class="active"><span>{{ PAGE.PAGE_NUMBER }}</span></li>
+									{% elseif PAGE.S_IS_ELLIPSIS %}<li class="ellipsis"><span>{{ lang('ELLIPSIS') }}</span></li>
+									{% elseif PAGE.S_IS_NEXT %}
+									{% else %}<li><a class="button" href="{{ PAGE.PAGE_URL }}">{{ PAGE.PAGE_NUMBER }}</a></li>
+									{% endif %}
 									{% endfor %}
 								</ul>
 							</div>
@@ -129,9 +129,9 @@
 					<dd class="views">
                         <span style="display: block;">{{ ITEM.TOPIC_REPUT }}
 							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
-								<br>
-								{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
-								{% include '@gfksx_ThanksForPosts/partials/star_rating.html' %} 
+							<br>
+							{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
+							{% include '@gfksx_ThanksForPosts/partials/star_rating.html' %}
 							{% endif %}
 						</span>
                     </dd>
@@ -172,9 +172,9 @@
 					<dt{% if ITEM.FORUM_IMG_STYLE and S_TOPIC_ICONS %} style="background-image: url({{ T_ICONS_PATH }}{{ ITEM.FORUM_IMG_STYLE }}); background-repeat: no-repeat;"{% endif %}>
 						<div class="list-inner">
 							{% if ITEM.FORUM_IMAGE %}
-								{% EVENT forumlist_body_forum_image_before %}
-								<span class="forum-image">{% EVENT forumlist_body_forum_image_prepend %}{{ ITEM.FORUM_IMAGE }}{% EVENT forumlist_body_forum_image_append %}</span>
-								{% EVENT forumlist_body_forum_image_after %}
+							{% EVENT forumlist_body_forum_image_before %}
+							<span class="forum-image">{% EVENT forumlist_body_forum_image_prepend %}{{ ITEM.FORUM_IMAGE }}{% EVENT forumlist_body_forum_image_append %}</span>
+							{% EVENT forumlist_body_forum_image_after %}
 							{% endif %}
 							{% if ITEM.U_VIEW_FORUM %}<a href="{{ ITEM.U_VIEW_FORUM }}" class="topictitle">{{ ITEM.FORUM_NAME }}</a>{% else %}{{ ITEM.FORUM_NAME }}{% endif %}
 						</div>
@@ -183,9 +183,9 @@
 					<dd class="views">
                         <span style="display: block;">{{ ITEM.FORUM_REPUT }}
 							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
-								<br>
-								{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
-								{% include '@gfksx_ThanksForPosts/partials/star_rating.html' %} 
+							<br>
+							{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
+							{% include '@gfksx_ThanksForPosts/partials/star_rating.html' %}
 							{% endif %}
 						</span>
                     </dd>
@@ -197,7 +197,7 @@
 </div>
 {% endif %}
 
-{% if pagination %}
+{% if .pagination %}
 <div class="action-bar bottom">
 	<div class="pagination">
 		{% include 'pagination.html' %}
