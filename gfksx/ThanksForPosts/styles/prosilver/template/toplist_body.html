@@ -34,7 +34,7 @@
 						<div class="list-inner">
 							{% if ITEM.POST_URL %}<a href="{{ ITEM.POST_URL }}" class="topictitle">{% endif %}
 								{% if ITEM.MINI_POST_IMG %}{{ ITEM.MINI_POST_IMG }}{% endif %}
-								{ITEM.POST_SUBJECT}
+								{{ ITEM.POST_SUBJECT }}
 								{% if ITEM.POST_URL %}</a>{% endif %}
 							<br>
 							<div class="topic-poster responsive-hide left-box">
@@ -103,7 +103,7 @@
 								{% if ITEM.S_HAS_POLL %}<i class="icon fa-bar-chart fa-fw" aria-hidden="true"></i>{% endif %}
 								{% if ITEM.ATTACH_ICON_IMG %}<i class="icon fa-paperclip fa-fw" aria-hidden="true"></i>{% endif %}
 								{{ ITEM.TOPIC_AUTHOR }} &raquo; {{ ITEM.FIRST_POST_TIME }}
-								{% if ITEM.S_POST_GLOBAL and FORUM_ID != ITEM.FORUM_ID %} {{ "&raquo;" }} {{ lang('IN') }} <a href="{{ ITEM.U_VIEW_FORUM }}">{{ ITEM.FORUM_NAME }}</a>{% endif %}
+								{% if ITEM.S_POST_GLOBAL and FORUM_ID != ITEM.FORUM_ID %} &raquo; {{ lang('IN') }} <a href="{{ ITEM.U_VIEW_FORUM }}">{{ ITEM.FORUM_NAME }}</a>{% endif %}
 							</div>
 
 							{% if ITEM.pagination %}
@@ -167,7 +167,7 @@
 
 		<ul class="topiclist topics">
 			{% for ITEM in topforumrow %}
-			<li class="row {% if ITEM.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+			<li class="row bg{% if ITEM.S_ROW_COUNT is even %}1{% else %}2{% endif %}">
 				<dl class="row-item {{ ITEM.FORUM_IMG_STYLE }}">
 					<dt{% if ITEM.FORUM_IMG_STYLE and S_TOPIC_ICONS %} style="background-image: url({{ T_ICONS_PATH }}{{ ITEM.FORUM_IMG_STYLE }}); background-repeat: no-repeat;"{% endif %}>
 						<div class="list-inner">
@@ -197,7 +197,7 @@
 </div>
 {% endif %}
 
-{% if .pagination %}
+{% if pagination %}
 <div class="action-bar bottom">
 	<div class="pagination">
 		{% include 'pagination.html' %}
