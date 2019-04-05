@@ -11,15 +11,13 @@
 
 namespace gfksx\ThanksForPosts\acp;
 
-class acp_thanks_reput_info
-{
+class acp_thanks_reput_info {
 
-	function module()
-	{
+	function module() {
 		return array(
 			'filename' => '\gfksx\ThanksForPosts\acp\acp_thanks_reput_module',
 			'title' => 'ACP_THANKS_REPUT_SETTINGS',
-			'version' => '3.2.11',
+			'version' => '3.2.12',
 			'modes' => array(
 				'thanks' => array('title' => 'ACP_THANKS_REPUT_SETTINGS', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
