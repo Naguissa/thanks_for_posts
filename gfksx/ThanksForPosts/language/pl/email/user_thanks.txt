@@ -1,0 +1,10 @@
+Temat: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Cześć {POSTER_NAME},
+
+Otrzymujesz to powiadmienie ponieważ {USERNAME} {POST_THANKS} "{POST_SUBJECT}" w "{SITENAME}".
+
+Jeśli chcesz zobaczyć ten post kliknij na link poniżej:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
