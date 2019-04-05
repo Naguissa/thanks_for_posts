@@ -13,8 +13,7 @@ namespace gfksx\ThanksForPosts\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class thankslist
-{
+class thankslist {
 
 	/** @var \phpbb\config\config */
 	protected $config;
@@ -77,8 +76,7 @@ class thankslist
 	 * @param string                               $php_ext               phpEx
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext)
-	{
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
@@ -95,8 +93,7 @@ class thankslist
 		$this->users_table = $users_table;
 	}
 
-	public function main($mode, $author_id, $give)
-	{
+	public function main($mode, $author_id, $give) {
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
@@ -123,14 +120,12 @@ class thankslist
 			$author_id = 1;
 		}
 		if (!$give) {
-			$give =  "";
+			$give = "";
 		}
 
 
-		if (!$this->auth->acl_gets('u_viewthanks'))
-		{
-			if ($this->user->data['user_id'] != ANONYMOUS)
-			{
+		if (!$this->auth->acl_gets('u_viewthanks')) {
+			if ($this->user->data['user_id'] != ANONYMOUS) {
 				trigger_error('NO_VIEW_USERS_THANKS');
 			}
 			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang('LOGIN_EXPLAIN_' . strtoupper($mode)) : $this->user->lang('LOGIN_EXPLAIN_MEMBERLIST')));
@@ -139,15 +134,13 @@ class thankslist
 
 		$order_by = '';
 
-		switch ($mode)
-		{
+		switch ($mode) {
 			case 'givens':
 				$per_page = $this->config['posts_per_page'];
 				$page_title = $this->user->lang('SEARCH');
 				$template_html = 'thanks_results.html';
 
-				switch ($give)
-				{
+				switch ($give) {
 					case 'true':
 						$u_search = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $author_id, 'give' => 'true'));
 
@@ -170,12 +163,9 @@ class thankslist
 
 				$result = $this->db->sql_query($sql);
 
-				if (!$row = $this->db->sql_fetchrow($result))
-				{
+				if (!$row = $this->db->sql_fetchrow($result)) {
 					break;
-				}
-				else
-				{
+				} else {
 					$total_match_count = (int) $row['total_match_count'];
 					$this->db->sql_freeresult($result);
 
@@ -195,45 +185,34 @@ class thankslist
 					$sql = $this->db->sql_build_query('SELECT_DISTINCT', $sql_array);
 					$result = $this->db->sql_query_limit($sql, $per_page, $start);
 
-					if (!$row = $this->db->sql_fetchrow($result))
-					{
+					if (!$row = $this->db->sql_fetchrow($result)) {
 						break;
-					}
-					else
-					{
+					} else {
 						$bbcode_bitfield = $text_only_message = '';
-						do
-						{
+						do {
 							// We pre-process some variables here for later usage
 							$row['post_text'] = censor_text($row['post_text']);
 							$text_only_message = $row['post_text'];
 							// make list items visible as such
-							if ($row['bbcode_uid'])
-							{
+							if ($row['bbcode_uid']) {
 								// no BBCode in text only message
 								strip_bbcode($text_only_message, $row['bbcode_uid']);
 							}
 
-							if ($return_chars == -1 || utf8_strlen($text_only_message) < ($return_chars + 3))
-							{
+							if ($return_chars == -1 || utf8_strlen($text_only_message) < ($return_chars + 3)) {
 								$row['display_text_only'] = false;
 								$bbcode_bitfield = $bbcode_bitfield | base64_decode($row['bbcode_bitfield']);
-							}
-							else
-							{
+							} else {
 								$row['post_text'] = $text_only_message;
 								$row['display_text_only'] = true;
 							}
 							unset($text_only_message);
 
-							if ($row['display_text_only'])
-							{
+							if ($row['display_text_only']) {
 								// limit the message length to return_chars value
 								$row['post_text'] = get_context($row['post_text'], array(), $return_chars);
 								$row['post_text'] = bbcode_nl2br($row['post_text']);
-							}
-							else
-							{
+							} else {
 								$flags = (($row['enable_bbcode']) ? OPTION_FLAG_BBCODE : 0) + (($row['enable_smilies']) ? OPTION_FLAG_SMILIES : 0) + (($row['enable_magic_url']) ? OPTION_FLAG_LINKS : 0);
 								$row['post_text'] = generate_text_for_display($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], $flags);
 							}
@@ -253,19 +232,15 @@ class thankslist
 								'U_VIEW_FORUM' => append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']),
 								'U_VIEW_POST' => (!empty($row['post_id'])) ? append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "t=" . $row['topic_id'] . '&amp;p=' . $row['post_id']) . '#p' . $row['post_id'] : '',
 							));
-						}
-						while ($row = $this->db->sql_fetchrow($result));
+						} while ($row = $this->db->sql_fetchrow($result));
 
 						$this->db->sql_freeresult($result);
 					}
 				}
-				if ($total_match_count > 1000)
-				{
+				if ($total_match_count > 1000) {
 					$total_match_count--;
 					$l_search_matches = $this->user->lang('FOUND_MORE_SEARCH_MATCHES', $total_match_count);
-				}
-				else
-				{
+				} else {
 					$l_search_matches = $this->user->lang('FOUND_SEARCH_MATCHES', $total_match_count);
 				}
 				$this->pagination->generate_template_pagination($u_search, 'pagination', 'start', $total_match_count, $per_page, $start);
@@ -288,8 +263,7 @@ class thankslist
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
 					GROUP BY user_id';
 				$result = $this->db->sql_query($sql);
-				while ($row = $this->db->sql_fetchrow($result))
-				{
+				while ($row = $this->db->sql_fetchrow($result)) {
 					$givens[$row['user_id']] = $row['tally'];
 				}
 				$this->db->sql_freeresult($result);
@@ -299,8 +273,7 @@ class thankslist
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
 					GROUP BY poster_id';
 				$result = $this->db->sql_query($sql);
-				while ($row = $this->db->sql_fetchrow($result))
-				{
+				while ($row = $this->db->sql_fetchrow($result)) {
 					$reseved[$row['poster_id']] = $row['tally'];
 				}
 				$this->db->sql_freeresult($result);
@@ -309,21 +282,18 @@ class thankslist
 				$sort_key_text = array('a' => $this->user->lang('SORT_USERNAME'), 'b' => $this->user->lang('SORT_LOCATION'), 'c' => $this->user->lang('SORT_JOINED'), 'd' => $this->user->lang('SORT_POST_COUNT'), 'e' => 'R_THANKS', 'f' => 'G_THANKS');
 				$sort_key_sql = array('a' => 'u.username_clean', 'b' => 'u.user_from', 'c' => 'u.user_regdate', 'd' => 'u.user_posts', 'e' => 'count_thanks', 'f' => 'count_thanks');
 				$sort_dir_text = array('a' => $this->user->lang('ASCENDING'), 'd' => $this->user->lang('DESCENDING'));
-				if ($this->auth->acl_get('u_viewonline'))
-				{
+				if ($this->auth->acl_get('u_viewonline')) {
 					$sort_key_text['l'] = $this->user->lang('SORT_LAST_ACTIVE');
 					$sort_key_sql['l'] = 'u.user_lastvisit';
 				}
 
 				$s_sort_key = '';
-				foreach ($sort_key_text as $key => $value)
-				{
+				foreach ($sort_key_text as $key => $value) {
 					$selected = ($sort_key == $key) ? ' selected="selected"' : '';
 					$s_sort_key .= '<option value="' . $key . '"' . $selected . '>' . $value . '</option>';
 				}
 				$s_sort_dir = '';
-				foreach ($sort_dir_text as $key => $value)
-				{
+				foreach ($sort_dir_text as $key => $value) {
 					$selected = ($sort_dir == $key) ? ' selected="selected"' : '';
 					$s_sort_dir .= '<option value="' . $key . '"' . $selected . '>' . $value . '</option>';
 				}
@@ -341,10 +311,8 @@ class thankslist
 					'author_id' => array('author_id', $author_id),
 					'give' => array('give', $give),
 				);
-				foreach ($check_params as $key => $call)
-				{
-					if (!$this->request->is_set($key))
-					{
+				foreach ($check_params as $key => $call) {
+					if (!$this->request->is_set($key)) {
 						continue;
 					}
 
@@ -358,8 +326,7 @@ class thankslist
 				$sql = 'SELECT DISTINCT poster_id
 					FROM ' . $this->thanks_table;
 				$result = $this->db->sql_query($sql);
-				while ($row = $this->db->sql_fetchrow($result))
-				{
+				while ($row = $this->db->sql_fetchrow($result)) {
 					$rowsp[] = $row['poster_id'];
 				}
 				$this->db->sql_freeresult($result);
@@ -367,32 +334,25 @@ class thankslist
 				$sql = 'SELECT DISTINCT user_id
 					FROM ' . $this->thanks_table;
 				$result = $this->db->sql_query($sql);
-				while ($row = $this->db->sql_fetchrow($result))
-				{
+				while ($row = $this->db->sql_fetchrow($result)) {
 					$rowsu[] = $row['user_id'];
 				}
 				$this->db->sql_freeresult($result);
 
-				if ($sort_key == 'e')
-				{
+				if ($sort_key == 'e') {
 					$sortparam = 'poster';
 					$rows = $rowsp;
-				}
-				else if ($sort_key == 'f')
-				{
+				} else if ($sort_key == 'f') {
 					$sortparam = 'user';
 					$rows = $rowsu;
-				}
-				else
-				{
+				} else {
 					$sortparam = '';
 					$rows = array_merge($rowsp, $rowsu);
 				}
 
 				$total_users = count(array_unique($rows));
 
-				if (empty($rows))
-				{
+				if (empty($rows)) {
 					break;
 				}
 
@@ -402,14 +362,11 @@ class thankslist
 					'ORDER_BY' => $order_by,
 				);
 
-				if ($top)
-				{
+				if ($top) {
 					$total_users = $top;
 					$start = 0;
 					$page_title = $this->user->lang('REPUT_TOPLIST');
-				}
-				else
-				{
+				} else {
 					$top = $this->config['topics_per_page'];
 				}
 
@@ -421,8 +378,7 @@ class thankslist
 						'ON' => 't.' . $sortparam . '_id = u.user_id'
 					);
 
-					switch ($this->db->get_sql_layer())
-					{
+					switch ($this->db->get_sql_layer()) {
 						case 'postgres':
 							$sql_array['GROUP_BY'] = 't.' . $sortparam . '_id, u.user_id';
 							break;
@@ -430,25 +386,20 @@ class thankslist
 						default:
 							$sql_array['GROUP_BY'] = 't.' . $sortparam . '_id';
 							break;
-
 					}
 				}
 
 				$where[] = $rows[0];
-				for ($i = 1, $end = sizeof($rows); $i < $end; ++$i)
-				{
+				for ($i = 1, $end = sizeof($rows); $i < $end; ++$i) {
 					$where[] = $rows[$i];
 				}
 				$sql_array['WHERE'] = $this->db->sql_in_set('u.user_id', $where);
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
 				$result = $this->db->sql_query_limit($sql, $top, $start);
 
-				if (!$row = $this->db->sql_fetchrow($result))
-				{
+				if (!$row = $this->db->sql_fetchrow($result)) {
 					trigger_error('NO_USER');
-				}
-				else
-				{
+				} else {
 					$sql = 'SELECT session_user_id, MAX(session_time) AS session_time
 						FROM ' . SESSIONS_TABLE . '
 						WHERE session_time >= ' . (time() - $this->config['session_length']) . '
@@ -457,30 +408,25 @@ class thankslist
 					$result_sessions = $this->db->sql_query($sql);
 
 					$session_times = array();
-					while ($session = $this->db->sql_fetchrow($result_sessions))
-					{
+					while ($session = $this->db->sql_fetchrow($result_sessions)) {
 						$session_times[$session['session_user_id']] = $session['session_time'];
 					}
 					$this->db->sql_freeresult($result_sessions);
 
 					$user_list = array();
 					$id_cache = array();
-					do
-					{
+					do {
 						$row['session_time'] = (!empty($session_times[$session['user_id']])) ? $session_times[$session['user_id']] : 0;
 						$row['last_visit'] = (!empty($session['session_time'])) ? $session['session_time'] : $session['user_lastvisit'];
 						$user_list[] = (int) $row['user_id'];
 						$id_cache[$row['user_id']] = $row;
-					}
-					while ($row = $this->db->sql_fetchrow($result));
+					} while ($row = $this->db->sql_fetchrow($result));
 					$this->db->sql_freeresult($result);
 
 					// Load custom profile fields
-					if ($this->config['load_cpf_memberlist'])
-					{
+					if ($this->config['load_cpf_memberlist']) {
 						$cp_row = $this->profilefields_manager->generate_profile_fields_template_headlines('field_show_on_ml');
-						foreach ($cp_row as $profile_field)
-						{
+						foreach ($cp_row as $profile_field) {
 							$this->template->assign_block_vars('custom_fields', $profile_field);
 						}
 
@@ -488,12 +434,9 @@ class thankslist
 						$profile_fields_cache = $this->profilefields_manager->grab_profile_fields_data($user_list);
 
 						// Filter the fields we don't want to show
-						foreach ($profile_fields_cache as $user_id => $user_profile_fields)
-						{
-							foreach ($user_profile_fields as $field_ident => $profile_field)
-							{
-								if (!$profile_field['data']['field_show_on_ml'])
-								{
+						foreach ($profile_fields_cache as $user_id => $user_profile_fields) {
+							foreach ($user_profile_fields as $field_ident => $profile_field) {
+								if (!$profile_field['data']['field_show_on_ml']) {
 									unset($profile_fields_cache[$user_id][$field_ident]);
 								}
 							}
@@ -501,13 +444,12 @@ class thankslist
 					}
 
 					// Not needed for phpBB 3.2.2, but leave it here for compatibility with older versions.
-					if (!function_exists('get_user_rank'))
-					{
+					if (!function_exists('get_user_rank')) {
 						include($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 					}
-					//do
-					for ($i = 0, $end = sizeof($user_list); $i < $end; ++$i)
-					{
+
+					$acl_u_search = $this->auth->acl_get('u_search');
+					for ($i = 0, $end = sizeof($user_list); $i < $end; ++$i) {
 						$user_id = $user_list[$i];
 						$row = $id_cache[$user_id];
 						$last_visit = $row['user_lastvisit'];
@@ -516,8 +458,7 @@ class thankslist
 						$sthanks = true;
 						// Custom Profile Fields
 						$cp_row = array();
-						if ($this->config['load_cpf_memberlist'])
-						{
+						if ($this->config['load_cpf_memberlist']) {
 							$cp_row = isset($profile_fields_cache[$user_id]) ? $this->profilefields_manager->generate_profile_fields_template_data($profile_fields_cache[$user_id], false) : array();
 						}
 
@@ -535,24 +476,21 @@ class thankslist
 							'USERNAME' => get_username_string('username', $row['user_id'], $row['username'], $row['user_colour']),
 							'USER_COLOR' => get_username_string('colour', $row['user_id'], $row['username'], $row['user_colour']),
 							'U_VIEW_PROFILE' => get_username_string('profile', $row['user_id'], $row['username'], $row['user_colour']),
-							'U_SEARCH_USER' => ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}search.$this->php_ext", "author_id=$user_id&amp;sr=posts") : '',
-							'U_SEARCH_USER_GIVENS' => ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true')) : '',
-							'U_SEARCH_USER_RECEIVED' => ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false')) : '',
+							'U_SEARCH_USER' => $acl_u_search ? append_sid("{$this->phpbb_root_path}search.$this->php_ext", "author_id=$user_id&amp;sr=posts") : '',
+							'U_SEARCH_USER_GIVENS' => $acl_u_search ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true')) : '',
+							'U_SEARCH_USER_RECEIVED' => $acl_u_search ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false')) : '',
 							'L_VIEWING_PROFILE' => sprintf($this->user->lang('VIEWING_PROFILE'), $row['username']),
 							'S_CUSTOM_FIELDS' => (isset($cp_row['row']) && sizeof($cp_row['row'])) ? true : false
 						));
 
-						if (isset($cp_row['row']) && sizeof($cp_row['row']))
-						{
+						if (isset($cp_row['row']) && sizeof($cp_row['row'])) {
 							$memberrow = array_merge($memberrow, $cp_row['row']);
 						}
 
 						$this->template->assign_block_vars('memberrow', $memberrow);
 
-						if (isset($cp_row['blockrow']) && sizeof($cp_row['blockrow']))
-						{
-							foreach ($cp_row['blockrow'] as $field_data)
-							{
+						if (isset($cp_row['blockrow']) && sizeof($cp_row['blockrow'])) {
+							foreach ($cp_row['blockrow'] as $field_data) {
 								$this->template->assign_block_vars('memberrow.custom_fields', $field_data);
 							}
 						}
@@ -568,6 +506,7 @@ class thankslist
 						'U_SORT_THANKS_R' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'e', 'sort_dir' => (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd'))),
 						'U_SORT_THANKS_G' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'f', 'sort_dir' => (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd'))),
 						'U_SORT_ACTIVE' => ($this->auth->acl_get('u_viewonline')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'return_chars' => $return_chars, 'sort_key' => 'l', 'sort_dir' => (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a'))) : '',
+						'S_VIEWONLINE' => $this->auth->acl_get('u_viewonline')
 					));
 				}
 				break;

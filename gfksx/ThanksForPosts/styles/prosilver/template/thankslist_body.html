@@ -7,9 +7,9 @@
 	<div class="pagination">
 		{{ TOTAL_USERS }}
 		{% if pagination %}
-			{% include 'pagination.html' %}
+		{% include 'pagination.html' %}
 		{% else %}
-			{{ "&bull;" }} {{ PAGE_NUMBER }}
+		{{ "&bull;" }} {{ PAGE_NUMBER }}
 		{% endif %}
 	</div>
 </div>
@@ -27,12 +27,14 @@
 					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_THANKS_R }}">{{ lang('RECEIVED') }}</a>{% else %}{{ lang('RECEIVED') }}{% endif %}</th>
 					<th class="info">
 						{% for FIELD in custom_fields %}
-							{% if not(FIELD.S_FIRST_ROW) %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
-							{{ FIELD.PROFILE_FIELD_NAME }}
+						{% if not(FIELD.S_FIRST_ROW) %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
+						{{ FIELD.PROFILE_FIELD_NAME }}
 						{% endfor %}
 					</th>
 					<th class="joined">{% if S_THANKS %}<a href="{{ U_SORT_JOINED }}">{{ lang('JOINED') }}</a>{% else %}{{ lang('JOINED') }}{% endif %}</th>
+					{% if S_VIEWONLINE %}
 					<th class="active">{% if S_THANKS %}<a href="{{ U_SORT_ACTIVE }}">{{ lang('LAST_ACTIVE') }}</a>{% else %}{{ lang('LAST_ACTIVE') }}{% endif %}</th>
+					{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -48,13 +50,15 @@
 					<td class="posts">{% if MEMBER.RECEIVED %}<a href="{{ MEMBER.U_SEARCH_USER_RECEIVED }}" title="{{ lang('SEARCH_USER_POSTS') }}">{{ MEMBER.RECEIVED }}</a>{% else %}{{ MEMBER.RECEIVED }}{% endif %}</td>
 					<td class="info">
 						{% for FIELD in custom_fields %}
-							<div>{{ FIELD.PROFILE_FIELD_VALUE }}</div>
+						<div>{{ FIELD.PROFILE_FIELD_VALUE }}</div>
 						{% else %}
-							{{ "&nbsp;" }}
+						{{ "&nbsp;" }}
 						{% endfor %}
 					</td>
 					<td>{{ MEMBER.JOINED }}</td>
+					{% if S_VIEWONLINE %}
 					<td>{{ MEMBER.VISITED }}{{ "&nbsp;" }}</td>
+					{% endif %}
 				</tr>
 				{% else %}
 				<tr class="bg1">
@@ -71,9 +75,9 @@
 	<div class="pagination">
 		{{ TOTAL_USERS }}
 		{% if pagination %}
-			{% include 'pagination.html' %}
+		{% include 'pagination.html' %}
 		{% else %}
-			{{ "&bull;" }} {{ PAGE_NUMBER }}
+		{{ "&bull;" }} {{ PAGE_NUMBER }}
 		{% endif %}
 	</div>
 </div>
