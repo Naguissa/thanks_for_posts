@@ -1,0 +1,10 @@
+Oggetto: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Salve {POSTER_NAME},
+
+Ricevi questa notifica perchè {USERNAME} ha fatto la seguente azione: {POST_THANKS} "{POST_SUBJECT}" su "{SITENAME}".
+
+Se vuoi vedere il post di riferimento, clicca il seguente link:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
