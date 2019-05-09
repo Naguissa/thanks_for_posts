@@ -33,6 +33,11 @@
 		"display-name": "Thanks for posts",
 		"soft-require": {
 			"phpbb/phpbb": ">=3.2.0"
+		},
+		"version-check": {
+			"host": "www.foroelectro.net",
+			"directory": "/tools/version_check",
+			"filename": "thanks_for_posts.json"
 		}
 	}
 }
