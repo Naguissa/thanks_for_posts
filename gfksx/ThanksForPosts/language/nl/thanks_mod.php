@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CLEAR_LIST_THANKS' => 'Verwijder alle waarderingen',
-	'CLEAR_LIST_THANKS_CONFIRM' => 'Weet je zeker dat je alle waarderingen van deze gebruiker wilt verwijderen?',
+	'CLEAR_LIST_THANKS' => 'Verwijder waarderingen',
+	'CLEAR_LIST_THANKS_CONFIRM' => 'Weet je zeker dat je alle waarderingen wilt verwijderen?',
 	'CLEAR_LIST_THANKS_GIVE' => 'Alle waarderingen van deze gebruiker zijn verwijderd.',
 	'CLEAR_LIST_THANKS_POST' => 'Alle waarderingen van dit bericht zijn verwijderd.',
 	'CLEAR_LIST_THANKS_RECEIVE' => 'Alle ontvangen waarderingen van deze gebruiker zijn verwijderd.',
@@ -61,14 +61,14 @@ $lang = array_merge($lang, array(
         2 => '%1$s <strong> waarderen</strong> je bericht:',
 	),
 	'NOTIFICATION_THANKS_REMOVE' => array(
-		1 => '<strong>Waardering</strong> van %1$s voor het bericht:',
-		2 => '<strong>Waarderingen verwijderd</strong> van %1$s voor de berichten:',
+		1 => '%1$s <strong>verwijdert waardering</strong> voor je bericht:',
+		2 => '%1$s <strong>verwijderen waarderingen</strong> voor je bericht:',
 	),
 	'NOTIFICATION_TYPE_THANKS' => 'Bedankt voor je bericht',
 	'NOTIFICATION_TYPE_THANKS_GIVE' => 'Iemand heeft een bericht van jou gewaardeerd',
-	'NOTIFICATION_TYPE_THANKS_REMOVE' => 'Iemand heeft zijn waardering voor een bericht van jou verwijderd',
+	'NOTIFICATION_TYPE_THANKS_REMOVE' => 'Iemand heeft zijn waardering van een bericht van jou verwijderd',
 	'RECEIVED' => 'Ontvangen waarderingen',
-	'REMOVE_THANKS' => 'Verwijder je waardering: ',
+	'REMOVE_THANKS' => 'Verwijder waardering voor dit bericht van ',
 	'REMOVE_THANKS_CONFIRM' => 'Weet je zeker dat je je waardering wilt verwijderen?',
 	'REMOVE_THANKS_SHORT' => 'Verwijder waardering',
 	'REPUT' => 'Waardering',
