@@ -33,7 +33,7 @@
 					<dt>
 						<div class="list-inner">
 							{% if ITEM.POST_URL %}<a href="{{ ITEM.POST_URL }}" class="topictitle">{% endif %}
-								{% if ITEM.MINI_POST_IMG %}{{ ITEM.MINI_POST_IMG }}{% endif %}
+								<i class="icon fa-file fa-fw {% if ITEM.S_UNREAD_POST %}icon-red{% else %}icon-lightgray{% endif %} icon-md" aria-hidden="true"></i>
 								{{ ITEM.POST_SUBJECT }}
 								{% if ITEM.POST_URL %}</a>{% endif %}
 							<br>

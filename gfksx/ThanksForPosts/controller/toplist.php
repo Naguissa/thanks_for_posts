@@ -173,6 +173,7 @@ class toplist {
 				$total_match_count = 0;
 		}
 		$page_title = sprintf($this->user->lang('REPUT_TOPLIST'), $total_match_count);
+
 		//post rating
 		if (!$full_forum_rating && !$full_topic_rating && $this->config['thanks_post_reput_view']) {
 			$end = ($full_post_rating) ? $this->config['topics_per_page'] : $end_row_rating;
@@ -199,9 +200,27 @@ class toplist {
 			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
 			} else {
+				// Accumulate read icons for posts
+				$forum_topic_ids = array();
+				$posts_read_marks = array();
+				$rowsArray = array();
+				do {
+					if (!isset($forum_topic_ids[$row['forum_id']])) {
+						$forum_topic_ids[$row['forum_id']] = array($row['topic_id'] => true);
+					} else {
+						$forum_topic_ids[$row['forum_id']][$row['topic_id']] = true;
+					}
+					$rowsArray[] = $row;
+				} while ($row = $this->db->sql_fetchrow($result));
+				$this->db->sql_freeresult($result);
+
+				foreach ($forum_topic_ids as $forum_id => $topics) {
+					$posts_read_marks[$forum_id] = get_complete_topic_tracking($forum_id, array_keys($topics));
+				}
+
 				$notoplist = false;
 				$bbcode_bitfield = $text_only_message = '';
-				do {
+				foreach ($rowsArray as $row) {
 					// We pre-process some variables here for later usage
 					$row['post_text'] = censor_text($row['post_text']);
 					$text_only_message = $row['post_text'];
@@ -251,18 +270,19 @@ class toplist {
 					$this->template->assign_block_vars('toppostrow', array(
 						'MESSAGE' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : $row['post_text']),
 						'POST_DATE' => !empty($row['post_time']) ? $this->user->format_date($row['post_time']) : '',
-						'MINI_POST_IMG' => $this->user->img('icon_post_target', 'POST'),
 						'POST_URL' => $post_url,
+						'POST_ID' => $row['post_id'],
+						'FORUM_ID' => $row['forum_id'],
 						'POST_SUBJECT' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_subject'] : ((!empty($row['forum_id'])) ? '' : $row['post_subject']),
 						'POST_AUTHOR' => get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
 						'POST_REPUT' => $reputation_pct . '%',
 						'POST_THANKS' => $row['post_thanks'],
 						'S_THANKS_POST_REPUT_VIEW' => isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct)
+						'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct),
+						'S_UNREAD_POST' => !isset($posts_read_marks[$row['forum_id']][$row['topic_id']]) || $posts_read_marks[$row['forum_id']][$row['topic_id']] < $row['post_time']
 					));
-				} while ($row = $this->db->sql_fetchrow($result));
-				$this->db->sql_freeresult($result);
+				}
 			}
 		}
 		//topic rating
@@ -336,7 +356,6 @@ class toplist {
 			$sql = $this->db->sql_build_query('SELECT', $sql_f_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
 			$u_search_forum = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'forum'));
-
 			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
 			} else {
