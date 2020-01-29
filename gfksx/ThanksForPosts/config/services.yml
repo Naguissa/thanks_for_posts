@@ -55,7 +55,7 @@ services:
             - '%tables.users%'
             - '%core.root_path%'
             - '%core.php_ext%'
-    gfksx.ThanksForPosts.controller.toplist:
+    gfksx.thanksforposts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
         arguments:
             - '@config'
@@ -75,7 +75,7 @@ services:
             - '%tables.posts%'
     gfksx.ThanksForPosts.notification.type.thanks:
         class: gfksx\ThanksForPosts\notification\thanks
-        scope: prototype # scope MUST be prototype for this to work!
+        shared: false
         arguments:
             - '@dbal.conn'
             - '@language'
@@ -88,9 +88,10 @@ services:
             - '@user_loader'
         tags:
             - { name: notification.type }
-    gfksx.ThanksForPosts.notification.type.thanks_remove:
+    gfksx.thanksforposts.notification.type.thanks_remove:
         class: gfksx\ThanksForPosts\notification\thanks_remove
-        scope: prototype # scope MUST be prototype for this to work!
-        parent: gfksx.ThanksForPosts.notification.type.thanks
+        shared: false # scope MUST be prototype for this to work!
+        parent: gfksx.thanksforposts.notification.type.thanks
         tags:
             - { name: notification.type }
+
