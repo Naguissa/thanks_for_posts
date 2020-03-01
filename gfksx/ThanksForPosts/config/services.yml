@@ -91,7 +91,7 @@ services:
     gfksx.ThanksForPosts.notification.type.thanks_remove:
         class: gfksx\ThanksForPosts\notification\thanks_remove
         shared: false # scope MUST be prototype for this to work!
-        parent: gfksx.thanksforposts.notification.type.thanks
+        parent: gfksx.ThanksForPosts.notification.type.thanks
         tags:
             - { name: notification.type }
 

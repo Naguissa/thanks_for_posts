@@ -17,7 +17,7 @@ class acp_thanks_refresh_info {
 		return array(
 			'filename' => '\gfksx\ThanksForPosts\acp\acp_thanks_refresh_module',
 			'title' => 'ACP_THANKS_REFRESH',
-			'version' => '3.2.16',
+			'version' => '3.2.17',
 			'modes' => array(
 				'thanks' => array('title' => 'ACP_THANKS_REFRESH', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
