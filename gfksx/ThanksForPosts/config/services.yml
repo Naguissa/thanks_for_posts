@@ -55,7 +55,7 @@ services:
             - '%tables.users%'
             - '%core.root_path%'
             - '%core.php_ext%'
-    gfksx.thanksforposts.controller.toplist:
+    gfksx.ThanksForPosts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
         arguments:
             - '@config'
@@ -88,7 +88,7 @@ services:
             - '@user_loader'
         tags:
             - { name: notification.type }
-    gfksx.thanksforposts.notification.type.thanks_remove:
+    gfksx.ThanksForPosts.notification.type.thanks_remove:
         class: gfksx\ThanksForPosts\notification\thanks_remove
         shared: false # scope MUST be prototype for this to work!
         parent: gfksx.thanksforposts.notification.type.thanks
