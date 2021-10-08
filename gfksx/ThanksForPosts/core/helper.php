@@ -160,7 +160,7 @@ class helper
 
 		if (!empty($user_list))
 		{
-			$return = implode($user_list, ' &bull; ');
+			$return = implode(' &bull; ', $user_list);
 		}
 
 		if ($further_thanks > 0)
