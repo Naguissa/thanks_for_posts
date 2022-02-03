@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Показати не ідентифікованим користувачам (гостям)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Якщо активний, він покаже подяку та репутацію (якщо активна) для невизначених користувачів (гостей).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Показати пошуковим системам (ботам)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Якщо активний, він покаже подяку та репутацію (якщо активна) пошуковим системам (ботам).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Якщо активний, він покаже подяку та репутацію (якщо активна) пошуковим системам (ботам).',
+	'THANKS_SYMBOL_THANKS' => 'Символ кнопки подяки',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Символ із шрифту FontAwesome для кнопки «Дякую». За замовчуванням: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Видалити символ кнопки подяки',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Символ шрифту FontAwesome для кнопки «Спасибі Видалити». За замовчуванням: fa-recycle'
 		));

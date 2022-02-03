@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Tanımlanmayan kullanıcılara göster (misafir)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Eğer aktifse, tanımlanmamış kullanıcılara (misafirlere) teşekkür ve itibar gösterecektir..',
 	'THANKS_POST_VIEW_ROBOTS' => 'Arama motorlarına göster (botlar)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Etkinse, arama motorlarına (aktifse) teşekkür ve itibar gösterecektir (botlar)'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Etkinse, arama motorlarına (aktifse) teşekkür ve itibar gösterecektir (botlar)',
+	'THANKS_SYMBOL_THANKS' => 'Teşekkür düğmesi sembolü',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Teşekkür Ederim düğmesi için FontAwesome yazı tipinden sembol. Varsayılan: büyük başparmak-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Teşekkür düğmesi sembolünü kaldır',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Teşekkür Ederim Kaldır düğmesi için FontAwesome yazı tipinden sembol. Varsayılan: fa-geri dönüşüm'
 		));

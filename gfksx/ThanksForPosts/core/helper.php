@@ -400,13 +400,13 @@ class helper
 			return array(
 				'THANK_ALT' => $this->user->lang('REMOVE_THANKS'),
 				'THANK_ALT_SHORT' => $this->user->lang('REMOVE_THANKS_SHORT'),
-				'THANKS_IMG' => 'fa-recycle',
+				'THANKS_IMG' => isset($this->config['thanks_symbol_remove']) && !empty($this->config['thanks_symbol_remove']) ? $this->config['thanks_symbol_remove'] : 'fa-recycle',
 			);
 		}
 		return array(
 			'THANK_ALT' => $this->user->lang('THANK_POST'),
 			'THANK_ALT_SHORT' => $this->user->lang('THANK_POST_SHORT'),
-			'THANKS_IMG' => 'fa-thumbs-o-up',
+			'THANKS_IMG' => isset($this->config['thanks_symbol_thanks']) && !empty($this->config['thanks_symbol_thanks']) ? $this->config['thanks_symbol_thanks'] : 'fa-thumbs-o-up',
 		);
 	}
 
@@ -511,7 +511,6 @@ class helper
 		$l_poster_receive_count = ($poster_receive_count) ? $this->user->lang('THANKS', $poster_receive_count) : '';
 		$l_poster_give_count = ($poster_give_count) ? $this->user->lang('THANKS', $poster_give_count) : '';
 
-
 		$this->template->assign_vars(array(
 			'POSTER_RECEIVE_COUNT' => $l_poster_receive_count,
 			'MORE_THANKS' => $further_thanks_text,
@@ -525,7 +524,6 @@ class helper
 			'POSTER_GIVE_COUNT_LINK' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true'))
 		));
 	}
-
 
 	public function output_thanks($poster_id, &$postrow, $row, $topic_data, $forum_id)
 	{
@@ -597,7 +595,8 @@ class helper
 				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
 			$result = $this->db->sql_query($sql);
 			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
-			if ($this->max_post_thanks == 0) {
+			if ($this->max_post_thanks == 0)
+			{
 				$this->max_post_thanks = 1;
 			}
 			$this->db->sql_freeresult($result);
@@ -725,7 +724,8 @@ class helper
 			FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
 		$result = $this->db->sql_query($sql);
 		$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
-		if ($this->max_post_thanks == 0) {
+		if ($this->max_post_thanks == 0)
+		{
 			$this->max_post_thanks = 1;
 		}
 		$this->db->sql_freeresult($result);
@@ -756,7 +756,6 @@ class helper
 					GROUP BY t.poster_id
 					ORDER BY tally DESC';
 				break;
-
 		}
 
 		$result = $this->db->sql_query_limit($sql, (int) $this->config['thanks_top_number']);
@@ -813,7 +812,8 @@ class helper
 				WHERE forum_id <> 0';
 			$result = $this->db->sql_query($sql);
 			$this->max_forum_thanks = (int) $this->db->sql_fetchfield('max_forum_thanks');
-			if ($this->max_forum_thanks == 0) {
+			if ($this->max_forum_thanks == 0)
+			{
 				$this->max_forum_thanks = 1;
 			}
 			$this->db->sql_freeresult($result);
@@ -893,12 +893,10 @@ class helper
 		if ($ratingRounded < 1)
 		{
 			$output[] = "star-o";
-		}
-		elseif (($ratingRounded % 2) === 0)
+		} elseif (($ratingRounded % 2) === 0)
 		{
 			$output[] = "star";
-		}
-		else
+		} else
 		{
 			$output[] = "star-half-o";
 		}

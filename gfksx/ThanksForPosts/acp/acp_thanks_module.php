@@ -51,6 +51,8 @@ class acp_thanks_module
 				'thanks_profilelist_view' => array('lang' => 'THANKS_PROFILELIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_number' => array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1', 'type' => 'text:4:4', 'explain' => true),
 				'thanks_top_number' => array('lang' => 'THANKS_TOP_NUMBER', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
+				'thanks_symbol_thanks' => array('lang' => 'THANKS_SYMBOL_THANKS', 'validate' => 'text:1:30', 'type' => 'text:10:30', 'explain' => true),
+				'thanks_symbol_remove' => array('lang' => 'THANKS_SYMBOL_REMOVE', 'validate' => 'text:1:30', 'type' => 'text:10:30', 'explain' => true)
 			)
 		);
 
@@ -61,8 +63,9 @@ class acp_thanks_module
 
 		$this->new_config = $config;
 		$cfg_array = utf8_normalize_nfc($request->raw_variable('config', array()));
-		if ($cfg_array === array()) {
-			$cfg_array = $this->new_config ;
+		if ($cfg_array === array())
+		{
+			$cfg_array = $this->new_config;
 		}
 		$error = array();
 
@@ -139,8 +142,7 @@ class acp_thanks_module
 			if ($vars['explain'] && isset($vars['lang_explain']))
 			{
 				$l_explain = $user->lang($vars['lang_explain']);
-			}
-			else if ($vars['explain'])
+			} else if ($vars['explain'])
 			{
 				$l_explain = $user->lang($vars['lang'] . '_EXPLAIN');
 			}

@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Zeigen an nicht identifizierte Benutzer (Gäste)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Wenn aktiv, zeigt es Dank und Ruf (falls aktiv) an nicht identifizierte Benutzer (Gäste).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Zeigen an Suchmaschinen (Bots)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Wenn aktiv, zeigt es Dank und Ruf (falls aktiv) an Suchmaschinen (Bots).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Wenn aktiv, zeigt es Dank und Ruf (falls aktiv) an Suchmaschinen (Bots).',
+	'THANKS_SYMBOL_THANKS' => 'Danke-Button-Symbol',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbol aus der Schriftart FontAwesome für den Danke-Button. Standard ist: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Danke-Button-Symbol entfernen',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol aus der FontAwesome-Schriftart für die Danke-Entfernen-Schaltfläche. Standard ist: fa-recycle'
 		));

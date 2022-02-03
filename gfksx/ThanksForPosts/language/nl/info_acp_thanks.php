@@ -87,7 +87,7 @@ $lang = array_merge($lang, array(
 	'THANKS_PROFILELIST_VIEW' => 'Toon waarderingen in gebruikersprofiel',
 	'THANKS_PROFILELIST_VIEW_EXPLAIN' => 'Indien ingeschakeld, wordt een complete lijst van waarderingen getoond inclusief de berichten waar de gebruiker voor is gewaardeerd en de berichten die een gebruiker heeft gewaardeerd.',
 	'THANKS_REFRESH' => 'Werk waarderingen statistieken bij',
-	'THANKS_REFRESH_EXPLAIN' => 'Hier kunnen de statistieken worden bijgewerkt na bulk operaties op berichten/onderwerpen/gebruikers, splitsen/samenvoegen van onderwerpen, instellen/verwijderen globale aankondigingen, in/uitschakelen optie "Alleen het eerste bericht in het onderwerp", wijzigen van bericht eigenaren, etc. Deze operatie kan even duren.<br /><strong>Belangrijk: Deze functie werkt alleen indien MySQL versie 4.1 of hoger wordt gebruikt!<br />Attentie!<br /> - Verversen zal alle waarderingen van gasten verwijderen!<br /> - Verversem zal alle waarderingen op Globale Aankondigingen verwijderen indien de optie "Waarderingen in Globale Aankondigingen" is uitgeschakeld!<br /> - 
+	'THANKS_REFRESH_EXPLAIN' => 'Hier kunnen de statistieken worden bijgewerkt na bulk operaties op berichten/onderwerpen/gebruikers, splitsen/samenvoegen van onderwerpen, instellen/verwijderen globale aankondigingen, in/uitschakelen optie "Alleen het eerste bericht in het onderwerp", wijzigen van bericht eigenaren, etc. Deze operatie kan even duren.<br /><strong>Belangrijk: Deze functie werkt alleen indien MySQL versie 4.1 of hoger wordt gebruikt!<br />Attentie!<br /> - Verversen zal alle waarderingen van gasten verwijderen!<br /> - Verversem zal alle waarderingen op Globale Aankondigingen verwijderen indien de optie "Waarderingen in Globale Aankondigingen" is uitgeschakeld!<br /> -
 	Verversen zal alle waarderingen verwijderen behalve voor eerste berichten in onderwerpen, indien de optie "Alleen het eerste bericht in het onderwerp" is ingeschakeld!</strong>',
 	'THANKS_REFRESH_MSG' => 'Deze operatie kan enkele minuten duren. Alle ongeldige waarderingen worden verwijderd! <br /> Deze actie is onomkeerbaar!',
 	'THANKS_REFRESHED_MSG' => 'Statistieken bijgewerkt',
@@ -111,5 +111,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Toon aan niet geidentificeerde gebruikers (gasten)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Indien ingeschakeld, zullen waarderingen en reputatie (indien ingeschakeld) worden getoond aan niet geidentificeerde gebruikers (gasten).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Toon aan zoekmachines (bots)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Indien ingeschakeld, dan worden de waarderingen en reputatie (indien ingeschakeld) getoond aan zoekmachines (bots).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Indien ingeschakeld, dan worden de waarderingen en reputatie (indien ingeschakeld) getoond aan zoekmachines (bots).',
+	'THANKS_SYMBOL_THANKS' => 'Bedankt-knopsymbool',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbool van het FontAwesome-lettertype voor de bedankknop. Standaard is: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Bedankknopsymbool verwijderen',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => "Symbool van het FontAwesome-lettertype voor de knop 'Bedankt verwijderen'. Standaard is: fa-recycle"
 		));

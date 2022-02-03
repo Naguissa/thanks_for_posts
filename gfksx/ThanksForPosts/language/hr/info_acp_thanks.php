@@ -106,5 +106,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Prikaži neidentificirane korisnike (gosti)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Ako je aktivno, prikazivat će hvala i ugled (ako je aktivan) da nisu identificirani korisnici (gosti).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Prikaži tražilicama (robota)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Ako je aktivno, pokazat će hvala i ugled (ako je aktivan) tražilicama (robota).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Ako je aktivno, pokazat će hvala i ugled (ako je aktivan) tražilicama (robota).',
+	'THANKS_SYMBOL_THANKS' => 'Simbol gumba hvala',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Simbol iz FontAwesome fonta za gumb Hvala. Zadano je: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Ukloni simbol gumba zahvale',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Simbol iz FontAwesome fonta za gumb Hvala Ukloni. Zadana postavka je: fa-recycle'
 		));

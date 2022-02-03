@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Zobraziť neidentifikovaných používateľov (hostí)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Ak je aktívna, zobrazí poďakovanie a reputáciu (ak je aktívna) neidentifikovaným používateľom (hosťom).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Zobraziť pre vyhľadávače (bot)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Ak je aktívna, zobrazí poďakovanie a reputáciu (ak je aktívna) pre vyhľadávače (bot).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Ak je aktívna, zobrazí poďakovanie a reputáciu (ak je aktívna) pre vyhľadávače (bot).',
+	'THANKS_SYMBOL_THANKS' => 'Symbol tlačidla s poďakovaním',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbol z písma FontAwesome pre tlačidlo Ďakujem. Predvolená hodnota je: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Odstrániť symbol tlačidla poďakovania',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol z písma FontAwesome pre tlačidlo Odstrániť ďakujem. Predvolená hodnota je: fa-recycle'
 		));

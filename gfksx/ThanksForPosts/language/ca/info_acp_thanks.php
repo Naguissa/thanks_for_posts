@@ -110,4 +110,8 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Si es actiu, es mostrarán els agraeiments i la valoració (si és activa) als usuaris sense identificar (convidats).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Mostrar als robots',
 	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Si es actiu, es mostrarán els agraeiments i la valoració (si és activa) als usuaris identificats com robots.',
+	'THANKS_SYMBOL_THANKS' => 'Símbol botó agrair',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Símbol de la font FontAwesome per al botó de Gràcies. Per defecte és: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Símbol botó treure agraïment',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Símbol de la font FontAwesome per al botó Eliminar Gràcies. Per defecte és: fa-recycle'
 		));

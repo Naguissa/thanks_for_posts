@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Mostra agli utenti ospiti (nessun accesso effettuato)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Se abilitato, i ringraziamenti e la reputazione verrà mostarta agli utenti ospiti.',
 	'THANKS_POST_VIEW_ROBOTS' => 'Mostra ai motori di ricerca (bots)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Se abilitato, i ringraziamenti e la reputazione verrà mostrata ai motori di ricerca (bots).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Se abilitato, i ringraziamenti e la reputazione verrà mostrata ai motori di ricerca (bots).',
+	'THANKS_SYMBOL_THANKS' => 'Simbolo del pulsante di ringraziamento',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => "Simbolo dal font FontAwesome per il pulsante Grazie. L'impostazione predefinita è: fa-thumbs-o-up",
+	'THANKS_SYMBOL_REMOVE' => 'Rimuovi il simbolo del pulsante di ringraziamento',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => "Simbolo dal font FontAwesome per il pulsante Grazie Rimuovi. L'impostazione predefinita è: fa-recycle"
 		));

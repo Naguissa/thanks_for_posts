@@ -114,5 +114,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Montrer aux utilisateurs non identifiés (invités)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => "S'il est actif, il affichera des remerciements et une réputation (s'il est actif) aux utilisateurs non identifiés (invités).",
 	'THANKS_POST_VIEW_ROBOTS' => 'Montrer aux moteurs de recherche (bots)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => "S'il est actif, il affichera remerciements et réputation (s'il est actif) aux moteurs de recherche (bots)."
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => "S'il est actif, il affichera remerciements et réputation (s'il est actif) aux moteurs de recherche (bots).",
+	'THANKS_SYMBOL_THANKS' => 'Symbole du bouton de remerciement',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbole de la police FontAwesome pour le bouton Merci. La valeur par défaut est : fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Supprimer le symbole du bouton de remerciement',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbole de la police FontAwesome pour le bouton de remerciement Supprimer. La valeur par défaut est : fa-recycle'
 		));

@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Show to not identified users (guests)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'If active, it will show thanks and reputation (if active) to not identified users (guests).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Show to search engines (bots)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'If active, it will show thanks and reputation (if active) to search engines (bots).'
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'If active, it will show thanks and reputation (if active) to search engines (bots).',
+	'THANKS_SYMBOL_THANKS' => 'Thank you button symbol',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbol from the FontAwesome font for the Thank you button. Default is: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Remove thanks button symbol',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol from the FontAwesome font for the Thank You Remove button. Default is: fa-recycle'
 		));

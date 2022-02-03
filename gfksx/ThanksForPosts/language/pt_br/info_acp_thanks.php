@@ -109,5 +109,9 @@ $lang = array_merge($lang, array(
 	'THANKS_POST_VIEW_GUESTS' => 'Mostrar para usuários não identificados (convidados)',
 	'THANKS_POST_VIEW_GUESTS_EXPLAIN' => 'Se estiver ativo, mostrará agradecimentos e reputação (se ativos) para usuários não identificados (convidados).',
 	'THANKS_POST_VIEW_ROBOTS' => 'Mostrar para motores de busca (bots)',
-	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Se estiver ativo, mostrará agradecimentos e reputação (se ativos) aos motores de busca (bots).'
-));
+	'THANKS_POST_VIEW_ROBOTS_EXPLAIN' => 'Se estiver ativo, mostrará agradecimentos e reputação (se ativos) aos motores de busca (bots).',
+	'THANKS_SYMBOL_THANKS' => 'Símbolo do botão de agradecimento',
+	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Símbolo da fonte FontAwesome para o botão Obrigado. O padrão é: fa-thumbs-o-up',
+	'THANKS_SYMBOL_REMOVE' => 'Símbolo do botão de Remover agradecimento',
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Símbolo da fonte FontAwesome para o botão Remover Obrigado. O padrão é: fa-recycle'
+		));
