@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\acp;
+namespace naguissa\thanksforposts\acp;
 
 /**
  * @package acp

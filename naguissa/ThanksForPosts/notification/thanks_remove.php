@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\notification;
+namespace naguissa\thanksforposts\notification;
 
 /**
  * Thanks for posts notifications class
@@ -25,7 +25,7 @@ class thanks_remove extends thanks
 	 */
 	public function get_type()
 	{
-		return 'gfksx.thanksforposts.notification.type.thanks_remove';
+		return 'naguissa.thanksforposts.notification.type.thanks_remove';
 	}
 
 	/**

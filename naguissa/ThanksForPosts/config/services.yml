@@ -2,8 +2,8 @@ imports:
     - { resource: tables.yml }
 
 services:
-    gfksx.ThanksForPosts.listener:
-        class: gfksx\ThanksForPosts\event\listener
+    naguissa.thanksforposts.listener:
+        class: naguissa\thanksforposts\event\listener
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -15,11 +15,11 @@ services:
             - '@controller.helper'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '@gfksx.ThanksForPosts.helper'
+            - '@naguissa.thanksforposts.helper'
         tags:
             - { name: event.listener }
-    gfksx.ThanksForPosts.helper:
-        class: gfksx\ThanksForPosts\core\helper
+    naguissa.thanksforposts.helper:
+        class: naguissa\thanksforposts\core\helper
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -38,8 +38,8 @@ services:
             - '%tables.users%'
             - '%tables.posts%'
             - '%tables.notifications%'
-    gfksx.ThanksForPosts.controller.thankslist:
-        class: gfksx\ThanksForPosts\controller\thankslist
+    naguissa.thanksforposts.controller.thankslist:
+        class: naguissa\thanksforposts\controller\thankslist
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -55,8 +55,8 @@ services:
             - '%tables.users%'
             - '%core.root_path%'
             - '%core.php_ext%'
-    gfksx.ThanksForPosts.controller.toplist:
-        class: gfksx\ThanksForPosts\controller\toplist
+    naguissa.thanksforposts.controller.toplist:
+        class: naguissa\thanksforposts\controller\toplist
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -67,14 +67,14 @@ services:
             - '%core.root_path%'
             - '%core.php_ext%'
             - '@pagination'
-            - '@gfksx.ThanksForPosts.helper'
+            - '@naguissa.thanksforposts.helper'
             - '@request'
             - '@controller.helper'
             - '%tables.thanks%'
             - '%tables.users%'
             - '%tables.posts%'
-    gfksx.thanksforposts.notification.type.thanks:
-        class: gfksx\ThanksForPosts\notification\thanks
+    naguissa.thanksforposts.notification.type.thanks:
+        class: naguissa\thanksforposts\notification\thanks
         shared: false
         arguments:
             - '@dbal.conn'
@@ -88,10 +88,10 @@ services:
             - '@user_loader'
         tags:
             - { name: notification.type }
-    gfksx.thanksforposts.notification.type.thanks_remove:
-        class: gfksx\ThanksForPosts\notification\thanks_remove
+    naguissa.thanksforposts.notification.type.thanks_remove:
+        class: naguissa\thanksforposts\notification\thanks_remove
         shared: false # scope MUST be prototype for this to work!
-        parent: gfksx.thanksforposts.notification.type.thanks
+        parent: naguissa.thanksforposts.notification.type.thanks
         tags:
             - { name: notification.type }
 

@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\acp;
+namespace naguissa\thanksforposts\acp;
 
 class acp_thanks_info
 {
@@ -17,10 +17,10 @@ class acp_thanks_info
 	function module()
 	{
 		return array(
-			'filename' => '\gfksx\ThanksForPosts\acp\acp_thanks_module',
+			'filename' => '\naguissa\thanksforposts\acp\acp_thanks_module',
 			'title' => 'ACP_THANKS_SETTINGS',
 			'modes' => array(
-				'thanks' => array('title' => 'ACP_THANKS_SETTINGS', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
+				'thanks' => array('title' => 'ACP_THANKS_SETTINGS', 'auth' => 'ext_naguissa/thanksforposts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
 		);
 	}

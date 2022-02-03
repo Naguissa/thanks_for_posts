@@ -1,9 +1,9 @@
 {
-	"name": "gfksx/ThanksForPosts",
+	"name": "naguissa/thanksforposts",
 	"type": "phpbb-extension",
-	"description": "Adds the ability to thank the author (thanks to cancel), and use the rating system posts/topics/forums based on the issued of thanks.",
+	"description": "Adds the ability to thank the author (thanks and cancel), and use the rating system posts/topics/forums based on the issued of thanks.",
 	"homepage": "https://www.foroelectro.net",
-	"version": "3.3.0",
+	"version": "4.0.0",
 	"time": "2022-02-02",
 	"license": "GPL-2.0",
 	"authors": [
@@ -20,7 +20,7 @@
 		{
 			"name": "Naguissa",
 			"homepage": "https://www.foroelectro.net",
-			"role": "Adapting to phpbb 3.2 and Tapatalk, and further development."
+			"role": "Adapting to phpbb 3.2 and Tapatalk, AJAXify and further development."
 		}
 	],
 	"require": {

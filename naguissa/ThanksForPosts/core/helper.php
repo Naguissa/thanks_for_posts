@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\core;
+namespace naguissa\thanksforposts\core;
 
 class helper
 {
@@ -331,16 +331,13 @@ class helper
 		/**
 		 * This event allows to interrupt before a thanks is deleted
 		 *
-		 * @event gfksx.thanksforposts.delete_thanks_before
+		 * @event naguissa.thanksforposts.delete_thanks_before
 		 * @var	int		post_id		The post id
 		 * @var	int		forum_id	The forum id
 		 * @since 2.0.3
 		 */
-		$vars = array(
-			'post_id',
-			'forum_id',
-		);
-		extract($this->phpbb_dispatcher->trigger_event('gfksx.thanksforposts.delete_thanks_before', compact($vars)));
+		$vars = array('post_id', 'forum_id');
+		extract($this->phpbb_dispatcher->trigger_event('naguissa.thanksforposts.delete_thanks_before', compact($vars)));
 
 		if (isset($this->config['remove_thanks']) ? !$this->config['remove_thanks'] : true)
 		{
@@ -369,7 +366,7 @@ class helper
 						'lang_act' => $lang_act,
 						'post_subject' => $row['post_subject'],
 					);
-					$this->add_notification($thanks_data, 'gfksx.thanksforposts.notification.type.thanks_remove');
+					$this->add_notification($thanks_data, 'naguissa.thanksforposts.notification.type.thanks_remove');
 
 					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 					{
@@ -520,8 +517,8 @@ class helper
 			'S_MOD_THANKS' => $this->auth->acl_get('m_thanks'),
 			'U_CLEAR_LIST_THANKS_GIVE' => append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=give'),
 			'U_CLEAR_LIST_THANKS_RECEIVE' => append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=receive'),
-			'POSTER_RECEIVE_COUNT_LINK' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false')),
-			'POSTER_GIVE_COUNT_LINK' => $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true'))
+			'POSTER_RECEIVE_COUNT_LINK' => $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false')),
+			'POSTER_GIVE_COUNT_LINK' => $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true'))
 		));
 	}
 
@@ -536,8 +533,8 @@ class helper
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
 
 			// Correctly form URLs
-			$u_receive_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false'));
-			$u_give_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true'));
+			$u_receive_count_url = $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false'));
+			$u_give_count_url = $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true'));
 
 			$reputation_pct = round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']);
 
@@ -822,7 +819,7 @@ class helper
 	}
 
 	// Add notifications
-	public function add_notification($notification_data, $notification_type_name = 'gfksx.thanksforposts.notification.type.thanks')
+	public function add_notification($notification_data, $notification_type_name = 'naguissa.thanksforposts.notification.type.thanks')
 	{
 		if ($this->notification_exists($notification_data, $notification_type_name))
 		{
@@ -850,8 +847,8 @@ class helper
 	{
 		// Mark post notifications read for this user in this topic
 		$this->notification_manager->mark_notifications_read(array(
-			'gfksx.thanksforposts.notification.type.thanks',
-			'gfksx.thanksforposts.notification.type.thanks_remove',
+			'naguissa.thanksforposts.notification.type.thanks',
+			'naguissa.thanksforposts.notification.type.thanks_remove',
 				), $item_ids, $this->user->data['user_id']);
 	}
 

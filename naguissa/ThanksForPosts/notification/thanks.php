@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\notification;
+namespace naguissa\thanksforposts\notification;
 
 /**
  * Thanks for posts notifications class
@@ -35,7 +35,7 @@ class thanks extends \phpbb\notification\type\base
 	 */
 	public function get_type()
 	{
-		return 'gfksx.thanksforposts.notification.type.thanks';
+		return 'naguissa.thanksforposts.notification.type.thanks';
 	}
 
 	/**
@@ -198,7 +198,7 @@ class thanks extends \phpbb\notification\type\base
 	 */
 	public function get_email_template()
 	{
-		return '@gfksx_ThanksForPosts/user_thanks';
+		return '@naguissa_thanksforposts/user_thanks';
 	}
 
 	/**

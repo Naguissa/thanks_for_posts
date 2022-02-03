@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\event;
+namespace naguissa\thanksforposts\event;
 
 /**
  * Event listener
@@ -55,7 +55,7 @@ class listener implements EventSubscriberInterface
 	/** @var string phpEx */
 	protected $php_ext;
 
-	/** @var \gfksx\ThanksForPosts\core\helper */
+	/** @var \naguissa\thanksforposts\core\helper */
 	protected $helper;
 
 	/**
@@ -239,7 +239,7 @@ class listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'gfksx/ThanksForPosts',
+			'ext_name' => 'naguissa/thanksforposts',
 			'lang_set' => 'thanks_mod',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
@@ -250,12 +250,12 @@ class listener implements EventSubscriberInterface
 		$newVars = array();
 		if ($this->auth->acl_get('u_viewthanks'))
 		{
-			$newVars['U_THANKS_LIST'] = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller');
+			$newVars['U_THANKS_LIST'] = $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller');
 		}
 		$show_top = (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view']) || (isset($this->config['thanks_topic_reput_view']) && $this->config['thanks_topic_reput_view']) || (isset($this->config['thanks_post_reput_view']) && $this->config['thanks_post_reput_view']);
 		if ($show_top && $this->auth->acl_get('u_viewtoplist'))
 		{
-			$newVars['U_REPUT_TOPLIST'] = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller');
+			$newVars['U_REPUT_TOPLIST'] = $this->controller_helper->route('naguissa_thanksforposts_toplist_controller');
 		}
 		if ($newVars !== array())
 		{

@@ -8,7 +8,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\controller;
+namespace naguissa\thanksforposts\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,8 +41,8 @@ class toplist {
 	/** @var \phpbb\pagination */
 	protected $pagination;
 
-	/** @var \gfksx\ThanksForPosts\core\helper */
-	protected $gfksx_helper;
+	/** @var \naguissa\thanksforposts\core\helper */
+	protected $naguissa_helper;
 
 	/** @var \phpbb\request\request_interface */
 	protected $request;
@@ -71,7 +71,7 @@ class toplist {
 	 * @param string                               $phpbb_root_path       phpbb_root_path
 	 * @param string                               $php_ext               phpEx
 	 * @param \phpbb\pagination                    $pagination            Pagination object
-	 * @param \gfksx\ThanksForPosts\core\helper    $gfksx_helper          Helper object
+	 * @param \naguissa\thanksforposts\core\helper    $naguissa_helper          Helper object
 	 * @param \phpbb\request\request_interface     $request               Request object
 	 * @param \phpbb\controller\helper             $controller_helper     Controller helper object
 	 * @param string                               $thanks_table          THANKS_TABLE
@@ -79,7 +79,7 @@ class toplist {
 	 * @param string                               $posts_table           POSTS_TABLE
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table) {
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \naguissa\thanksforposts\core\helper $naguissa_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
@@ -89,7 +89,7 @@ class toplist {
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->pagination = $pagination;
-		$this->gfksx_helper = $gfksx_helper;
+		$this->naguissa_helper = $naguissa_helper;
 		$this->request = $request;
 		$this->controller_helper = $controller_helper;
 		$this->thanks_table = $thanks_table;
@@ -102,7 +102,7 @@ class toplist {
 			include($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 		}
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
-		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		$this->user->add_lang_ext('naguissa/thanksforposts', 'thanks_mod');
 
 		$end_row_rating = isset($this->config['thanks_number_row_reput']) ? $this->config['thanks_number_row_reput'] : false;
 		$full_post_rating = $full_topic_rating = $full_forum_rating = false;
@@ -118,9 +118,9 @@ class toplist {
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : true;
 
 		if ($mode == 'post' || $mode == 'topic' || $mode == 'forum') {
-			$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => $mode));
+			$pagination_url = $this->controller_helper->route('naguissa_thanksforposts_toplist_controller_mode', array('mode' => $mode));
 		} else {
-			$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller');
+			$pagination_url = $this->controller_helper->route('naguissa_thanksforposts_toplist_controller');
 		}
 
 		if (!$this->auth->acl_gets('u_viewtoplist')) {
@@ -131,9 +131,9 @@ class toplist {
 		}
 		$notoplist = true;
 		$start = $this->request->variable('start', 0);
-		$max_post_thanks = $this->config['thanks_post_reput_view'] ? $this->gfksx_helper->get_max_post_thanks() : 1;
-		$max_topic_thanks = $this->config['thanks_topic_reput_view'] ? $this->gfksx_helper->get_max_topic_thanks() : 1;
-		$max_forum_thanks = $this->config['thanks_forum_reput_view'] ? $this->gfksx_helper->get_max_forum_thanks() : 1;
+		$max_post_thanks = $this->config['thanks_post_reput_view'] ? $this->naguissa_helper->get_max_post_thanks() : 1;
+		$max_topic_thanks = $this->config['thanks_topic_reput_view'] ? $this->naguissa_helper->get_max_topic_thanks() : 1;
+		$max_forum_thanks = $this->config['thanks_forum_reput_view'] ? $this->naguissa_helper->get_max_forum_thanks() : 1;
 
 		switch ($mode) {
 			case 'post':
@@ -196,7 +196,7 @@ class toplist {
 			$sql = $this->db->sql_build_query('SELECT', $sql_p_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
 
-			$u_search_post = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'post'));
+			$u_search_post = $this->controller_helper->route('naguissa_thanksforposts_toplist_controller_mode', array('mode' => 'post'));
 			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
 			} else {
@@ -279,7 +279,7 @@ class toplist {
 						'POST_THANKS' => $row['post_thanks'],
 						'S_THANKS_POST_REPUT_VIEW' => isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct),
+						'THANKS_REPUT_GRAPHIC_TEXT' => $this->naguissa_helper->get_reputation_stars_from_rating($reputation_pct),
 						'S_UNREAD_POST' => !isset($posts_read_marks[$row['forum_id']][$row['topic_id']]) || $posts_read_marks[$row['forum_id']][$row['topic_id']] < $row['post_time']
 					));
 				}
@@ -306,7 +306,7 @@ class toplist {
 
 			$sql = $this->db->sql_build_query('SELECT', $sql_t_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_topic = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'topic'));
+			$u_search_topic = $this->controller_helper->route('naguissa_thanksforposts_toplist_controller_mode', array('mode' => 'topic'));
 
 			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -332,7 +332,7 @@ class toplist {
 						'TOPIC_REPUT' => $reputation_pct . '%',
 						'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct)
+						'THANKS_REPUT_GRAPHIC_TEXT' => $this->naguissa_helper->get_reputation_stars_from_rating($reputation_pct)
 					));
 				} while ($row = $this->db->sql_fetchrow($result));
 				$this->db->sql_freeresult($result);
@@ -355,7 +355,7 @@ class toplist {
 
 			$sql = $this->db->sql_build_query('SELECT', $sql_f_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_forum = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller_mode', array('mode' => 'forum'));
+			$u_search_forum = $this->controller_helper->route('naguissa_thanksforposts_toplist_controller_mode', array('mode' => 'forum'));
 			if (!$row = $this->db->sql_fetchrow($result)) {
 				trigger_error('RATING_VIEW_TOPLIST_NO');
 			} else {
@@ -392,7 +392,7 @@ class toplist {
 							'FORUM_REPUT' => $reputation_pct . '%',
 							'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
 							'S_THANKS_REPUT_GRAPHIC' => isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-							'THANKS_REPUT_GRAPHIC_TEXT' => $this->gfksx_helper->get_reputation_stars_from_rating($reputation_pct)
+							'THANKS_REPUT_GRAPHIC_TEXT' => $this->naguissa_helper->get_reputation_stars_from_rating($reputation_pct)
 						));
 					}
 				} while ($row = $this->db->sql_fetchrow($result));

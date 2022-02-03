@@ -8,7 +8,7 @@ Thanks for posts extension updated for phpbb 3.2 with Tapatalk support (see http
 ## How do I get set up? ##
 
  * Get the ZIP.
- * Upload to <PHPBB_ROOT>/ext/gfksx/ThanksForPosts or upload it with "Upload extensions" phpbb extension (see https://www.phpbb.com/customise/db/extension/upload/ )
+ * Upload to <PHPBB_ROOT>/ext/naguissa/thanksforposts or upload it with "Upload extensions" phpbb extension (see https://www.phpbb.com/customise/db/extension/upload/ )
  * Activate the extension
 
 

@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts;
+namespace naguissa\thanksforposts;
 
 /**
  * Extension class for custom enable/disable/purge actions
@@ -41,8 +41,8 @@ class ext extends \phpbb\extension\base
 			case '': // Empty means nothing has run yet
 				// Enable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->enable_notifications('gfksx.thanksforposts.notification.type.thanks');
-				$phpbb_notifications->enable_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
+				$phpbb_notifications->enable_notifications('naguissa.thanksforposts.notification.type.thanks');
+				$phpbb_notifications->enable_notifications('naguissa.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
 
 				break;
@@ -70,8 +70,8 @@ class ext extends \phpbb\extension\base
 			case '': // Empty means nothing has run yet
 				// Disable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks');
-				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
+				$phpbb_notifications->disable_notifications('naguissa.thanksforposts.notification.type.thanks');
+				$phpbb_notifications->disable_notifications('naguissa.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
 
 				break;
@@ -99,8 +99,8 @@ class ext extends \phpbb\extension\base
 			case '': // Empty means nothing has run yet
 				// Purge notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->purge_notifications('gfksx.thanksforposts.notification.type.thanks');
-				$phpbb_notifications->purge_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
+				$phpbb_notifications->purge_notifications('naguissa.thanksforposts.notification.type.thanks');
+				$phpbb_notifications->purge_notifications('naguissa.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
 
 				break;

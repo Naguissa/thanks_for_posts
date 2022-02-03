@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\migrations;
+namespace gfksx\thanksforposts\migrations;
 
 class v_1_2_5 extends \phpbb\db\migration\migration
 {

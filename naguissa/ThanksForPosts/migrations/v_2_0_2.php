@@ -9,7 +9,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\migrations;
+namespace gfksx\thanksforposts\migrations;
 
 class v_2_0_2 extends \phpbb\db\migration\migration
 {
@@ -22,7 +22,7 @@ class v_2_0_2 extends \phpbb\db\migration\migration
 	static public function depends_on()
 	{
 		return array(
-			'\gfksx\ThanksForPosts\migrations\v_2_0_1',
+			'\gfksx\thanksforposts\migrations\v_2_0_1',
 		);
 	}
 
