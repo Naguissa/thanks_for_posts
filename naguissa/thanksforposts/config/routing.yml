@@ -35,3 +35,10 @@ naguissa_thanksforposts_toplist_controller:
         start: \d+
         return_chars: \d+
 
+naguissa_thanksforposts_ajax_controller:
+    path: /thanksforposts/ajax/{action}/{target}/{env}/{extra}
+    defaults: { _controller: naguissa.thanksforposts.controller.ajax:main, action: "", target: 0, env: 0, extra: "" }
+    requirements:
+        action: \w+
+        target: \d+
+        env: \d+
