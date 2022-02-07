@@ -70,7 +70,7 @@ class listener implements EventSubscriberInterface
 	 * @param \phpbb\request\request_interface     $request               Request object
 	 * @param string                               $phpbb_root_path       phpbb_root_path
 	 * @param string                               $php_ext               phpEx
-	 * @param \rxu\PostsMerging\core\helper        $helper                The extension helper object
+	 * @param \naguissa\thanksforposts\core\helper $helper                The extension helper object
 	 * @access public
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $helper)
@@ -184,8 +184,7 @@ class listener implements EventSubscriberInterface
 		if ($this->request->is_set('thanks') && !$this->request->is_set('rthanks'))
 		{
 			$this->helper->insert_thanks($this->request->variable('thanks', 0), $this->user->data['user_id'], $forum_id);
-		}
-		elseif ($this->request->is_set('rthanks') && !$this->request->is_set('thanks'))
+		} elseif ($this->request->is_set('rthanks') && !$this->request->is_set('thanks'))
 		{
 			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $forum_id);
 		}

@@ -25,9 +25,6 @@ class ajax
 	/** @var \phpbb\auth\auth */
 	protected $auth;
 
-	/** @var \phpbb\template\template */
-	protected $template;
-
 	/** @var \phpbb\user */
 	protected $user;
 
@@ -61,13 +58,15 @@ class ajax
 	/** @var \naguissa\thanksforposts\core\helper */
 	protected $helper;
 
+	/** @var \naguissa\thanksforposts\core\template */
+	protected $partials;
+
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\config\config                 $config                Config object
 	 * @param \phpbb\db\driver\driver_interface    $db                    DBAL object
 	 * @param \phpbb\auth\auth                     $auth                  Auth object
-	 * @param \phpbb\template\template             $template              Template object
 	 * @param \phpbb\user                          $user                  User object
 	 * @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
 	 * @param \phpbb\pagination                    $pagination            Pagination object
@@ -77,15 +76,16 @@ class ajax
 	 * @param string                               $thanks_table          THANKS_TABLE
 	 * @param string                               $users_table           USERS_TABLE
 	 * @param string                               $phpbb_root_path       phpbb_root_path
-	 * @param string                               $php_ext               phpEx
+	 * @param \naguissa\thanksforposts\core\helper $helper                The extension helper object
+	 * @param \naguissa\thanksforposts\core\partials $partials            RenderPartial functionality
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper, $partials)
 	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
-		$this->template = $template;
+		$this->partials = $partials;
 		$this->user = $user;
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
@@ -131,8 +131,16 @@ class ajax
 
 		if ($result === true)
 		{
+			$this->partials->assign_vars(array(
+				'TOTAL_USERS' => 'a',
+				'U_THANKS' => 'b',
+				'S_THANKS' => 'c',
+				'STAR_RATING' => array('full', 'full', 'middle')
+			));
 			return new JsonResponse(array(
-				"result" => 1
+				"result" => 1,
+//				"test" => $this->partials->renderPartial('event/viewtopic_body_postrow_custom_fields_after.html'/* , $this->template->get_template_vars() */)
+				"test" => $this->partials->renderPartial('partials/star_rating.html')
 			));
 		} else
 		{
