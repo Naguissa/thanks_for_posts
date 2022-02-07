@@ -90,6 +90,7 @@ services:
             - '%tables.users%'
             - '%core.root_path%'
             - '%core.php_ext%'
+            - '@naguissa.thanksforposts.helper'
     naguissa.thanksforposts.notification.type.thanks:
         class: naguissa\thanksforposts\notification\thanks
         shared: false

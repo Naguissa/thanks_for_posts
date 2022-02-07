@@ -58,6 +58,9 @@ class ajax
 	/** @var string phpEx */
 	protected $php_ext;
 
+	/** @var \naguissa\thanksforposts\core\helper */
+	protected $helper;
+
 	/**
 	 * Constructor
 	 *
@@ -77,7 +80,7 @@ class ajax
 	 * @param string                               $php_ext               phpEx
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -93,39 +96,58 @@ class ajax
 		$this->controller_helper = $controller_helper;
 		$this->thanks_table = $thanks_table;
 		$this->users_table = $users_table;
+		$this->helper = $helper;
 	}
 
-	protected function _thank($target, $env, $extra)
+	protected function _thank()
 	{
-		return new JsonResponse(array("a" => 2));
+		return $this->helper->insert_thanks($this->request->variable('pid', 0), $this->user->data['user_id'], $this->request->variable('fid', 0), true);
 	}
 
-	protected function _rthank($target, $env, $extra)
+	protected function _rthank()
 	{
-
+		return $this->helper->delete_thanks($this->request->variable('pid', 0), $this->request->variable('fid', 0), true);
 	}
 
 	public function main()
 	{
-
-		$action = $this->request->variable('action', null, true, \phpbb\request\request_interface::POST);
-		switch ($action)
+		$result = false;
+		$error = $this->user->lang('THANKS_AJAX_NOT_LOGGED');
+		if ($this->user->data['user_type'] != USER_IGNORE)
 		{
-			case "thank":
-				return $this->_thank($target, $env, $extra);
-				break;
-			case "rthank":
-				return $this->_rthank($target, $env, $extra);
-				break;
-			default:
-				return new JsonResponse(array(
-					'action' => $action,
-					'target' => $target,
-					'env' => $env,
-					'extra' => $extra,
-					'hola' => $this->request->variable('hola', "no", true, \phpbb\request\request_interface::POST)
-				));
+			$action = $this->request->variable('action', "empty", true, \phpbb\request\request_interface::POST);
+			switch ($action)
+			{
+				case "thank":
+					$result = $error = $this->_thank();
+					break;
+				case "rthank":
+					$result = $error = $this->_rthank();
+					break;
+				default:
+					$error = $this->user->lang('THANKS_AJAX_NOT_ACTION') . ' ' . $action;
+			}
 		}
+
+		if ($result === true)
+		{
+			return new JsonResponse(array(
+				"result" => 1
+			));
+		} else
+		{
+			return new JsonResponse(array(
+				'result' => 0,
+				'error' => $error
+				// DEBUG
+				,
+				'pid' => $this->request->variable('pid', 0),
+				'uid' => $this->user->data['user_id'],
+				'fid' => $this->request->variable('fid', 0)
+			));
+		}
+
+
 		/*
 		  $this->template->assign_vars(array(
 		  'TOTAL_POSTS'	=> $this->user->lang('TOTAL_POSTS_COUNT', (int) $this->config['num_posts']),

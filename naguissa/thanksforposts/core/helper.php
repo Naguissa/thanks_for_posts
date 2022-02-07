@@ -117,7 +117,7 @@ class helper
 		$this->notification_manager = $notification_manager;
 		$this->controller_helper = $controller_helper;
 		$this->phpbb_dispatcher = $phpbb_dispatcher;
-		// FIX for SEO extension
+// FIX for SEO extension
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -127,13 +127,13 @@ class helper
 		$this->notifications_table = $notifications_table;
 	}
 
-	// Output thanks list
+// Output thanks list
 	public function get_thankers()
 	{
 		return $this->thankers;
 	}
 
-	// Output thanks list
+// Output thanks list
 	public function get_thanks($post_id)
 	{
 		$view = $this->request->variable('view', '');
@@ -171,7 +171,7 @@ class helper
 		return $return;
 	}
 
-	//get thanks number
+//get thanks number
 	public function get_thanks_number($post_id)
 	{
 		$i = 0;
@@ -185,8 +185,8 @@ class helper
 		return $i;
 	}
 
-	// add a user to the thanks list
-	public function insert_thanks($post_id, $user_id, $forum_id)
+// add a user to the thanks list
+	public function insert_thanks($post_id, $user_id, $forum_id, $ajax = FALSE)
 	{
 		$to_id = $this->request->variable('to_id', 0);
 		$from_id = $this->request->variable('from_id', 0);
@@ -214,29 +214,47 @@ class helper
 				));
 				$this->add_notification($thanks_data);
 
-				if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
+				if ($ajax)
 				{
-					meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
-					trigger_error($this->user->lang('THANKS_INFO_' . $lang_act) . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
+					return true;
 				} else
 				{
-					redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
+					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
+					{
+						meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
+						trigger_error($this->user->lang('THANKS_INFO_' . $lang_act) . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
+					} else
+					{
+						redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
+					}
 				}
 			} else if (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true))
 			{
-				trigger_error($this->user->lang('GLOBAL_INCORRECT_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
+				if ($ajax)
+				{
+					return $this->user->lang('GLOBAL_INCORRECT_THANKS');
+				} else
+				{
+					trigger_error($this->user->lang('GLOBAL_INCORRECT_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
+				}
 			} else
 			{
-				trigger_error($this->user->lang('INCORRECT_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
+				if ($ajax)
+				{
+					return $this->user->lang('INCORRECT_THANKS');
+				} else
+				{
+					trigger_error($this->user->lang('INCORRECT_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
+				}
 			}
 		}
-		return;
+		return $this->user->lang('THANKS_AJAX_INCORRECT_PARAMETERS');
 	}
 
-	// clear list user's thanks
+// clear list user's thanks
 	public function clear_list_thanks($object_id, $list_thanks = '')
 	{
-		// confirm
+// confirm
 		$s_hidden_fields = build_hidden_fields(array(
 			'list_thanks' => $list_thanks,
 				)
@@ -315,18 +333,17 @@ class helper
 		return;
 	}
 
-	// remove a user's thanks
-	public function delete_thanks($post_id, $forum_id)
+// remove a user's thanks
+	public function delete_thanks($post_id, $forum_id, $ajax = FALSE)
 	{
 		$to_id = $this->request->variable('to_id', 0);
 		$forum_id = ($forum_id) ?: $this->request->variable('f', 0);
 		$row = $this->get_post_info($post_id);
-		// confirm
+// confirm
 		$hidden = build_hidden_fields(array(
 			'to_id' => $to_id,
 			'rthanks' => $post_id,
-				)
-		);
+		));
 
 		/**
 		 * This event allows to interrupt before a thanks is deleted
@@ -341,12 +358,18 @@ class helper
 
 		if (isset($this->config['remove_thanks']) ? !$this->config['remove_thanks'] : true)
 		{
-			trigger_error($this->user->lang('DISABLE_REMOVE_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
+			if ($ajax)
+			{
+				return $this->user->lang('DISABLE_REMOVE_THANKS');
+			} else
+			{
+				trigger_error($this->user->lang('DISABLE_REMOVE_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
+			}
 		}
 
-		if (confirm_box(true, 'REMOVE_THANKS', $hidden))
+		if ($ajax || confirm_box(true, 'REMOVE_THANKS', $hidden))
 		{
-			if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id) && $this->auth->acl_get('f_thanks', $forum_id))
+			if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id) && ($ajax || $this->auth->acl_get('f_thanks', $forum_id)))
 			{
 				$sql = "DELETE FROM " . $this->thanks_table . '
 					WHERE post_id =' . (int) $post_id . " AND user_id = " . (int) $this->user->data['user_id'];
@@ -368,18 +391,35 @@ class helper
 					);
 					$this->add_notification($thanks_data, 'naguissa.thanksforposts.notification.type.thanks_remove');
 
-					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
+					if ($ajax)
 					{
-						meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
-						trigger_error($this->user->lang('THANKS_INFO_' . $lang_act) . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
+						return true;
 					} else
 					{
-						redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
+
+
+						if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
+						{
+							meta_refresh(1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
+							trigger_error($this->user->lang('THANKS_INFO_' . $lang_act) . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
+						} else
+						{
+							redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
+						}
 					}
 				} else
 				{
-					trigger_error($this->user->lang('INCORRECT_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
+					if ($ajax)
+					{
+						return $this->user->lang('INCORRECT_THANKS');
+					} else
+					{
+						trigger_error($this->user->lang('INCORRECT_THANKS') . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
+					}
 				}
+			} else
+			{
+				return $this->user->lang('THANKS_AJAX_INCORRECT_PARAMETERS');
 			}
 		} else
 		{
@@ -389,7 +429,7 @@ class helper
 		return;
 	}
 
-	// display the text/image saying either to add or remove thanks
+// display the text/image saying either to add or remove thanks
 	public function get_thanks_text($post_id)
 	{
 		if ($this->already_thanked($post_id, $this->user->data['user_id']))
@@ -407,7 +447,7 @@ class helper
 		);
 	}
 
-	// change the variable sent via the link to avoid odd errors
+// change the variable sent via the link to avoid odd errors
 	public function get_thanks_link($post_id)
 	{
 		if ($this->already_thanked($post_id, $this->user->data['user_id']))
@@ -417,7 +457,7 @@ class helper
 		return 'thanks';
 	}
 
-	// check if the user has already thanked that post
+// check if the user has already thanked that post
 	public function already_thanked($post_id, $user_id)
 	{
 		$thanked = false;
@@ -431,14 +471,14 @@ class helper
 		return $thanked;
 	}
 
-	// stuff goes here to avoid over-editing memberlist.php
+// stuff goes here to avoid over-editing memberlist.php
 	public function output_thanks_memberlist($user_id, $ex_fid_ary)
 	{
 		$thanks = array();
 		$thanked = array();
 		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
 
-		// Thanks received:
+// Thanks received:
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . $this->thanks_table . '
 			WHERE poster_id = ' . (int) $user_id . ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -471,7 +511,7 @@ class helper
 
 		$further_thanked_text = ($poster_receive_count > $poster_limit ? $this->user->lang('FURTHER_THANKS', $poster_receive_count - $poster_limit, $poster_receive_count - $poster_limit) : '');
 
-		// Thanks given:
+// Thanks given:
 		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
 			FROM ' . $this->thanks_table . "
 			WHERE user_id = " . (int) $user_id . ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -532,7 +572,7 @@ class helper
 			$l_poster_receive_count = (isset($this->poster_list_count[$poster_id]['R']) && $this->poster_list_count[$poster_id]['R']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['R']) : '';
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
 
-			// Correctly form URLs
+// Correctly form URLs
 			$u_receive_count_url = $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false'));
 			$u_give_count_url = $this->controller_helper->route('naguissa_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true'));
 
@@ -572,7 +612,7 @@ class helper
 		}
 	}
 
-	//refresh counts if post delete
+//refresh counts if post delete
 	public function delete_post_thanks($post_ids)
 	{
 		$sql = 'DELETE FROM ' . $this->thanks_table . '
@@ -580,12 +620,12 @@ class helper
 		$this->db->sql_query($sql);
 	}
 
-	// create an array of all thanks info
+// create an array of all thanks info
 	public function array_all_thanks($post_list, $forum_id)
 	{
 		$poster_list = array();
 
-		// max post thanks
+// max post thanks
 		if (isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false)
 		{
 			$sql = 'SELECT MAX(tally) AS max_post_thanks
@@ -602,7 +642,7 @@ class helper
 			$this->max_post_thanks = 1;
 		}
 
-		//array all user who say thanks on viewtopic page
+//array all user who say thanks on viewtopic page
 		if ($this->auth->acl_get('f_thanks', $forum_id) || ($this->user->data['user_id'] == ANONYMOUS && $this->config['thanks_post_view_guests']) || ($this->config['thanks_post_view_robots'] && $this->user->data['is_bot']))
 		{
 			$sql_array = array(
@@ -628,7 +668,7 @@ class helper
 			$this->db->sql_freeresult($result);
 		}
 
-		//array thanks_count for all poster on viewtopic page
+//array thanks_count for all poster on viewtopic page
 		if (isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)
 		{
 			$sql = 'SELECT DISTINCT poster_id FROM ' . $this->posts_table . ' WHERE ' . $this->db->sql_in_set('post_id', $post_list);
@@ -668,7 +708,7 @@ class helper
 		return;
 	}
 
-	// topic reput
+// topic reput
 	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks)
 	{
 		$reputation_pct = (isset($topic_thanks[$topic_id])) ? round((int) $topic_thanks[$topic_id] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) : '';
@@ -680,7 +720,7 @@ class helper
 		);
 	}
 
-	// topic thanks number
+// topic thanks number
 	public function get_thanks_topic_number($topic_list)
 	{
 		$topic_thanks = array();
@@ -700,7 +740,7 @@ class helper
 		}
 	}
 
-	// max topic thanks
+// max topic thanks
 	public function get_max_topic_thanks()
 	{
 		if ($this->config['thanks_topic_reput_view'])
@@ -714,7 +754,7 @@ class helper
 		}
 	}
 
-	// max post thanks for toplist
+// max post thanks for toplist
 	public function get_max_post_thanks()
 	{
 		$sql = 'SELECT MAX(tally) AS max_post_thanks
@@ -729,7 +769,7 @@ class helper
 		return $this->max_post_thanks;
 	}
 
-	// Generate thankslist if required ...
+// Generate thankslist if required ...
 	public function get_toplist_index($ex_fid_ary)
 	{
 		$thanks_list = '';
@@ -765,7 +805,7 @@ class helper
 		return $thanks_list;
 	}
 
-	// forum reput
+// forum reput
 	public function get_thanks_forum_reput($forum_id)
 	{
 		$reputation_pct = (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) : '';
@@ -777,7 +817,7 @@ class helper
 		);
 	}
 
-	// forum thanks number
+// forum thanks number
 	public function get_thanks_forum_number()
 	{
 		if ($this->config['thanks_forum_reput_view'])
@@ -799,7 +839,7 @@ class helper
 		}
 	}
 
-	// max forum thanks
+// max forum thanks
 	public function get_max_forum_thanks()
 	{
 		if ($this->config['thanks_forum_reput_view'])
@@ -818,7 +858,7 @@ class helper
 		}
 	}
 
-	// Add notifications
+// Add notifications
 	public function add_notification($notification_data, $notification_type_name = 'naguissa.thanksforposts.notification.type.thanks')
 	{
 		if ($this->notification_exists($notification_data, $notification_type_name))
@@ -845,7 +885,7 @@ class helper
 
 	public function notification_markread($item_ids)
 	{
-		// Mark post notifications read for this user in this topic
+// Mark post notifications read for this user in this topic
 		$this->notification_manager->mark_notifications_read(array(
 			'naguissa.thanksforposts.notification.type.thanks',
 			'naguissa.thanksforposts.notification.type.thanks_remove',
@@ -882,7 +922,9 @@ class helper
 		$count = 2;
 		$output = array();
 
-		for (; $count < $ratingRounded; $count += 2)
+		for (;
+				$count < $ratingRounded;
+				$count += 2)
 		{
 			$output[] = "star";
 		}
@@ -899,7 +941,9 @@ class helper
 		}
 
 		$count += 2;
-		for (; $count <= 10; $count += 2)
+		for (;
+				$count <= 10;
+				$count += 2)
 		{
 			$output[] = "star-o";
 		}
