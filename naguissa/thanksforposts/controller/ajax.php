@@ -160,6 +160,7 @@ class ajax
 			);
 			$template_vars["postrow"]["POST_ID"] = $postrow["post_id"];
 			$template_vars["postrow"]["POST_AUTHOR"] = $this->helper->get_username_string('username', $postrow['poster_id']);
+			$template_vars["postrow"]["POST_AUTHOR_FULL"] = $this->helper->get_username_string('full', $postrow['poster_id']);
 			return new JsonResponse(array(
 				"result" => 1,
 				"update" => array(
