@@ -1,0 +1,211 @@
+{% include 'overall_header.html' %}
+
+<h2 class="solo">{{ lang('TOPLIST') }}</h2>
+
+{% if pagination %}
+<div class="action-bar top">
+	<div class="pagination">
+		{% include 'pagination.html' %}
+	</div>
+</div>
+{% endif %}
+
+{% if S_THANKS_POST_REPUT_VIEW and not(S_FULL_TOPIC_RATING) and not(S_FULL_FORUM_RATING) %}
+<h3 class="solo"><a href="{{ U_SEARCH_POST }}" class="forumtitle">{{ lang('RATING_TOP_POST') }}</a></h3>
+<div class="forumbg thanks-topposts">
+	<div class="inner">
+
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt class="posttitle">{{ lang('RATING_POST') }}</dt>
+					<dd class="views">{{ lang('RECEIVED') }}</dd>
+					<dd class="views">{{ lang('AUTHOR') }}</dd>
+					<dd class="views">{{ lang('REPUT') }}</dd>
+				</dl>
+			</li>
+		</ul>
+
+		<ul class="topiclist topics">
+			{% for ITEM in toppostrow %}
+			<li class="row {% if ITEM.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+				<dl class="row-item">
+					<dt>
+						<div class="list-inner">
+							{% if ITEM.POST_URL %}<a href="{{ ITEM.POST_URL }}" class="topictitle">{% endif %}
+								<i class="icon fa-file fa-fw {% if ITEM.S_UNREAD_POST %}icon-red{% else %}icon-lightgray{% endif %} icon-md" aria-hidden="true"></i>
+								{{ ITEM.POST_SUBJECT }}
+								{% if ITEM.POST_URL %}</a>{% endif %}
+							<br>
+							<div class="topic-poster responsive-hide left-box">
+								{{ ITEM.POST_AUTHOR }} &raquo; {{ ITEM.POST_DATE }}
+							</div>
+							<br>
+							<br>
+							{{ ITEM.MESSAGE }}
+						</div>
+					</dt>
+
+
+					<dd class="views">{{ ITEM.POST_THANKS }}</dd>
+					<dd class="views">{{ ITEM.POST_AUTHOR }}</dd>
+					<dd class="views">
+                        <span style="display: block;">{{ ITEM.POST_REPUT }}
+							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
+							<br>
+							{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
+							{% include '@naguissa_thanksforposts/partials/star_rating.html' %}
+							{% endif %}
+						</span>
+                    </dd>
+				</dl>
+			</li>
+			{% endfor %}
+		</ul>
+    </div>
+</div>
+{% endif %}
+
+
+{% if S_THANKS_TOPIC_REPUT_VIEW and not(S_FULL_POST_RATING) and not(S_FULL_FORUM_RATING) %}
+<h3 class="solo"><a href="{{ U_SEARCH_TOPIC }}" class="forumtitle">{{ lang('RATING_TOP_TOPIC') }}</a></h3>
+<div class="forumbg thanks-toptopics">
+	<div class="inner">
+
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt class="topictitle">{{ lang('RATING_TOPIC') }}</dt>
+					<dd class="views">{{ lang('RECEIVED') }}</dd>
+					<dd class="views">{{ lang('AUTHOR') }}</dd>
+					<dd class="views">{{ lang('REPUT') }}</dd>
+				</dl>
+			</li>
+		</ul>
+
+		<ul class="topiclist topics">
+			{% for ITEM in toptopicrow %}
+			<li class="row {% if ITEM.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+				<dl class="row-item {{ ITEM.TOPIC_IMG_STYLE }}">
+					<dt{% if ITEM.TOPIC_ICON_IMG and S_TOPIC_ICONS %} style="background-image: url({{ T_ICONS_PATH }}{{ ITEM.TOPIC_ICON_IMG }}); background-repeat: no-repeat;"{% endif %} title="{{ ITEM.TOPIC_FOLDER_IMG_ALT }}">
+						{% if ITEM.S_UNREAD_TOPIC and not S_IS_BOT %}<a href="{{ ITEM.U_NEWEST_POST }}" class="row-item-link"></a>{% endif %}
+						<div class="list-inner">
+							{% EVENT topiclist_row_prepend %}
+							{% if ITEM.S_UNREAD_TOPIC and not S_IS_BOT %}
+							<a class="unread" href="{{ ITEM.U_NEWEST_POST }}">
+								<i class="icon fa-file fa-fw icon-red icon-md" aria-hidden="true"></i><span class="sr-only">{{ NEW_POST }}</span>
+							</a>
+							{% endif %}
+							{% if ITEM.U_VIEW_TOPIC %}<a href="{{ ITEM.U_VIEW_TOPIC }}" class="topictitle">{{ ITEM.TOPIC_TITLE }}</a>{% else %}{{ ITEM.TOPIC_TITLE }}{% endif %}
+							<br>
+							{% EVENT topiclist_row_topic_title_after %}
+							<div class="topic-poster responsive-hide left-box">
+								{% if ITEM.S_HAS_POLL %}<i class="icon fa-bar-chart fa-fw" aria-hidden="true"></i>{% endif %}
+								{% if ITEM.ATTACH_ICON_IMG %}<i class="icon fa-paperclip fa-fw" aria-hidden="true"></i>{% endif %}
+								{{ ITEM.TOPIC_AUTHOR }} &raquo; {{ ITEM.FIRST_POST_TIME }}
+								{% if ITEM.S_POST_GLOBAL and FORUM_ID != ITEM.FORUM_ID %} &raquo; {{ lang('IN') }} <a href="{{ ITEM.U_VIEW_FORUM }}">{{ ITEM.FORUM_NAME }}</a>{% endif %}
+							</div>
+
+							{% if ITEM.pagination %}
+							<div class="pagination">
+								<span><i class="icon fa-clone fa-fw" aria-hidden="true"></i></span>
+								<ul>
+									{% for PAGE in ITEM.PAGINATION %}
+									{% if PAGE.S_IS_PREV %}
+									{% elseif PAGE.S_IS_CURRENT %}<li class="active"><span>{{ PAGE.PAGE_NUMBER }}</span></li>
+									{% elseif PAGE.S_IS_ELLIPSIS %}<li class="ellipsis"><span>{{ lang('ELLIPSIS') }}</span></li>
+									{% elseif PAGE.S_IS_NEXT %}
+									{% else %}<li><a class="button" href="{{ PAGE.PAGE_URL }}">{{ PAGE.PAGE_NUMBER }}</a></li>
+									{% endif %}
+									{% endfor %}
+								</ul>
+							</div>
+							{% endif %}
+							{% EVENT topiclist_row_append %}
+						</div>
+					</dt>
+					<dd class="views">{{ ITEM.TOPIC_THANKS }}</dd>
+					<dd class="views">{{ ITEM.TOPIC_AUTHOR }}</dd>
+					<dd class="views">
+                        <span style="display: block;">{{ ITEM.TOPIC_REPUT }}
+							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
+							<br>
+							{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
+							{% include '@naguissa_thanksforposts/partials/star_rating.html' %}
+							{% endif %}
+						</span>
+                    </dd>
+				</dl>
+				{% EVENT viewforum_body_topic_row_append %}
+			</li>
+			{% EVENT viewforum_body_topic_row_after %}
+			{% endfor %}
+		</ul>
+    </div>
+</div>
+
+{% endif %}
+
+
+{% if S_THANKS_FORUM_REPUT_VIEW and not(S_FULL_TOPIC_RATING) and not(S_FULL_POST_RATING) %}
+
+<h3 class="solo"><a href="{{ U_SEARCH_FORUM }}" class="forumtitle">{{ lang('RATING_TOP_FORUM') }}</a></h3>
+
+
+<div class="forumbg thanks-topforums">
+	<div class="inner">
+
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt class="topictitle">{{ lang('RATING_FORUM') }}</dt>
+					<dd class="views">{{ lang('RECEIVED') }}</dd>
+					<dd class="views">{{ lang('REPUT') }}</dd>
+				</dl>
+			</li>
+		</ul>
+
+		<ul class="topiclist topics">
+			{% for ITEM in topforumrow %}
+			<li class="row bg{% if ITEM.S_ROW_COUNT is even %}1{% else %}2{% endif %}">
+				<dl class="row-item {{ ITEM.FORUM_IMG_STYLE }}">
+					<dt{% if ITEM.FORUM_IMG_STYLE and S_TOPIC_ICONS %} style="background-image: url({{ T_ICONS_PATH }}{{ ITEM.FORUM_IMG_STYLE }}); background-repeat: no-repeat;"{% endif %}>
+						<div class="list-inner">
+							{% if ITEM.FORUM_IMAGE %}
+							{% EVENT forumlist_body_forum_image_before %}
+							<span class="forum-image">{% EVENT forumlist_body_forum_image_prepend %}{{ ITEM.FORUM_IMAGE }}{% EVENT forumlist_body_forum_image_append %}</span>
+							{% EVENT forumlist_body_forum_image_after %}
+							{% endif %}
+							{% if ITEM.U_VIEW_FORUM %}<a href="{{ ITEM.U_VIEW_FORUM }}" class="topictitle">{{ ITEM.FORUM_NAME }}</a>{% else %}{{ ITEM.FORUM_NAME }}{% endif %}
+						</div>
+					</dt>
+					<dd class="views">{{ ITEM.FORUM_THANKS }}</dd>
+					<dd class="views">
+                        <span style="display: block;">{{ ITEM.FORUM_REPUT }}
+							{% if ITEM.S_THANKS_REPUT_GRAPHIC %}
+							<br>
+							{% set STAR_RATING = ITEM.THANKS_REPUT_GRAPHIC_TEXT %}
+							{% include '@naguissa_thanksforposts/partials/star_rating.html' %}
+							{% endif %}
+						</span>
+                    </dd>
+				</dl>
+			</li>
+			{% endfor %}
+		</ul>
+    </div>
+</div>
+{% endif %}
+
+{% if pagination %}
+<div class="action-bar bottom">
+	<div class="pagination">
+		{% include 'pagination.html' %}
+	</div>
+</div>
+{% endif %}
+
+{% include 'jumpbox.html' %}
+{% include 'overall_footer.html' %}
+
+

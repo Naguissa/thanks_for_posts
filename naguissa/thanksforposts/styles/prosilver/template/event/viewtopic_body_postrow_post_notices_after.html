@@ -1,0 +1,35 @@
+<div class='app_list_thanks_{{ postrow.POST_ID }}'>
+	<div>
+		{% if postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and (postrow.THANKS_POST_VIEW_GUESTS or not postrow.S_POST_ANONYMOUS) and (postrow.THANKS_POST_VIEW_ROBOTS or not S_IS_BOT) %}
+		<div class="notice">
+			<dl>
+				{% if postrow.S_MOD_THANKS %}
+				<ul class="post-buttons" style="float: left; position: static;">
+					<li>
+						<a id='clear_list_thanks{{ postrow.POST_ID }}' href="{{ postrow.U_CLEAR_LIST_THANKS_POST }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button button-icon-only" style="float:left"><i aria-hidden="true" class="icon fa-fw fa-recycle"></i><span class="sr-only">{{ lang('CLEAR_LIST_THANKS') }}</span></a>
+					</li>
+				</ul>
+				{% endif %}
+
+				<dt>{{ postrow.THANK_TEXT }}{{ postrow.POST_AUTHOR_FULL }}{{ postrow.THANK_TEXT_2 }}</dt>
+				<dd>{{ postrow.THANKS }}</dd>
+			</dl>
+		</div>
+		{% endif %}
+	</div>
+	<div id='div_post_reput{{ postrow.POST_ID }}'>
+		{% if postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and (not postrow.S_POST_ANONYMOUS or postrow.THANKS_POST_VIEW_GUESTS) and (not S_IS_BOT or postrow.THANKS_POST_VIEW_ROBOTS) %}
+		<div class="notice">
+			<dl>
+				<dt class="small"><strong>{{ lang('REPUT') }}{{ lang('COLON') }}</strong>&nbsp;{{ postrow.POST_REPUT }}</dt>
+				<dd>
+					{% if postrow.S_THANKS_REPUT_GRAPHIC %}
+					{% set STAR_RATING = postrow.THANKS_REPUT_GRAPHIC_TEXT %}
+					{% include '@naguissa_thanksforposts/partials/star_rating.html' %}
+					{% endif %}
+				</dd>
+			</dl>
+		</div>
+		{% endif %}
+	</div>
+</div>

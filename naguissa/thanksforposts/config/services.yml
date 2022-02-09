@@ -1,0 +1,128 @@
+imports:
+    - { resource: tables.yml }
+
+services:
+    naguissa.thanksforposts.listener:
+        class: naguissa\thanksforposts\event\listener
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@request'
+            - '@controller.helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@naguissa.thanksforposts.helper'
+        tags:
+            - { name: event.listener }
+    naguissa.thanksforposts.helper:
+        class: naguissa\thanksforposts\core\helper
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@request'
+            - '@notification_manager'
+            - '@controller.helper'
+            - '@dispatcher'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%core.table_prefix%'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%tables.posts%'
+            - '%tables.notifications%'
+            - '%tables.topics%'
+    naguissa.thanksforposts.controller.thankslist:
+        class: naguissa\thanksforposts\controller\thankslist
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@pagination'
+            - '@profilefields.manager'
+            - '@request'
+            - '@controller.helper'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+    naguissa.thanksforposts.controller.toplist:
+        class: naguissa\thanksforposts\controller\toplist
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@pagination'
+            - '@naguissa.thanksforposts.helper'
+            - '@request'
+            - '@controller.helper'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%tables.posts%'
+    naguissa.thanksforposts.controller.ajax:
+        class: naguissa\thanksforposts\controller\ajax
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@pagination'
+            - '@profilefields.manager'
+            - '@request'
+            - '@controller.helper'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@naguissa.thanksforposts.helper'
+            - '@naguissa.thanksforposts.partials'
+    naguissa.thanksforposts.notification.type.thanks:
+        class: naguissa\thanksforposts\notification\thanks
+        shared: false
+        arguments:
+            - '@dbal.conn'
+            - '@language'
+            - '@user'
+            - '@auth'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%tables.user_notifications%'
+            - '%tables.notifications%'
+            - '@user_loader'
+        tags:
+            - { name: notification.type }
+    naguissa.thanksforposts.notification.type.thanks_remove:
+        class: naguissa\thanksforposts\notification\thanks_remove
+        shared: false # scope MUST be prototype for this to work!
+        parent: naguissa.thanksforposts.notification.type.thanks
+        tags:
+            - { name: notification.type }
+    naguissa.thanksforposts.partials:
+        class: naguissa\thanksforposts\core\partials
+        decorates: 'template'
+        arguments:
+            - '@path_helper'
+            - '@config'
+            - '@template_context'
+            - '@template.twig.environment'
+            - '%core.template.cache_path%'
+            - '@user'
+            - '@template.twig.extensions.collection'
+            - '@ext.manager'
