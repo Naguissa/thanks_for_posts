@@ -153,6 +153,13 @@ class v_4_0_0 extends \phpbb\db\migration\migration
 		return array_values($acp_modules_array);
 	}
 
+	public function delete_old_ext_module()
+	{
+		$delete_sql = "DELETE FROM " . $this->table_prefix . "ext
+                    WHERE ext_name LIKE 'gfksx/ThanksForPosts'";
+		$this->sql_query($delete_sql);
+	}
+
 	public function update_data()
 	{
 		$configs_array = array(
@@ -212,9 +219,13 @@ class v_4_0_0 extends \phpbb\db\migration\migration
 		$notifications_array = array(
 			array('custom', array(array($this, 'update_notifications_serialization')))
 		);
+		$old_ext_cleanup = array(
+			array('custom', array(array($this, 'delete_old_ext_module')))
+		);
+
 		$acp_modules_array = $this->get_needed_modules_array();
 
-		return array_merge($configs_array, $permissions_array, $notifications_array, $acp_modules_array);
+		return array_merge($configs_array, $permissions_array, $notifications_array, $old_ext_cleanup, $acp_modules_array);
 	}
 
 	public function revert_schema()
