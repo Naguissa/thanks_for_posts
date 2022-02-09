@@ -105,5 +105,8 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Благодарность за сообщение',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Благодарность за сообщение отменена',
 	'THANKS_USER' => 'Лист благодарностей',
-	'TOPLIST' => 'Топлист сообщений'
-));
+	'TOPLIST' => 'Топлист сообщений',
+	'THANKS_AJAX_NOT_LOGGED' => "Неизвестный пользователь",
+	'THANKS_AJAX_NOT_ACTION' => "Неверное действие",
+	'THANKS_AJAX_INCORRECT_PARAMETERS' => "Неверные параметры"
+		));

@@ -115,5 +115,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Bedankt-knopsymbool',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbool van het FontAwesome-lettertype voor de bedankknop. Standaard is: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Bedankknopsymbool verwijderen',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => "Symbool van het FontAwesome-lettertype voor de knop 'Bedankt verwijderen'. Standaard is: fa-recycle"
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => "Symbool van het FontAwesome-lettertype voor de knop 'Bedankt verwijderen'. Standaard is: fa-recycle",
+	'THANKS_AJAX' => "Gebruik AJAX om bedankjes te geven of te verwijderen",
+	'THANKS_AJAX_EXPLAIN' => "Als de bedankknoppen voor geven of verwijderen actief zijn, wordt er geen nieuwe pagina geladen. LET OP: Indien actief, werken de informatie- en bevestigingsdialogen niet."
 		));

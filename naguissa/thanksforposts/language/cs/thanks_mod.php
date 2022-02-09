@@ -103,5 +103,8 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Děkujeme za příspěvek.',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Odstraněné poděkování za příspěvek',
 	'THANKS_USER' => 'Seznam poděkování',
-	'TOPLIST' => 'Příspěvky TOP list'
-));
+	'TOPLIST' => 'Příspěvky TOP list',
+	'THANKS_AJAX_NOT_LOGGED' => "Neznámý uživatel",
+	'THANKS_AJAX_NOT_ACTION' => "Špatná akce",
+	'THANKS_AJAX_INCORRECT_PARAMETERS' => "Špatné parametry"
+		));

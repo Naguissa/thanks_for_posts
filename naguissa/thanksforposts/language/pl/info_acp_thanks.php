@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Symbol przycisku dziękuję',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => "Symbol z czcionki FontAwesome dla przycisku Dziękuję. Domyślnie: fa-kciuki-o-do góry",
 	'THANKS_SYMBOL_REMOVE' => 'Usuń symbol przycisku podziękowania',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol z czcionki FontAwesome dla przycisku Dziękuję Usuń. Domyślnie: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol z czcionki FontAwesome dla przycisku Dziękuję Usuń. Domyślnie: fa-recycle',
+	'THANKS_AJAX' => "Użyj AJAX, aby podziękować lub usunąć podziękowania",
+	'THANKS_AJAX_EXPLAIN' => "Jeżeli przyciski dziękowania lub usuwania podziękowań są aktywne, nowa strona nie zostanie załadowana. UWAGA: Gdy są aktywne, okna dialogowe informacji i potwierdzenia nie działają."
 		));

@@ -104,5 +104,8 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Grazie per il post',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Rimosso il grazie per il post',
 	'THANKS_USER' => 'Lista dei ringraziamenti',
-	'TOPLIST' => 'Classifica Posts'
-));
+	'TOPLIST' => 'Classifica Posts',
+	'THANKS_AJAX_NOT_LOGGED' => "Utente non identificato",
+	'THANKS_AJAX_NOT_ACTION' => "Azione sbagliata",
+	'THANKS_AJAX_INCORRECT_PARAMETERS' => "Parametri errati"
+		));

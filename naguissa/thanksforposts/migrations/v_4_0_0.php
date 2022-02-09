@@ -177,6 +177,7 @@ class v_4_0_0 extends \phpbb\db\migration\migration
 			array('if', array((isset($this->config['thanks_topic_reput_view_column'])), array('config.remove', array('thanks_topic_reput_view_column', 0)))),
 			array('if', array((!isset($this->config['thanks_symbol_thanks'])), array('config.add', array('thanks_symbol_thanks', 'fa-thumbs-o-up')))),
 			array('if', array((!isset($this->config['thanks_symbol_remove'])), array('config.add', array('thanks_symbol_remove', 'fa-recycle')))),
+			array('if', array((!isset($this->config['thanks_ajax'])), array('config.add', array('thanks_ajax', 1)))),
 			// Version update
 			array('if', array(
 					(!isset($this->config['thanks_for_posts_version'])),

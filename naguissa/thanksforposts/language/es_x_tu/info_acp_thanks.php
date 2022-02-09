@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Símbolo botón agradecer',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Símbolo de la fuente FontAwesome para el botón de Gracias. Por defecto es: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Símbolo botón quitar agradecimiento',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Símbolo de la fuente FontAwesome para el botón de Eliminar Gracias. Por defecto es: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Símbolo de la fuente FontAwesome para el botón de Eliminar Gracias. Por defecto es: fa-recycle',
+	'THANKS_AJAX' => "Usar AJAX para dar o eliminar gracias",
+	'THANKS_AJAX_EXPLAIN' => "Si está activo los botones de dar o quitar gracias no cargará una página nueva. ATENCIÓN: Cuando está activo no funcionan los diálogos de información ni confirmación."
 		));

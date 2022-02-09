@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Simbolo del pulsante di ringraziamento',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => "Simbolo dal font FontAwesome per il pulsante Grazie. L'impostazione predefinita è: fa-thumbs-o-up",
 	'THANKS_SYMBOL_REMOVE' => 'Rimuovi il simbolo del pulsante di ringraziamento',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => "Simbolo dal font FontAwesome per il pulsante Grazie Rimuovi. L'impostazione predefinita è: fa-recycle"
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => "Simbolo dal font FontAwesome per il pulsante Grazie Rimuovi. L'impostazione predefinita è: fa-recycle",
+	'THANKS_AJAX' => "Usa AJAX per ringraziare o rimuovere",
+	'THANKS_AJAX_EXPLAIN' => "Se i pulsanti di ringraziamento o rimozione sono attivi, una nuova pagina non verrà caricata. ATTENZIONE: Quando è attiva, le finestre di dialogo di informazione e conferma non funzionano."
 		));

@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Символ кнопки благодарности',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Символ из шрифта FontAwesome для кнопки «Спасибо». По умолчанию: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Удалить символ кнопки благодарности',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Символ шрифта FontAwesome для кнопки «Спасибо, удалить». По умолчанию: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Символ шрифта FontAwesome для кнопки «Спасибо, удалить». По умолчанию: fa-recycle',
+	'THANKS_AJAX' => "Используйте AJAX, чтобы поблагодарить или удалить его",
+	'THANKS_AJAX_EXPLAIN' => "Если активны кнопки благодарности или удаления, новая страница не загрузится. ВНИМАНИЕ: Когда они активны, диалоги информации и подтверждения не работают."
 		));

@@ -38,6 +38,7 @@ class acp_thanks_module
 			'title' => 'ACP_THANKS_SETTINGS',
 			'vars' => array(
 				'legend' => 'GENERAL_OPTIONS',
+				'thanks_ajax' => array('lang' => 'THANKS_AJAX', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'remove_thanks' => array('lang' => 'REMOVE_THANKS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_only_first_post' => array('lang' => 'THANKS_ONLY_FIRST_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'thanks_post_view_guests' => array('lang' => 'THANKS_POST_VIEW_GUESTS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),

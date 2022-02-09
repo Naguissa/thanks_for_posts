@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Symbol tlačítka s poděkováním',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbol z písma FontAwesome pro tlačítko Děkuji. Výchozí hodnota je: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Odstranit symbol tlačítka s poděkováním',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol z písma FontAwesome pro tlačítko Odebrat Děkuji. Výchozí hodnota je: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol z písma FontAwesome pro tlačítko Odebrat Děkuji. Výchozí hodnota je: fa-recycle',
+	'THANKS_AJAX' => "Použít AJAX k poděkování nebo odstranění",
+	'THANKS_AJAX_EXPLAIN' => "Pokud jsou tlačítka pro udělení nebo odebrání poděkování aktivní, nová stránka se nenačte. POZOR: Když je aktivní, informační a potvrzovací dialogy nefungují."
 		));

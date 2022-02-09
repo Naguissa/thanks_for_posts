@@ -110,5 +110,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Simbol gumba hvala',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Simbol iz FontAwesome fonta za gumb Hvala. Zadano je: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Ukloni simbol gumba zahvale',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Simbol iz FontAwesome fonta za gumb Hvala Ukloni. Zadana postavka je: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Simbol iz FontAwesome fonta za gumb Hvala Ukloni. Zadana postavka je: fa-recycle',
+	'THANKS_AJAX' => "Koristite AJAX za davanje ili uklanjanje zahvalnosti",
+	'THANKS_AJAX_EXPLAIN' => "Ako su gumbi za davanje ili uklanjanje zahvale aktivni, nova stranica se neće učitati. PAŽNJA: Kada su aktivni, dijaloški okviri za informacije i potvrdu ne rade."
 		));

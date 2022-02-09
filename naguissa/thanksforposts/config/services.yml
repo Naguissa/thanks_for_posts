@@ -38,6 +38,7 @@ services:
             - '%tables.users%'
             - '%tables.posts%'
             - '%tables.notifications%'
+            - '%tables.topics%'
     naguissa.thanksforposts.controller.thankslist:
         class: naguissa\thanksforposts\controller\thankslist
         arguments:
@@ -79,6 +80,7 @@ services:
             - '@config'
             - '@dbal.conn'
             - '@auth'
+            - '@template'
             - '@user'
             - '@cache.driver'
             - '@pagination'

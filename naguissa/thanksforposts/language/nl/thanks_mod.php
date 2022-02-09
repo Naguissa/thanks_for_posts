@@ -46,7 +46,7 @@ $lang = array_merge($lang, array(
 	'DISABLE_REMOVE_THANKS' => 'Waardering verwijderen is uitgeschakeld door de beheerders.',
 	'GIVEN' => 'Gegeven waarderingen',
 	'GLOBAL_INCORRECT_THANKS' => 'Je kan geen waardering achterlaten op een globale mededeling dat niet geplaatst is in een specifiek forum.',
-    'GRATITUDES' => 'Overzicht waarderingen',
+	'GRATITUDES' => 'Overzicht waarderingen',
 	'INCORRECT_THANKS' => 'Waardering foutief',
 	'JUMP_TO_FORUM' => 'Ga naar forum',
 	'JUMP_TO_TOPIC' => 'Ga naar onderwerp',
@@ -57,8 +57,8 @@ $lang = array_merge($lang, array(
 	),
 	'NO_VIEW_USERS_THANKS' => 'You are not authorised to view the Thanks List.',
 	'NOTIFICATION_THANKS_GIVE' => array(
-        1 => '%1$s <strong>waardeert</strong> je bericht:',
-        2 => '%1$s <strong> waarderen</strong> je bericht:',
+		1 => '%1$s <strong>waardeert</strong> je bericht:',
+		2 => '%1$s <strong> waarderen</strong> je bericht:',
 	),
 	'NOTIFICATION_THANKS_REMOVE' => array(
 		1 => '%1$s <strong>verwijdert waardering</strong> voor je bericht:',
@@ -73,7 +73,7 @@ $lang = array_merge($lang, array(
 	'REMOVE_THANKS_SHORT' => 'Verwijder waardering',
 	'REPUT' => 'Waardering',
 	'REPUT_TOPLIST' => 'Waardering ranglijst — %d',
-    'RATING_LOGIN_EXPLAIN' => 'Je hebt geen toegang tot de ranglijst van waarderingen',
+	'RATING_LOGIN_EXPLAIN' => 'Je hebt geen toegang tot de ranglijst van waarderingen',
 	'RATING_NO_VIEW_TOPLIST' => 'Je hebt geen toegang tot de ranglijst van waarderingen',
 	'RATING_VIEW_TOPLIST_NO' => 'Ranglijst is leeg of uitgeschakeld door de beheerder',
 	'RATING_FORUM' => 'Forum',
@@ -104,5 +104,8 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Waardeer dit bericht',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Verwijder waardering voor dit bericht',
 	'THANKS_USER' => 'Lijst van waarderingen',
-	'TOPLIST' => 'Meest gewaardeerde berichten'
-));
+	'TOPLIST' => 'Meest gewaardeerde berichten',
+	'THANKS_AJAX_NOT_LOGGED' => "Niet-geïdentificeerde gebruiker",
+	'THANKS_AJAX_NOT_ACTION' => "Verkeerde actie",
+	'THANKS_AJAX_INCORRECT_PARAMETERS' => "Verkeerde parameters"
+		));

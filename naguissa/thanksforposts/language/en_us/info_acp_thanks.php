@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Thank you button symbol',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbol from the FontAwesome font for the Thank you button. Default is: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Remove thanks button symbol',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol from the FontAwesome font for the Thank You Remove button. Default is: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol from the FontAwesome font for the Thank You Remove button. Default is: fa-recycle',
+	'THANKS_AJAX' => "Use AJAX to give or remove thanks",
+	'THANKS_AJAX_EXPLAIN' => "If the give or remove thanks buttons are used, a new page will not load. ATTENTION: When active, the information and confirmation dialogs will not work."
 		));

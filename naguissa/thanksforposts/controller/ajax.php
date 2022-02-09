@@ -25,6 +25,9 @@ class ajax
 	/** @var \phpbb\auth\auth */
 	protected $auth;
 
+	/** @var \phpbb\template\template */
+	protected $template;
+
 	/** @var \phpbb\user */
 	protected $user;
 
@@ -67,6 +70,7 @@ class ajax
 	 * @param \phpbb\config\config                 $config                Config object
 	 * @param \phpbb\db\driver\driver_interface    $db                    DBAL object
 	 * @param \phpbb\auth\auth                     $auth                  Auth object
+	 * @param \phpbb\template\template             $template              Template object
 	 * @param \phpbb\user                          $user                  User object
 	 * @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
 	 * @param \phpbb\pagination                    $pagination            Pagination object
@@ -80,12 +84,12 @@ class ajax
 	 * @param \naguissa\thanksforposts\core\partials $partials            RenderPartial functionality
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper, $partials)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper, $partials)
 	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
-		$this->partials = $partials;
+		$this->template = $template;
 		$this->user = $user;
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
@@ -97,16 +101,22 @@ class ajax
 		$this->thanks_table = $thanks_table;
 		$this->users_table = $users_table;
 		$this->helper = $helper;
+		$this->partials = $partials;
 	}
 
 	protected function _thank()
 	{
-		return $this->helper->insert_thanks($this->request->variable('pid', 0), $this->user->data['user_id'], $this->request->variable('fid', 0), true);
+		$post_id = $this->request->variable('pid', 0);
+		$forum_id = $this->request->variable('fid', 0);
+		$this->helper->array_all_thanks(array($post_id), $forum_id);
+		return $this->helper->insert_thanks($post_id, $this->user->data['user_id'], $forum_id, true);
 	}
 
 	protected function _rthank()
 	{
-		return $this->helper->delete_thanks($this->request->variable('pid', 0), $this->request->variable('fid', 0), true);
+		$post_id = $this->request->variable('pid', 0);
+		$forum_id = $this->request->variable('fid', 0);
+		return $this->helper->delete_thanks($post_id, $forum_id, true);
 	}
 
 	public function main()
@@ -118,10 +128,10 @@ class ajax
 			$action = $this->request->variable('action', "empty", true, \phpbb\request\request_interface::POST);
 			switch ($action)
 			{
-				case "thank":
+				case "thanks":
 					$result = $error = $this->_thank();
 					break;
-				case "rthank":
+				case "rthanks":
 					$result = $error = $this->_rthank();
 					break;
 				default:
@@ -131,27 +141,37 @@ class ajax
 
 		if ($result === true)
 		{
-			$this->partials->assign_vars(array(
-				'TOTAL_USERS' => 'a',
-				'U_THANKS' => 'b',
-				'S_THANKS' => 'c',
-				'STAR_RATING' => array('full', 'full', 'middle')
-			));
+			$post_id = $this->request->variable('pid', 0);
+			$forum_id = $this->request->variable('fid', 0);
+			$this->helper->array_all_thanks(array($post_id), $forum_id);
+			$postrow = $this->helper->get_post_row($post_id);
+			$postinfo = $this->helper->get_post_info($post_id);
+			$row = array_merge(
+					$this->helper->get_topic_info($postrow['topic_id']),
+					$postinfo
+			);
+			$row["username"] = $row["post_username"] = $postrow["username"];
+			$row["user_colour"] = $postrow["user_colour"];
+			$this->helper->output_thanks($this->request->variable('to_id', 0), $postrow, $row, $row, $this->request->variable('fid', 0));
+			$template_vars = array(
+				"postrow" => $postrow,
+				'S_FORUM_THANKS' => (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
+				'S_USER_LOGGED_IN' => ($this->user->data['user_type'] != USER_IGNORE)
+			);
+			$template_vars["postrow"]["POST_ID"] = $postrow["post_id"];
+			$template_vars["postrow"]["POST_AUTHOR"] = $this->helper->get_username_string('username', $postrow['poster_id']);
 			return new JsonResponse(array(
 				"result" => 1,
-//				"test" => $this->partials->renderPartial('event/viewtopic_body_postrow_custom_fields_after.html'/* , $this->template->get_template_vars() */)
-				"test" => $this->partials->renderPartial('partials/star_rating.html')
+				"update" => array(
+					"app_list_thanks_" . $post_id => $this->partials->renderPartial('event/viewtopic_body_postrow_post_notices_after.html', $template_vars),
+					"app_thanks_button_" . $post_id => $this->partials->renderPartial('event/viewtopic_body_post_buttons_after.html', $template_vars)
+				)
 			));
 		} else
 		{
 			return new JsonResponse(array(
 				'result' => 0,
 				'error' => $error
-				// DEBUG
-				,
-				'pid' => $this->request->variable('pid', 0),
-				'uid' => $this->user->data['user_id'],
-				'fid' => $this->request->variable('fid', 0)
 			));
 		}
 

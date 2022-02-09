@@ -1,7 +1,7 @@
 {% if not postrow.S_FIRST_POST_ONLY or postrow.S_ONLY_TOPICSTART %}
 {% if not(postrow.S_GLOBAL_POST_THANKS) and not(postrow.S_POST_ANONYMOUS) and S_FORUM_THANKS and S_USER_LOGGED_IN and not(postrow.S_IS_OWN_POST) and (not(postrow.S_ALREADY_THANKED) or postrow.S_REMOVE_THANKS) %}
-<li class="app-thanks-post-{{ postrow.POST_ID }}">
-	<a href="{{ postrow.THANKS_LINK }}" title="{{ postrow.THANK_ALT }}{{ postrow.POST_AUTHOR }}" class="button button-icon-only">
+<li class="app_thanks_button_{{ postrow.POST_ID }}">
+	<a href="{{ postrow.THANKS_LINK }}" title="{{ postrow.THANK_ALT }}{{ postrow.POST_AUTHOR }}" class="button button-icon-only {{ postrow.THANKS_LINK_CLASS_ADD }}" {{ postrow.THANKS_LINK_DATA_ADD }}>
 		<i aria-hidden="true" class="icon fa-fw {{ postrow.THANKS_IMG }}"></i><span class="sr-only">{{ postrow.THANK_ALT_SHORT }}</span>
 	</a>
 </li>

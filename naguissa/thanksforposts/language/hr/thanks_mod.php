@@ -101,5 +101,8 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE' => 'Zahvali na postu',
 	'THANKS_PM_SUBJECT_REMOVE' => 'Ukloni zahvalu s posta',
 	'THANKS_USER' => 'Lista zahvala',
-	'TOPLIST' => 'Toplista postova'
-));
+	'TOPLIST' => 'Toplista postova',
+	'THANKS_AJAX_NOT_LOGGED' => "Neidentificirani korisnik",
+	'THANKS_AJAX_NOT_ACTION' => "Pogrešna radnja",
+	'THANKS_AJAX_INCORRECT_PARAMETERS' => "Pogrešni parametri"
+		));

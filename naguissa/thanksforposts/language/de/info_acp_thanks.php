@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Danke-Button-Symbol',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbol aus der Schriftart FontAwesome für den Danke-Button. Standard ist: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Danke-Button-Symbol entfernen',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol aus der FontAwesome-Schriftart für die Danke-Entfernen-Schaltfläche. Standard ist: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbol aus der FontAwesome-Schriftart für die Danke-Entfernen-Schaltfläche. Standard ist: fa-recycle',
+	'THANKS_AJAX' => "Mit AJAX Dank sagen oder entfernen",
+	'THANKS_AJAX_EXPLAIN' => "Wenn die Schaltflächen 'Danke geben' oder 'Danke entfernen' aktiv sind, wird keine neue Seite geladen. ACHTUNG: Wenn aktiv, funktionieren die Informations- und Bestätigungsdialoge nicht."
 		));

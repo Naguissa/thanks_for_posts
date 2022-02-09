@@ -26,12 +26,11 @@ class partials extends twig
 	 *
 	 * @return false|string|null
 	 */
-	public function renderPartial($templateConstant)
+	public function renderPartial($templateConstant, $extraVars = array())
 	{
 		try
 		{
-
-			$output = $this->twig->render($templateConstant, $this->get_template_vars());
+			$output = $this->twig->render($templateConstant, array_merge($this->get_template_vars(), $extraVars));
 			// Usually this is via AJAX, so compress the whitespace
 			$output = preg_replace('/\s+/', ' ', $output);
 		} catch (LoaderError $e)

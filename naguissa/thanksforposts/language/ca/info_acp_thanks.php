@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Símbol botó agrair',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Símbol de la font FontAwesome per al botó de Gràcies. Per defecte és: fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Símbol botó treure agraïment',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Símbol de la font FontAwesome per al botó Eliminar Gràcies. Per defecte és: fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Símbol de la font FontAwesome per al botó Eliminar Gràcies. Per defecte és: fa-recycle',
+	'THANKS_AJAX' => "Usar AJAX per donar o eliminar gràcies",
+	'THANKS_AJAX_EXPLAIN' => "Si està actiu els botons de donar o treure gràcies no carregarà una pàgina nova. ATENCIÓ: Quan està actiu no funcionen els diàlegs d'informació ni confirmació."
 		));

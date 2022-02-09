@@ -113,5 +113,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Teşekkür düğmesi sembolü',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Teşekkür Ederim düğmesi için FontAwesome yazı tipinden sembol. Varsayılan: büyük başparmak-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Teşekkür düğmesi sembolünü kaldır',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Teşekkür Ederim Kaldır düğmesi için FontAwesome yazı tipinden sembol. Varsayılan: fa-geri dönüşüm'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Teşekkür Ederim Kaldır düğmesi için FontAwesome yazı tipinden sembol. Varsayılan: fa-geri dönüşüm',
+	'THANKS_AJAX' => "Teşekkür etmek veya teşekkürü kaldırmak için AJAX kullanın",
+	'THANKS_AJAX_EXPLAIN' => "Teşekkür et veya kaldır butonları aktifse yeni bir sayfa yüklenmez. DİKKAT: Aktif olduğunda bilgi ve onay diyalogları çalışmaz."
 		));

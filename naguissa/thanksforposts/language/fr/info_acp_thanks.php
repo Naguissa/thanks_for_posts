@@ -118,5 +118,7 @@ $lang = array_merge($lang, array(
 	'THANKS_SYMBOL_THANKS' => 'Symbole du bouton de remerciement',
 	'THANKS_SYMBOL_THANKS_EXPLAIN' => 'Symbole de la police FontAwesome pour le bouton Merci. La valeur par défaut est : fa-thumbs-o-up',
 	'THANKS_SYMBOL_REMOVE' => 'Supprimer le symbole du bouton de remerciement',
-	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbole de la police FontAwesome pour le bouton de remerciement Supprimer. La valeur par défaut est : fa-recycle'
+	'THANKS_SYMBOL_REMOVE_EXPLAIN' => 'Symbole de la police FontAwesome pour le bouton de remerciement Supprimer. La valeur par défaut est : fa-recycle',
+	'THANKS_AJAX' => "Utiliser AJAX pour remercier ou retirer",
+	'THANKS_AJAX_EXPLAIN' => "Si les boutons donner ou retirer des remerciements sont actifs, une nouvelle page ne se chargera pas. ATTENTION : Lorsqu'ils sont actifs, les dialogues d'information et de confirmation ne fonctionnent pas."
 		));
