@@ -88,7 +88,7 @@ class v_4_0_0 extends \phpbb\db\migration\migration
 				{
 
 					$update_sql = "UPDATE " . USER_NOTIFICATIONS_TABLE . "
-					SET notification_type_id = '" . $new_notification_row['notification_type_id'] . "
+					SET notification_type_id = " . $new_notification_row['notification_type_id'] . "
                     WHERE notification_type_id = " . $old_notification_row['notification_type_id'];
 					$this->sql_query($update_sql);
 
