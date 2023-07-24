@@ -13,8 +13,7 @@ namespace naguissa\thanksforposts\controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ajax
-{
+class ajax {
 
 	/** @var \phpbb\config\config */
 	protected $config;
@@ -84,8 +83,7 @@ class ajax
 	 * @param \naguissa\thanksforposts\core\partials $partials            RenderPartial functionality
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper, $partials)
-	{
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext, $helper, $partials) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
@@ -104,30 +102,24 @@ class ajax
 		$this->partials = $partials;
 	}
 
-	protected function _thank()
-	{
+	protected function _thank() {
 		$post_id = $this->request->variable('pid', 0);
 		$forum_id = $this->request->variable('fid', 0);
-		$this->helper->array_all_thanks(array($post_id), $forum_id);
 		return $this->helper->insert_thanks($post_id, $this->user->data['user_id'], $forum_id, true);
 	}
 
-	protected function _rthank()
-	{
+	protected function _rthank() {
 		$post_id = $this->request->variable('pid', 0);
 		$forum_id = $this->request->variable('fid', 0);
 		return $this->helper->delete_thanks($post_id, $forum_id, true);
 	}
 
-	public function main()
-	{
+	public function main() {
 		$result = false;
 		$error = $this->user->lang('THANKS_AJAX_NOT_LOGGED');
-		if ($this->user->data['user_type'] != USER_IGNORE)
-		{
+		if ($this->user->data['user_type'] != USER_IGNORE) {
 			$action = $this->request->variable('action', "empty", true, \phpbb\request\request_interface::POST);
-			switch ($action)
-			{
+			switch ($action) {
 				case "thanks":
 					$result = $error = $this->_thank();
 					break;
@@ -139,8 +131,7 @@ class ajax
 			}
 		}
 
-		if ($result === true)
-		{
+		if ($result === true) {
 			$post_id = $this->request->variable('pid', 0);
 			$forum_id = $this->request->variable('fid', 0);
 			$this->helper->array_all_thanks(array($post_id), $forum_id);
@@ -168,8 +159,7 @@ class ajax
 					"app_thanks_button_" . $post_id => $this->partials->renderPartial('event/viewtopic_body_post_buttons_after.html', $template_vars)
 				)
 			));
-		} else
-		{
+		} else {
 			return new JsonResponse(array(
 				'result' => 0,
 				'error' => $error
