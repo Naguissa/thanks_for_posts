@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Adds the ability to thank the author (thanks and cancel), and use the rating system posts/topics/forums based on the issued of thanks.",
 	"homepage": "https://www.foroelectro.net",
-	"version": "4.0.5",
-	"time": "2023-07-24",
+	"version": "4.0.6",
+	"time": "2024-02-26",
 	"license": "GPL-2.0",
 	"authors": [
 		{
