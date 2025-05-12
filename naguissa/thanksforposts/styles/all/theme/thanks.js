@@ -7,15 +7,8 @@
 		$.ajax({
 			async: true,
 			url: el.attr('href'),
-			type: 'POST',
+			type: 'GET',
 			dataType: 'json',
-			data: {
-				action: el.data('action'),
-				pid: el.data('pid'),
-				fid: el.data('fid'),
-				to_id: el.data('to_id'),
-				from_id: el.data('from_id')
-			},
 			success: function (response) {
 				if (response && response.result) {
 					if (response && response.update) {

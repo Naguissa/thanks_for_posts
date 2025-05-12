@@ -22,7 +22,7 @@ class v_4_0_6 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\phpbb\db\migration\data\v320\dev');
+        return ['\naguissa\thanksforposts\migrations\v_4_0_0'];
 	}
 
 	public function update_schema()

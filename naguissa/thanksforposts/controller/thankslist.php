@@ -1,10 +1,9 @@
 <?php
-
 /**
  *
  * Thanks For Posts extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @see https://github.com/Naguissa/thanks_for_posts
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -15,74 +14,41 @@ use Symfony\Component\HttpFoundation\Response;
 
 class thankslist {
 
-    /** @var \phpbb\config\config */
-    protected $config;
+    protected \phpbb\config\config $config;
+    protected \phpbb\db\driver\driver_interface $db;
+	protected \phpbb\auth\auth $auth;
+	protected \phpbb\template\template $template;
+	protected \phpbb\user $user;
+    protected \phpbb\pagination $pagination;
+    protected \phpbb\profilefields\manager $profilefields_manager;
+	protected \phpbb\request\request_interface $request;
+	protected \phpbb\controller\helper $controller_helper;
+	protected string $thanks_table;
+	protected string $users_table;
+	protected string $phpbb_root_path;
+	protected string $php_ext;
+	
 
-    /** @var \phpbb\db\driver\driver_interface */
-    protected $db;
-
-    /** @var \phpbb\auth\auth */
-    protected $auth;
-
-    /** @var \phpbb\template\template */
-    protected $template;
-
-    /** @var \phpbb\user */
-    protected $user;
-
-    /** @var \phpbb\cache\driver\driver_interface */
-    protected $cache;
-
-    /** @var \phpbb\pagination */
-    protected $pagination;
-
-    /** @var \phpbb\profilefields\manager */
-    protected $profilefields_manager;
-
-    /** @var \phpbb\request\request_interface */
-    protected $request;
-
-    /** @var \phpbb\controller\helper */
-    protected $controller_helper;
-
-    /** @var string THANKS_TABLE */
-    protected $thanks_table;
-
-    /** @var string USERS_TABLE */
-    protected $users_table;
-
-    /** @var string phpbb_root_path */
-    protected $phpbb_root_path;
-
-    /** @var string phpEx */
-    protected $php_ext;
-
-    /**
-     * Constructor
-     *
-     * @param \phpbb\config\config                 $config                Config object
-     * @param \phpbb\db\driver\driver_interface    $db                    DBAL object
-     * @param \phpbb\auth\auth                     $auth                  Auth object
-     * @param \phpbb\template\template             $template              Template object
-     * @param \phpbb\user                          $user                  User object
-     * @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
-     * @param \phpbb\pagination                    $pagination            Pagination object
-     * @param \phpbb\profilefields\manager         $profilefields_manager Profile fields manager object
-     * @param \phpbb\request\request_interface     $request               Request object
-     * @param \phpbb\controller\helper             $controller_helper     Controller helper object
-     * @param string                               $thanks_table          THANKS_TABLE
-     * @param string                               $users_table           USERS_TABLE
-     * @param string                               $phpbb_root_path       phpbb_root_path
-     * @param string                               $php_ext               phpEx
-     * @access public
-     */
-    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext) {
+    public function __construct(
+        \phpbb\config\config $config,
+        \phpbb\db\driver\driver_interface $db,
+        \phpbb\auth\auth $auth,
+        \phpbb\template\template $template,
+        \phpbb\user $user,
+        \phpbb\pagination $pagination,
+        \phpbb\profilefields\manager $profilefields_manager,
+        \phpbb\request\request_interface $request,
+        \phpbb\controller\helper $controller_helper,
+        string $thanks_table,
+        string $users_table,
+        string $phpbb_root_path,
+        string $php_ext
+    ) {
         $this->config = $config;
         $this->db = $db;
         $this->auth = $auth;
         $this->template = $template;
         $this->user = $user;
-        $this->cache = $cache;
         $this->phpbb_root_path = $phpbb_root_path;
         $this->php_ext = $php_ext;
         $this->pagination = $pagination;
@@ -123,14 +89,12 @@ class thankslist {
             $give = "";
         }
 
-
         if (!$this->auth->acl_gets('u_viewthanks')) {
             if ($this->user->data['user_id'] != ANONYMOUS) {
                 trigger_error('NO_VIEW_USERS_THANKS');
             }
             login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang('LOGIN_EXPLAIN_' . strtoupper($mode)) : $this->user->lang('LOGIN_EXPLAIN_MEMBERLIST')));
         }
-
 
         $order_by = '';
 

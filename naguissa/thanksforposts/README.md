@@ -15,4 +15,4 @@ Thanks for posts extension updated for phpbb 3.2 with Tapatalk support (see http
 ## Who do I talk to? ##
 
  * [Naguissa](https://github.com/Naguissa)
- * https://www.foroelectro.net (spanish phpbb forum)
+ * https://www.foroelectro.net

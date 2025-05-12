@@ -1,10 +1,9 @@
 <?php
-
 /**
  *
  * Thanks For Posts extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+ * @see https://github.com/Naguissa/thanks_for_posts
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */

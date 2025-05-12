@@ -1,10 +1,10 @@
 <?php
-
 /**
  *
- * @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
- * @version $Id: toplist.php,v 135 2012-10-10 10:02:51 Палыч $
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * Thanks For Posts extension for the phpBB Forum Software package.
+ *
+ * @see https://github.com/Naguissa/thanks_for_posts
+ * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
@@ -14,72 +14,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 class toplist {
 
-	/** @var \phpbb\config\config */
-	protected $config;
+    protected \phpbb\config\config $config;
+    protected \phpbb\db\driver\driver_interface $db;
+	protected \phpbb\auth\auth $auth;
+	protected \phpbb\template\template $template;
+	protected \phpbb\user $user;
+    protected \phpbb\pagination $pagination;
+	protected \phpbb\request\request_interface $request;
+	protected \phpbb\controller\helper $controller_helper;
+	protected \phpbb\cache\driver\driver_interface $cache;
+	protected string $thanks_table;
+	protected string $users_table;
+	protected string $posts_table;
+	protected string $phpbb_root_path;
+	protected string $php_ext;
+	protected \naguissa\thanksforposts\core\helper $naguissa_helper;
 
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
 
-	/** @var \phpbb\auth\auth */
-	protected $auth;
-
-	/** @var \phpbb\template\template */
-	protected $template;
-
-	/** @var \phpbb\user */
-	protected $user;
-
-	/** @var \phpbb\cache\driver\driver_interface */
-	protected $cache;
-
-	/** @var string phpbb_root_path */
-	protected $phpbb_root_path;
-
-	/** @var string phpEx */
-	protected $php_ext;
-
-	/** @var \phpbb\pagination */
-	protected $pagination;
-
-	/** @var \naguissa\thanksforposts\core\helper */
-	protected $naguissa_helper;
-
-	/** @var \phpbb\request\request_interface */
-	protected $request;
-
-	/** @var \phpbb\controller\helper */
-	protected $controller_helper;
-
-	/** @var string THANKS_TABLE */
-	protected $thanks_table;
-
-	/** @var string USERS_TABLE */
-	protected $users_table;
-
-	/** @var string POSTS_TABLE */
-	protected $posts_table;
-
-	/**
-	 * Constructor
-	 *
-	 * @param \phpbb\config\config                 $config                Config object
-	 * @param \phpbb\db\driver\driver_interface    $db                    DBAL object
-	 * @param \phpbb\auth\auth                     $auth                  Auth object
-	 * @param \phpbb\template\template             $template              Template object
-	 * @param \phpbb\user                          $user                  User object
-	 * @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
-	 * @param string                               $phpbb_root_path       phpbb_root_path
-	 * @param string                               $php_ext               phpEx
-	 * @param \phpbb\pagination                    $pagination            Pagination object
-	 * @param \naguissa\thanksforposts\core\helper    $naguissa_helper          Helper object
-	 * @param \phpbb\request\request_interface     $request               Request object
-	 * @param \phpbb\controller\helper             $controller_helper     Controller helper object
-	 * @param string                               $thanks_table          THANKS_TABLE
-	 * @param string                               $users_table           USERS_TABLE
-	 * @param string                               $posts_table           POSTS_TABLE
-	 * @access public
-	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \naguissa\thanksforposts\core\helper $naguissa_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table) {
+	public function __construct(
+	    \phpbb\config\config $config,
+	    \phpbb\db\driver\driver_interface $db,
+	    \phpbb\auth\auth $auth,
+	    \phpbb\template\template $template,
+	    \phpbb\user $user,
+	    \phpbb\cache\driver\driver_interface $cache,
+	    string $phpbb_root_path,
+	    string $php_ext,
+	    \phpbb\pagination $pagination,
+	    \naguissa\thanksforposts\core\helper $naguissa_helper,
+	    \phpbb\request\request_interface $request,
+	    \phpbb\controller\helper $controller_helper,
+	    string $thanks_table,
+	    string $users_table,
+	    string $posts_table
+    ) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
@@ -266,7 +234,7 @@ class toplist {
 					}
 
 					$reputation_pct = round($row['post_thanks'] / ($max_post_thanks / 100), $this->config['thanks_number_digits']);
-					$post_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id']);
+					$post_url = append_sid($this->phpbb_root_path . "viewtopic." . $this->php_ext, 'p=' . $row['post_id'] . '#p' . $row['post_id']);
 					$this->template->assign_block_vars('toppostrow', array(
 						'MESSAGE' => $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : $row['post_text']),
 						'POST_DATE' => !empty($row['post_time']) ? $this->user->format_date($row['post_time']) : '',
@@ -317,7 +285,7 @@ class toplist {
 					$folder_img = $folder_alt = $topic_type = '';
 					topic_status($row, 0, false, $folder_img, $folder_alt, $topic_type);
 					$view_topic_url_params = 'f=' . (($row['forum_id']) ? $row['forum_id'] : '') . '&amp;t=' . $row['topic_id'];
-					$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", $view_topic_url_params);
+					$view_topic_url = append_sid($this->phpbb_root_path . "viewtopic." . $this->php_ext, $view_topic_url_params);
 
 					$reputation_pct = round($row['topic_thanks'] / ($max_topic_thanks / 100), $this->config['thanks_number_digits']);
 					$this->template->assign_block_vars('toptopicrow', array(
@@ -380,12 +348,19 @@ class toplist {
 						}
 
 
-						$u_viewforum = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
+						$u_viewforum = append_sid($this->phpbb_root_path . "viewforum." . $this->php_ext, 'f=' . $row['forum_id']);
 						$reputation_pct = round($row['forum_thanks'] / ($max_forum_thanks / 100), $this->config['thanks_number_digits']);
+						
+						// Fix path issues, maybe created by seourls extension
+						$forum_image = '';
+						if ($row['forum_image']) {
+						    $forum_image = '<img src="' . ($this->phpbb_root_path === './' ? '' : $this->phpbb_root_path) . $row['forum_image'] . '" alt="' . $this->user->lang($folder_alt) . '">' ;
+                        }
+						
 						$this->template->assign_block_vars('topforumrow', array(
 							'FORUM_FOLDER_IMG_SRC' => $this->user->img($folder_image, $folder_alt, false, '', 'src'),
 							'FORUM_IMG_STYLE' => $folder_image,
-							'FORUM_IMAGE' => ($row['forum_image']) ? '<img src="' . $this->phpbb_root_path . $row['forum_image'] . '" alt="' . $this->user->lang($folder_alt) . '" />' : '',
+							'FORUM_IMAGE' => $forum_image,
 							'FORUM_NAME' => ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['forum_name'] : ((!empty($row['forum_id'])) ? $this->user->lang('SORRY_AUTH_READ') : $row['forum_name']),
 							'U_VIEW_FORUM' => $u_viewforum,
 							'FORUM_THANKS' => $row['forum_thanks'],

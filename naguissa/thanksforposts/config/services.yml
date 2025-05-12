@@ -33,7 +33,6 @@ services:
             - '@dispatcher'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '%core.table_prefix%'
             - '%tables.thanks%'
             - '%tables.users%'
             - '%tables.posts%'
@@ -47,7 +46,6 @@ services:
             - '@auth'
             - '@template'
             - '@user'
-            - '@cache.driver'
             - '@pagination'
             - '@profilefields.manager'
             - '@request'
@@ -74,25 +72,6 @@ services:
             - '%tables.thanks%'
             - '%tables.users%'
             - '%tables.posts%'
-    naguissa.thanksforposts.controller.ajax:
-        class: naguissa\thanksforposts\controller\ajax
-        arguments:
-            - '@config'
-            - '@dbal.conn'
-            - '@auth'
-            - '@template'
-            - '@user'
-            - '@cache.driver'
-            - '@pagination'
-            - '@profilefields.manager'
-            - '@request'
-            - '@controller.helper'
-            - '%tables.thanks%'
-            - '%tables.users%'
-            - '%core.root_path%'
-            - '%core.php_ext%'
-            - '@naguissa.thanksforposts.helper'
-            - '@naguissa.thanksforposts.partials'
     naguissa.thanksforposts.notification.type.thanks:
         class: naguissa\thanksforposts\notification\thanks
         shared: false
@@ -114,15 +93,4 @@ services:
         parent: naguissa.thanksforposts.notification.type.thanks
         tags:
             - { name: notification.type }
-    naguissa.thanksforposts.partials:
-        class: naguissa\thanksforposts\core\partials
-        decorates: 'template'
-        arguments:
-            - '@path_helper'
-            - '@config'
-            - '@template_context'
-            - '@template.twig.environment'
-            - '%core.template.cache_path%'
-            - '@user'
-            - '@template.twig.extensions.collection'
-            - '@ext.manager'
+
