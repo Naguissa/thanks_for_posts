@@ -18,7 +18,7 @@ class helper
 	protected array $thankers = array();
 	protected array $forum_thanks = array();
 	protected ?int $max_post_thanks;
-	protected ?int  $max_topic_thanks;
+	protected int  $max_topic_thanks = 1;
 	protected ?int $max_forum_thanks;
 	protected array $poster_list_count = array();
 	protected \phpbb\config\config $config;
@@ -720,6 +720,9 @@ class helper
 // topic reput
 	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks) : array
 	{
+	    if ($max_topic_thanks < 1) {
+	        $max_topic_thanks = 1;
+        }
 		$reputation_pct = (isset($topic_thanks[$topic_id])) ? round((int) $topic_thanks[$topic_id] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) : '';
 		return array(
 			'TOPIC_REPUT' => $reputation_pct == '' ? '' : $reputation_pct . '%',
@@ -757,7 +760,7 @@ class helper
 			$sql = 'SELECT MAX(tally) AS max_topic_thanks
 				FROM (SELECT topic_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY topic_id) t';
 			$result = $this->db->sql_query($sql);
-			$this->max_topic_thanks = (int) $this->db->sql_fetchfield('max_topic_thanks');
+			$this->max_topic_thanks = (int) $this->db->sql_fetchfield('max_topic_thanks') ?? 1;
 			$this->db->sql_freeresult($result);
 			return $this->max_topic_thanks;
 		}

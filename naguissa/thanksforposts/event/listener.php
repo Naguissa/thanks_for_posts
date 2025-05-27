@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 	protected array $topic_thanks = array();
-	protected int  $max_topic_thanks = 0;
+	protected int  $max_topic_thanks = 1;
 	protected \phpbb\config\config $config;
 	protected \phpbb\db\driver\driver_interface $db;
 	protected \phpbb\auth\auth $auth;
