@@ -753,17 +753,18 @@ class helper
 	}
 
 // max topic thanks
-	public function get_max_topic_thanks()
+	public function get_max_topic_thanks() : int
 	{
 		if ($this->config['thanks_topic_reput_view'])
 		{
 			$sql = 'SELECT MAX(tally) AS max_topic_thanks
 				FROM (SELECT topic_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY topic_id) t';
 			$result = $this->db->sql_query($sql);
-			$this->max_topic_thanks = (int) $this->db->sql_fetchfield('max_topic_thanks') ?? 1;
+			$this->max_topic_thanks = (int) ($this->db->sql_fetchfield('max_topic_thanks') ?? 1);
 			$this->db->sql_freeresult($result);
 			return $this->max_topic_thanks;
 		}
+		return 1;
 	}
 
 // max post thanks for toplist
