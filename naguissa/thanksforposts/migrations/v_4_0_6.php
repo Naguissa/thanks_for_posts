@@ -201,7 +201,7 @@ class v_4_0_6 extends \phpbb\db\migration\migration
 					array('config.add', array('thanks_for_posts_version', '4.0.6'))
 				)
 			),
-			array('config.update', array('thanks_for_posts_version', '4.0.6')),
+			array('config.update', array('thanks_for_posts_version', '4.0.6'))
 		);
 
 		$permissions_array = array(
