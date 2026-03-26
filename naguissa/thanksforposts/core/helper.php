@@ -950,7 +950,7 @@ class helper
 		$sql_array = array(
 			'SELECT' => 'p.*, u.username, u.username_clean, u.user_colour',
 			'FROM' => array($this->posts_table => 'p', $this->users_table => 'u'),
-			'WHERE' => 'p.post_id =' . (int) $post_id
+			'WHERE' => 'u.user_id = p.poster_id AND p.post_id =' . (int) $post_id
 		);
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query($sql);
